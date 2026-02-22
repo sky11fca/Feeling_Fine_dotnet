@@ -1,0 +1,11 @@
+/home/mrbogdanovich/git/FeelingFine/DotnetApi/DotnetApi.Domains/bin/Debug/net10.0/DotnetApi.Domains.deps.json
+/home/mrbogdanovich/git/FeelingFine/DotnetApi/DotnetApi.Domains/bin/Debug/net10.0/DotnetApi.Domains.dll
+/home/mrbogdanovich/git/FeelingFine/DotnetApi/DotnetApi.Domains/bin/Debug/net10.0/DotnetApi.Domains.pdb
+/home/mrbogdanovich/git/FeelingFine/DotnetApi/DotnetApi.Domains/obj/Debug/net10.0/DotnetApi.Domains.GeneratedMSBuildEditorConfig.editorconfig
+/home/mrbogdanovich/git/FeelingFine/DotnetApi/DotnetApi.Domains/obj/Debug/net10.0/DotnetApi.Domains.AssemblyInfoInputs.cache
+/home/mrbogdanovich/git/FeelingFine/DotnetApi/DotnetApi.Domains/obj/Debug/net10.0/DotnetApi.Domains.AssemblyInfo.cs
+/home/mrbogdanovich/git/FeelingFine/DotnetApi/DotnetApi.Domains/obj/Debug/net10.0/DotnetApi.Domains.csproj.CoreCompileInputs.cache
+/home/mrbogdanovich/git/FeelingFine/DotnetApi/DotnetApi.Domains/obj/Debug/net10.0/DotnetApi.Domains.dll
+/home/mrbogdanovich/git/FeelingFine/DotnetApi/DotnetApi.Domains/obj/Debug/net10.0/refint/DotnetApi.Domains.dll
+/home/mrbogdanovich/git/FeelingFine/DotnetApi/DotnetApi.Domains/obj/Debug/net10.0/DotnetApi.Domains.pdb
+/home/mrbogdanovich/git/FeelingFine/DotnetApi/DotnetApi.Domains/obj/Debug/net10.0/ref/DotnetApi.Domains.dll

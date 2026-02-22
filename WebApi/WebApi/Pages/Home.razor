@@ -1,0 +1,48 @@
+@page "/"
+@using WebApi.Models
+@using WebApi.Services.Business
+@inject NavigationManager NavManager
+@inject IBusinessService BusinessService
+
+<div>
+    <h3>Welcome</h3>
+    <p>Choose a Company</p>
+</div>
+
+@if (_allBusinesses.Count != 0)
+{
+    <ul class="list-group mt-3">
+        @foreach (var business in _allBusinesses)
+        {
+            <li class="list-group-item list-group-item-action" 
+                @onclick="() => NavigateToReviews(business.Id)" 
+                style="cursor: pointer;">
+                <strong>@business.Name</strong>
+                <p>@business.Industry</p>
+            </li>
+        }
+    </ul>
+}else{
+    <p>No businesses found</p>
+}
+
+
+
+@code {
+    private List<BusinessDto> _allBusinesses = new();
+
+    protected async override Task OnInitializedAsync()
+    {
+
+        try
+        {
+            _allBusinesses = await BusinessService.GetBusinessQuery(string.Empty, string.Empty);
+        }
+        catch
+        {
+            _allBusinesses = new();
+        }
+    }
+    
+    private void NavigateToReviews(Guid businessId) => NavManager.NavigateTo($"/reviews/{businessId}");
+}

@@ -1,0 +1,48 @@
+{
+  "version": 2,
+  "dgSpecHash": "CKcvNpTGiJ8=",
+  "success": true,
+  "projectFilePath": "/home/mrbogdanovich/git/FeelingFine/DotnetApi/DotnetApi.WebApi/DotnetApi.WebApi.csproj",
+  "expectedPackageFiles": [
+    "/home/mrbogdanovich/.nuget/packages/efcore.namingconventions/10.0.1/efcore.namingconventions.10.0.1.nupkg.sha512",
+    "/home/mrbogdanovich/.nuget/packages/fluentvalidation/12.1.1/fluentvalidation.12.1.1.nupkg.sha512",
+    "/home/mrbogdanovich/.nuget/packages/mediatr/14.0.0/mediatr.14.0.0.nupkg.sha512",
+    "/home/mrbogdanovich/.nuget/packages/mediatr.contracts/2.0.1/mediatr.contracts.2.0.1.nupkg.sha512",
+    "/home/mrbogdanovich/.nuget/packages/microsoft.aspnetcore.openapi/10.0.0/microsoft.aspnetcore.openapi.10.0.0.nupkg.sha512",
+    "/home/mrbogdanovich/.nuget/packages/microsoft.entityframeworkcore/10.0.1/microsoft.entityframeworkcore.10.0.1.nupkg.sha512",
+    "/home/mrbogdanovich/.nuget/packages/microsoft.entityframeworkcore.abstractions/10.0.1/microsoft.entityframeworkcore.abstractions.10.0.1.nupkg.sha512",
+    "/home/mrbogdanovich/.nuget/packages/microsoft.entityframeworkcore.analyzers/10.0.1/microsoft.entityframeworkcore.analyzers.10.0.1.nupkg.sha512",
+    "/home/mrbogdanovich/.nuget/packages/microsoft.entityframeworkcore.relational/10.0.1/microsoft.entityframeworkcore.relational.10.0.1.nupkg.sha512",
+    "/home/mrbogdanovich/.nuget/packages/microsoft.extensions.apidescription.server/10.0.0/microsoft.extensions.apidescription.server.10.0.0.nupkg.sha512",
+    "/home/mrbogdanovich/.nuget/packages/microsoft.extensions.configuration.json/10.0.3/microsoft.extensions.configuration.json.10.0.3.nupkg.sha512",
+    "/home/mrbogdanovich/.nuget/packages/microsoft.identitymodel.abstractions/8.14.0/microsoft.identitymodel.abstractions.8.14.0.nupkg.sha512",
+    "/home/mrbogdanovich/.nuget/packages/microsoft.identitymodel.jsonwebtokens/8.14.0/microsoft.identitymodel.jsonwebtokens.8.14.0.nupkg.sha512",
+    "/home/mrbogdanovich/.nuget/packages/microsoft.identitymodel.logging/8.14.0/microsoft.identitymodel.logging.8.14.0.nupkg.sha512",
+    "/home/mrbogdanovich/.nuget/packages/microsoft.identitymodel.tokens/8.14.0/microsoft.identitymodel.tokens.8.14.0.nupkg.sha512",
+    "/home/mrbogdanovich/.nuget/packages/microsoft.openapi/2.4.1/microsoft.openapi.2.4.1.nupkg.sha512",
+    "/home/mrbogdanovich/.nuget/packages/nettopologysuite/2.6.0/nettopologysuite.2.6.0.nupkg.sha512",
+    "/home/mrbogdanovich/.nuget/packages/nettopologysuite.io.postgis/2.1.0/nettopologysuite.io.postgis.2.1.0.nupkg.sha512",
+    "/home/mrbogdanovich/.nuget/packages/npgsql/10.0.1/npgsql.10.0.1.nupkg.sha512",
+    "/home/mrbogdanovich/.nuget/packages/npgsql.entityframeworkcore.postgresql/10.0.0/npgsql.entityframeworkcore.postgresql.10.0.0.nupkg.sha512",
+    "/home/mrbogdanovich/.nuget/packages/npgsql.entityframeworkcore.postgresql.nettopologysuite/10.0.0/npgsql.entityframeworkcore.postgresql.nettopologysuite.10.0.0.nupkg.sha512",
+    "/home/mrbogdanovich/.nuget/packages/npgsql.nettopologysuite/10.0.0/npgsql.nettopologysuite.10.0.0.nupkg.sha512",
+    "/home/mrbogdanovich/.nuget/packages/swashbuckle.aspnetcore/10.1.4/swashbuckle.aspnetcore.10.1.4.nupkg.sha512",
+    "/home/mrbogdanovich/.nuget/packages/swashbuckle.aspnetcore.swagger/10.1.4/swashbuckle.aspnetcore.swagger.10.1.4.nupkg.sha512",
+    "/home/mrbogdanovich/.nuget/packages/swashbuckle.aspnetcore.swaggergen/10.1.4/swashbuckle.aspnetcore.swaggergen.10.1.4.nupkg.sha512",
+    "/home/mrbogdanovich/.nuget/packages/swashbuckle.aspnetcore.swaggerui/10.1.4/swashbuckle.aspnetcore.swaggerui.10.1.4.nupkg.sha512"
+  ],
+  "logs": [
+    {
+      "code": "NU1510",
+      "level": "Warning",
+      "message": "PackageReference Microsoft.Extensions.Configuration.Json will not be pruned. Consider removing this package from your dependencies, as it is likely unnecessary.",
+      "projectPath": "/home/mrbogdanovich/git/FeelingFine/DotnetApi/DotnetApi.WebApi/DotnetApi.WebApi.csproj",
+      "warningLevel": 1,
+      "filePath": "/home/mrbogdanovich/git/FeelingFine/DotnetApi/DotnetApi.WebApi/DotnetApi.WebApi.csproj",
+      "libraryId": "Microsoft.Extensions.Configuration.Json",
+      "targetGraphs": [
+        "net10.0"
+      ]
+    }
+  ]
+}

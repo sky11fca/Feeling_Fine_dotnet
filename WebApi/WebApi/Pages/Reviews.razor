@@ -1,0 +1,59 @@
+@page "/reviews/{businessId:guid}"
+@using WebApi.Models
+@using WebApi.Services.Business
+@using WebApi.Services.Reviews
+@inject IReviewsService ReviewsService
+@inject IBusinessService BusinessService
+
+@if (_business != null)
+{
+    <h3>Reviews for @_business.Name</h3>
+    <p>@_business.Industry</p>
+}
+else
+{
+    <h3>Reviews</h3>
+}
+
+@if (_reviewList.Count != 0)
+{
+    <ul class="list-group mt-3">
+        @foreach (var review in _reviewList)
+        {
+            <li class="list-group-item">
+                <strong>@review.Id</strong>
+                <p>@review.RawText</p>
+                <p>Posted on: @review.SubmitedOn</p>
+            </li>
+            
+        }
+    </ul>
+}
+else
+{
+    <p>No reviews found</p>
+}
+
+@code {
+
+    [Parameter]
+    public Guid BusinessId { get; set; }
+
+    private List<ReviewDto?> _reviewList = new();
+    private BusinessDto? _business;
+
+    protected async override Task OnInitializedAsync()
+    {
+
+        try
+        {
+            _reviewList = await ReviewsService.GetReviewQuery(BusinessId, string.Empty, string.Empty);
+            var business = await BusinessService.GetBusinessQuery(string.Empty, string.Empty);
+            _business = business.Find(b => b.Id == BusinessId);
+        }
+        catch
+        {
+            _reviewList = new();
+        }
+    }
+}

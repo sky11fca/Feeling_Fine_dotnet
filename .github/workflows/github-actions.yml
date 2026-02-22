@@ -1,0 +1,16 @@
+name: Feeling Fine CI/CD Pipeline
+on: [push]
+jobs:
+  api-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Setup the Project
+      - name: Build The Project 
+      - name: Publish The Project
+
+  web-ui-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Setup the Project
+      - name: Build The Project 
+      - name: Publish The Project

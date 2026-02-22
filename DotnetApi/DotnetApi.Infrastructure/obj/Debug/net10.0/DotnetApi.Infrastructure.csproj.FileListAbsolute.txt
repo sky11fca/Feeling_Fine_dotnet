@@ -1,0 +1,17 @@
+/home/mrbogdanovich/git/FeelingFine/DotnetApi/DotnetApi.Infrastructure/bin/Debug/net10.0/DotnetApi.Infrastructure.deps.json
+/home/mrbogdanovich/git/FeelingFine/DotnetApi/DotnetApi.Infrastructure/bin/Debug/net10.0/DotnetApi.Infrastructure.dll
+/home/mrbogdanovich/git/FeelingFine/DotnetApi/DotnetApi.Infrastructure/bin/Debug/net10.0/DotnetApi.Infrastructure.pdb
+/home/mrbogdanovich/git/FeelingFine/DotnetApi/DotnetApi.Infrastructure/bin/Debug/net10.0/DotnetApi.Application.dll
+/home/mrbogdanovich/git/FeelingFine/DotnetApi/DotnetApi.Infrastructure/bin/Debug/net10.0/DotnetApi.Domains.dll
+/home/mrbogdanovich/git/FeelingFine/DotnetApi/DotnetApi.Infrastructure/bin/Debug/net10.0/DotnetApi.Application.pdb
+/home/mrbogdanovich/git/FeelingFine/DotnetApi/DotnetApi.Infrastructure/bin/Debug/net10.0/DotnetApi.Domains.pdb
+/home/mrbogdanovich/git/FeelingFine/DotnetApi/DotnetApi.Infrastructure/obj/Debug/net10.0/DotnetApi.Infrastructure.csproj.AssemblyReference.cache
+/home/mrbogdanovich/git/FeelingFine/DotnetApi/DotnetApi.Infrastructure/obj/Debug/net10.0/DotnetApi.Infrastructure.GeneratedMSBuildEditorConfig.editorconfig
+/home/mrbogdanovich/git/FeelingFine/DotnetApi/DotnetApi.Infrastructure/obj/Debug/net10.0/DotnetApi.Infrastructure.AssemblyInfoInputs.cache
+/home/mrbogdanovich/git/FeelingFine/DotnetApi/DotnetApi.Infrastructure/obj/Debug/net10.0/DotnetApi.Infrastructure.AssemblyInfo.cs
+/home/mrbogdanovich/git/FeelingFine/DotnetApi/DotnetApi.Infrastructure/obj/Debug/net10.0/DotnetApi.Infrastructure.csproj.CoreCompileInputs.cache
+/home/mrbogdanovich/git/FeelingFine/DotnetApi/DotnetApi.Infrastructure/obj/Debug/net10.0/DotnetAp.C8EC9233.Up2Date
+/home/mrbogdanovich/git/FeelingFine/DotnetApi/DotnetApi.Infrastructure/obj/Debug/net10.0/DotnetApi.Infrastructure.dll
+/home/mrbogdanovich/git/FeelingFine/DotnetApi/DotnetApi.Infrastructure/obj/Debug/net10.0/refint/DotnetApi.Infrastructure.dll
+/home/mrbogdanovich/git/FeelingFine/DotnetApi/DotnetApi.Infrastructure/obj/Debug/net10.0/DotnetApi.Infrastructure.pdb
+/home/mrbogdanovich/git/FeelingFine/DotnetApi/DotnetApi.Infrastructure/obj/Debug/net10.0/ref/DotnetApi.Infrastructure.dll
