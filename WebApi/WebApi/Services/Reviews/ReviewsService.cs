@@ -8,9 +8,9 @@ public class ReviewsService(HttpClient httpClient) : IReviewsService
 {
 
     private readonly string BaseUri = "http://localhost:5160/api/v1/review";
-    public async Task AddReview(Guid businessId, string rawText, string submitedOn)
+    public async Task AddReview(Guid businessId, decimal review, string rawText, string submitedOn)
     {
-        var request = new AddReviewCommand(businessId, rawText, submitedOn);
+        var request = new AddReviewCommand(businessId, review, rawText, submitedOn);
         await httpClient.PostAsJsonAsync(BaseUri, request);
     }
 

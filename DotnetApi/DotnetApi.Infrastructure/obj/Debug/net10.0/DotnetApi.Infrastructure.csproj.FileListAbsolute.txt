@@ -15,3 +15,4 @@
 /home/mrbogdanovich/git/FeelingFine/DotnetApi/DotnetApi.Infrastructure/obj/Debug/net10.0/refint/DotnetApi.Infrastructure.dll
 /home/mrbogdanovich/git/FeelingFine/DotnetApi/DotnetApi.Infrastructure/obj/Debug/net10.0/DotnetApi.Infrastructure.pdb
 /home/mrbogdanovich/git/FeelingFine/DotnetApi/DotnetApi.Infrastructure/obj/Debug/net10.0/ref/DotnetApi.Infrastructure.dll
+/home/mrbogdanovich/git/FeelingFine/DotnetApi/DotnetApi.Infrastructure/obj/Debug/net10.0/DotnetApi.Infrastructure.sourcelink.json

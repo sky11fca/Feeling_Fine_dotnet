@@ -21,7 +21,7 @@ public class GetReviewQueryHandler(IReviewRepository repository): IRequestHandle
                 (!string.IsNullOrWhiteSpace(request.SubmitedOn) && x.SubmitedOn.Contains(request.SubmitedOn)));
         }
 
-        var reviews = query.Select(x => new ReviewDto(x.Id, x.RawText, x.SubmitedOn)).ToList();
+        var reviews = query.Select(x => new ReviewDto(x.Id, x.Rating, x.RatingType.ToString(), x.RawText, x.SubmitedOn)).ToList();
 
         return Task.FromResult(reviews);
     }

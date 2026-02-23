@@ -58,3 +58,4 @@
 /home/mrbogdanovich/git/FeelingFine/DotnetApi/DotnetApi.WebApi/bin/Debug/net10.0/Npgsql.EntityFrameworkCore.PostgreSQL.NetTopologySuite.dll
 /home/mrbogdanovich/git/FeelingFine/DotnetApi/DotnetApi.WebApi/bin/Debug/net10.0/Npgsql.NetTopologySuite.dll
 /home/mrbogdanovich/git/FeelingFine/DotnetApi/DotnetApi.WebApi/obj/Debug/net10.0/EFCoreNpgsqlNetTopologySuite.cs
+/home/mrbogdanovich/git/FeelingFine/DotnetApi/DotnetApi.WebApi/obj/Debug/net10.0/DotnetApi.WebApi.sourcelink.json

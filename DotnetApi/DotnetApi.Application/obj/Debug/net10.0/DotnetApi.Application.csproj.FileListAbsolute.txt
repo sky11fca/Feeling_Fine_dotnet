@@ -13,3 +13,4 @@
 /home/mrbogdanovich/git/FeelingFine/DotnetApi/DotnetApi.Application/obj/Debug/net10.0/refint/DotnetApi.Application.dll
 /home/mrbogdanovich/git/FeelingFine/DotnetApi/DotnetApi.Application/obj/Debug/net10.0/DotnetApi.Application.pdb
 /home/mrbogdanovich/git/FeelingFine/DotnetApi/DotnetApi.Application/obj/Debug/net10.0/ref/DotnetApi.Application.dll
+/home/mrbogdanovich/git/FeelingFine/DotnetApi/DotnetApi.Application/obj/Debug/net10.0/DotnetApi.Application.sourcelink.json

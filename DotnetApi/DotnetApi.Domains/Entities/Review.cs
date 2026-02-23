@@ -1,3 +1,5 @@
+using DotnetApi.Domains.Enums;
+
 namespace DotnetApi.Domains.Entities;
 
 public class Review
@@ -5,7 +7,7 @@ public class Review
 
     private Review() { }
 
-    public static Review Create(Guid businessId, string rawText, string submitedOn)
+    public static Review Create(Guid businessId, decimal rating, RatingType ratingType, string rawText, string submitedOn)
     {
         if(businessId == Guid.Empty)
         {
@@ -25,6 +27,8 @@ public class Review
         return new Review
         {
             Id = new Guid(),
+            Rating = rating,
+            RatingType = ratingType,
             BusinessId = businessId,
             RawText = rawText,
             SubmitedOn = submitedOn,
@@ -34,6 +38,8 @@ public class Review
     
     public Guid Id { get; set; }
     public Guid BusinessId { get; set; }
+    public decimal Rating { get; set; }
+    public RatingType RatingType { get; set; }
     public string RawText { get; set; } = string.Empty;
     public string SubmitedOn { get; set; } = string.Empty;
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
