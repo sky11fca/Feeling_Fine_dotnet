@@ -1,14 +1,25 @@
 using DotnetApi.Application.Abstractions;
+using DotnetApi.Application.Businesses.Commands;
+using DotnetApi.Application.Businesses.Validators;
 using DotnetApi.Domains.Entities;
 using DotnetApi.Domains.Enums;
+using FluentValidation;
 using MediatR;
 
 namespace DotnetApi.Application.Reviews.Commands;
 
-public class AddReviewCommandHandler(IReviewRepository repository) : IRequestHandler<AddReviewCommand, Guid>
+public class AddReviewCommandHandler(IReviewRepository repository, IValidator<AddReviewCommand> validator) : IRequestHandler<AddReviewCommand, Guid>
 {
     public async Task<Guid> Handle(AddReviewCommand request, CancellationToken cancellationToken)
     {
+        
+        var result = await validator.ValidateAsync(request, cancellationToken);
+
+        if (!result.IsValid)
+        {
+            throw new ValidationException(result.Errors);
+        }
+        
         var finalReviewType = request.Review switch
         {
             >= 5.0m => RatingType.OverwhelminglyPositive,

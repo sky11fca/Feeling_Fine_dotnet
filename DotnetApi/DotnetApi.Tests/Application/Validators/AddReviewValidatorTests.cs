@@ -47,6 +47,17 @@ public class AddReviewValidatorTests : IDisposable
     }
 
     [Fact]
+    public void GivenOutOfRangeReviewWhenValidatingThenReturnsError()
+    {
+        var review = new AddReviewCommand(Guid.NewGuid(), 6.9m,"testing", string.Empty);
+        
+        var result = _sut.Validate(review);
+        
+        result.IsValid.Should().BeFalse();
+        result.Errors.Should().HaveCount(2);
+    }
+
+    [Fact]
     public void GivenValidParametersWhenValidatingTHenReturnsNoErrors()
     {
         var review = new AddReviewCommand(Guid.NewGuid(), 1.5m,"testing", "test");

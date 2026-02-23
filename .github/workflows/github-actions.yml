@@ -5,12 +5,18 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Setup the Project
+        run: "echo look at me setting up"
       - name: Build The Project 
+        run: "echo look at me Building it"
       - name: Publish The Project
+        run: "echo an important step when it comes to dotnet"
 
   web-ui-deploy:
     runs-on: ubuntu-latest
     steps:
       - name: Setup the Project
+        run: "echo look at me setting up"
       - name: Build The Project 
+        run: "echo look at me Building it"
       - name: Publish The Project
+        run: "echo an important step when it comes to dotnet"
