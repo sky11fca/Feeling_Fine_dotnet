@@ -1,29 +1,36 @@
-name: SonarQube
+name: Multi-Project SonarQube Analysis
 on:
   push:
     branches:
       - main
   pull_request:
     types: [opened, synchronize, reopened]
+
 jobs:
-  build:
-    name: Build and analyze
+  # ---------------------------------------------------------
+  # Job 1: .NET Analysis (API and Blazor WebAssembly)
+  # ---------------------------------------------------------
+  dotnet-analysis:
+    name: .NET Build and Analyze
     runs-on: windows-latest
     steps:
       - name: Set up JDK 17
         uses: actions/setup-java@v4
         with:
           java-version: 17
-          distribution: 'zulu' # Alternative distribution options are available.
+          distribution: 'zulu'
+
       - uses: actions/checkout@v4
         with:
-          fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
+          fetch-depth: 0
+
       - name: Cache SonarQube Cloud packages
         uses: actions/cache@v4
         with:
           path: ~\sonar\cache
           key: ${{ runner.os }}-sonar
           restore-keys: ${{ runner.os }}-sonar
+
       - name: Cache SonarQube Cloud scanner
         id: cache-sonar-scanner
         uses: actions/cache@v4
@@ -31,17 +38,29 @@ jobs:
           path: ${{ runner.temp }}\scanner
           key: ${{ runner.os }}-sonar-scanner
           restore-keys: ${{ runner.os }}-sonar-scanner
+
       - name: Install SonarQube Cloud scanner
         if: steps.cache-sonar-scanner.outputs.cache-hit != 'true'
         shell: powershell
         run: |
           New-Item -Path ${{ runner.temp }}\scanner -ItemType Directory
           dotnet tool update dotnet-sonarscanner --tool-path ${{ runner.temp }}\scanner
-      - name: Build and analyze
+
+      - name: Build and Analyze .NET Solution
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         shell: powershell
         run: |
-          ${{ runner.temp }}\scanner\dotnet-sonarscanner begin /k:"sky11fca_Feeling_Fine_dotnet" /o:"sky11fca" /d:sonar.token="${{ secrets.SONAR_TOKEN }}"
-          dotnet build
+          # Use the scanner to begin analysis for the entire .NET suite
+          # We exclude the Python folder here to keep the .NET project clean
+          ${{ runner.temp }}\scanner\dotnet-sonarscanner begin /k:"sky11fca_Feeling_Fine_dotnet" `
+            /o:"sky11fca" `
+            /d:sonar.token="${{ secrets.SONAR_TOKEN }}" `
+            /d:sonar.exclusions="Python AI/**" `
+            /d:sonar.host.url="https://sonarcloud.io"
+
+          # Build the .NET API and the Blazor Web API
+          dotnet build "DotnetAPI/DotnetAPI.WebAPI/DotnetAPI.WebAPI.csproj"
+          dotnet build "Web API/Web API.csproj"
+
           ${{ runner.temp }}\scanner\dotnet-sonarscanner end /d:sonar.token="${{ secrets.SONAR_TOKEN }}"

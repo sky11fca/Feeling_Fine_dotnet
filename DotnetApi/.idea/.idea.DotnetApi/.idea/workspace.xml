@@ -8,22 +8,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="44e66928-14ec-4523-9772-45198094e7aa" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.DotnetApi/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.DotnetApi/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DotnetApi.Application/obj/Debug/net10.0/DotnetApi.Application.AssemblyInfo.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DotnetApi.Application/obj/Debug/net10.0/DotnetApi.Application.AssemblyInfo.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DotnetApi.Application/obj/Debug/net10.0/DotnetApi.Application.AssemblyInfoInputs.cache" beforeDir="false" afterPath="$PROJECT_DIR$/DotnetApi.Application/obj/Debug/net10.0/DotnetApi.Application.AssemblyInfoInputs.cache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DotnetApi.Domains/obj/Debug/net10.0/DotnetApi.Domains.AssemblyInfo.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DotnetApi.Domains/obj/Debug/net10.0/DotnetApi.Domains.AssemblyInfo.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DotnetApi.Domains/obj/Debug/net10.0/DotnetApi.Domains.AssemblyInfoInputs.cache" beforeDir="false" afterPath="$PROJECT_DIR$/DotnetApi.Domains/obj/Debug/net10.0/DotnetApi.Domains.AssemblyInfoInputs.cache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DotnetApi.Infrastructure/obj/Debug/net10.0/DotnetApi.Infrastructure.AssemblyInfo.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DotnetApi.Infrastructure/obj/Debug/net10.0/DotnetApi.Infrastructure.AssemblyInfo.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DotnetApi.Infrastructure/obj/Debug/net10.0/DotnetApi.Infrastructure.AssemblyInfoInputs.cache" beforeDir="false" afterPath="$PROJECT_DIR$/DotnetApi.Infrastructure/obj/Debug/net10.0/DotnetApi.Infrastructure.AssemblyInfoInputs.cache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DotnetApi.Infrastructure/obj/Debug/net10.0/DotnetApi.Infrastructure.csproj.AssemblyReference.cache" beforeDir="false" afterPath="$PROJECT_DIR$/DotnetApi.Infrastructure/obj/Debug/net10.0/DotnetApi.Infrastructure.csproj.AssemblyReference.cache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DotnetApi.Tests/obj/Debug/net10.0/DotnetApi.Tests.AssemblyInfo.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DotnetApi.Tests/obj/Debug/net10.0/DotnetApi.Tests.AssemblyInfo.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DotnetApi.Tests/obj/Debug/net10.0/DotnetApi.Tests.AssemblyInfoInputs.cache" beforeDir="false" afterPath="$PROJECT_DIR$/DotnetApi.Tests/obj/Debug/net10.0/DotnetApi.Tests.AssemblyInfoInputs.cache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DotnetApi.WebApi/obj/Debug/net10.0/DotnetApi.WebApi.AssemblyInfo.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DotnetApi.WebApi/obj/Debug/net10.0/DotnetApi.WebApi.AssemblyInfo.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DotnetApi.WebApi/obj/Debug/net10.0/DotnetApi.WebApi.AssemblyInfoInputs.cache" beforeDir="false" afterPath="$PROJECT_DIR$/DotnetApi.WebApi/obj/Debug/net10.0/DotnetApi.WebApi.AssemblyInfoInputs.cache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DotnetApi.WebApi/obj/Debug/net10.0/DotnetApi.WebApi.csproj.AssemblyReference.cache" beforeDir="false" afterPath="$PROJECT_DIR$/DotnetApi.WebApi/obj/Debug/net10.0/DotnetApi.WebApi.csproj.AssemblyReference.cache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DotnetApi.sln.DotSettings.user" beforeDir="false" afterPath="$PROJECT_DIR$/DotnetApi.sln.DotSettings.user" afterDir="false" />
-    </list>
+    <list default="true" id="44e66928-14ec-4523-9772-45198094e7aa" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -112,10 +97,10 @@
 }]]></component>
   <component name="RecapSpentCounter">
     <option name="endsOfQuotaMs" value="1773892903187" />
-    <option name="spentUsd" value="0.08725655" />
+    <option name="spentUsd" value="0.0917778" />
   </component>
   <component name="RecapUselessUpdatesCounter">
-    <option name="suspendCountdown" value="7" />
+    <option name="suspendCountdown" value="6" />
   </component>
   <component name="RunManager" selected=".NET Launch Settings Profile.DotnetApi.WebApi: http">
     <configuration name="DotnetApi.WebApi: http" type="LaunchSettings" factoryName=".NET Launch Settings Profile">
@@ -186,7 +171,7 @@
       <workItem from="1771824242042" duration="4720000" />
       <workItem from="1771834612062" duration="1916000" />
       <workItem from="1771861659772" duration="177000" />
-      <workItem from="1771862179362" duration="421000" />
+      <workItem from="1771862179362" duration="614000" />
     </task>
     <servers />
   </component>
