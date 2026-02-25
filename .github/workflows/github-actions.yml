@@ -61,6 +61,6 @@ jobs:
 
           # Build the .NET API and the Blazor Web API
           dotnet build "DotnetApi/DotnetApi.WebApi/DotnetApi.WebApi.csproj"
-          dotnet build "WebApi/WebApi.csproj"
+          dotnet build "WebApi/WebApi/WebApi.csproj"
 
           ${{ runner.temp }}\scanner\dotnet-sonarscanner end /d:sonar.token="${{ secrets.SONAR_TOKEN }}"
