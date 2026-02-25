@@ -64,7 +64,7 @@ jobs:
           dotnet build "WebApi/WebApi/WebApi.csproj"
 
 
-          dotnet test "DotnetApi/DotnetApi.Tests/DotnetApi.Tests.csproj"`
+          dotnet test "**/*Tests.csproj"`
             --configuration Release `
             --no-build `
             --collect:"XPlat Code Coverage" `
