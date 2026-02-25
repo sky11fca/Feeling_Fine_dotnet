@@ -63,4 +63,11 @@ jobs:
           dotnet build "DotnetApi/DotnetApi.WebApi/DotnetApi.WebApi.csproj"
           dotnet build "WebApi/WebApi/WebApi.csproj"
 
+
+          dotnet test "DotnetApi/DotnetApi.Tests/DotnetApi.Tests.csproj"`
+            --configuration Release `
+            --no-build `
+            --collect:"XPlat Code Coverage" `
+            -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Format=opencover
+
           ${{ runner.temp }}\scanner\dotnet-sonarscanner end /d:sonar.token="${{ secrets.SONAR_TOKEN }}"
