@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "KDoygWY4nBk=",
+  "dgSpecHash": "mIYnDaW2OCM=",
   "success": true,
   "projectFilePath": "/home/mrbogdanovich/git/FeelingFine/DotnetApi/DotnetApi.Tests/DotnetApi.Tests.csproj",
   "expectedPackageFiles": [
@@ -9,6 +9,8 @@
     "/home/mrbogdanovich/.nuget/packages/efcore.namingconventions/10.0.1/efcore.namingconventions.10.0.1.nupkg.sha512",
     "/home/mrbogdanovich/.nuget/packages/fluentassertions/8.8.0/fluentassertions.8.8.0.nupkg.sha512",
     "/home/mrbogdanovich/.nuget/packages/fluentvalidation/12.1.1/fluentvalidation.12.1.1.nupkg.sha512",
+    "/home/mrbogdanovich/.nuget/packages/fluentvalidation.aspnetcore/11.3.1/fluentvalidation.aspnetcore.11.3.1.nupkg.sha512",
+    "/home/mrbogdanovich/.nuget/packages/fluentvalidation.dependencyinjectionextensions/12.1.1/fluentvalidation.dependencyinjectionextensions.12.1.1.nupkg.sha512",
     "/home/mrbogdanovich/.nuget/packages/mediatr/14.0.0/mediatr.14.0.0.nupkg.sha512",
     "/home/mrbogdanovich/.nuget/packages/mediatr.contracts/2.0.1/mediatr.contracts.2.0.1.nupkg.sha512",
     "/home/mrbogdanovich/.nuget/packages/microsoft.aspnetcore.openapi/10.0.0/microsoft.aspnetcore.openapi.10.0.0.nupkg.sha512",

@@ -1,8 +1,13 @@
 using DotnetApi.Application.Abstractions;
+using DotnetApi.Application.Businesses.Commands;
 using DotnetApi.Application.Businesses.Queries;
+using DotnetApi.Application.Reviews.Commands;
+using DotnetApi.Application.Reviews.Validators;
 using DotnetApi.Infrastructure.Persistance;
 using DotnetApi.Infrastructure.Repository;
 using DotnetApi.WebApi.Controller;
+using FluentValidation;
+using FluentValidation.AspNetCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi;
 
@@ -43,6 +48,9 @@ builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(GetBu
 
 builder.Services.AddScoped<IBusinessRepository, BusinessRepository>();
 builder.Services.AddScoped<IReviewRepository, ReviewRepository>();
+
+builder.Services.AddValidatorsFromAssemblyContaining<AddReviewCommand>();
+builder.Services.AddValidatorsFromAssemblyContaining<AddBusinessCommand>();
 
 builder.Services.AddCors(option =>
 {

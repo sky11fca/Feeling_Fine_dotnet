@@ -59,3 +59,5 @@
 /home/mrbogdanovich/git/FeelingFine/DotnetApi/DotnetApi.WebApi/bin/Debug/net10.0/Npgsql.NetTopologySuite.dll
 /home/mrbogdanovich/git/FeelingFine/DotnetApi/DotnetApi.WebApi/obj/Debug/net10.0/EFCoreNpgsqlNetTopologySuite.cs
 /home/mrbogdanovich/git/FeelingFine/DotnetApi/DotnetApi.WebApi/obj/Debug/net10.0/DotnetApi.WebApi.sourcelink.json
+/home/mrbogdanovich/git/FeelingFine/DotnetApi/DotnetApi.WebApi/bin/Debug/net10.0/FluentValidation.AspNetCore.dll
+/home/mrbogdanovich/git/FeelingFine/DotnetApi/DotnetApi.WebApi/bin/Debug/net10.0/FluentValidation.DependencyInjectionExtensions.dll
