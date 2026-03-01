@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "cy5PjUI+UEI=",
+  "dgSpecHash": "qY5OIo+1sv0=",
   "success": true,
   "projectFilePath": "/home/mrbogdanovich/git/FeelingFine/DotnetApi/DotnetApi.Application/DotnetApi.Application.csproj",
   "expectedPackageFiles": [
@@ -12,7 +12,26 @@
     "/home/mrbogdanovich/.nuget/packages/microsoft.identitymodel.abstractions/8.14.0/microsoft.identitymodel.abstractions.8.14.0.nupkg.sha512",
     "/home/mrbogdanovich/.nuget/packages/microsoft.identitymodel.jsonwebtokens/8.14.0/microsoft.identitymodel.jsonwebtokens.8.14.0.nupkg.sha512",
     "/home/mrbogdanovich/.nuget/packages/microsoft.identitymodel.logging/8.14.0/microsoft.identitymodel.logging.8.14.0.nupkg.sha512",
-    "/home/mrbogdanovich/.nuget/packages/microsoft.identitymodel.tokens/8.14.0/microsoft.identitymodel.tokens.8.14.0.nupkg.sha512"
+    "/home/mrbogdanovich/.nuget/packages/microsoft.identitymodel.tokens/8.14.0/microsoft.identitymodel.tokens.8.14.0.nupkg.sha512",
+    "/home/mrbogdanovich/.nuget/packages/microsoft.netcore.platforms/1.1.1/microsoft.netcore.platforms.1.1.1.nupkg.sha512",
+    "/home/mrbogdanovich/.nuget/packages/microsoft.netcore.targets/1.1.0/microsoft.netcore.targets.1.1.0.nupkg.sha512",
+    "/home/mrbogdanovich/.nuget/packages/runtime.native.system/4.3.0/runtime.native.system.4.3.0.nupkg.sha512",
+    "/home/mrbogdanovich/.nuget/packages/runtime.native.system.net.http/4.3.0/runtime.native.system.net.http.4.3.0.nupkg.sha512",
+    "/home/mrbogdanovich/.nuget/packages/runtime.native.system.security.cryptography.openssl/4.3.2/runtime.native.system.security.cryptography.openssl.4.3.2.nupkg.sha512",
+    "/home/mrbogdanovich/.nuget/packages/system.net.http/4.3.4/system.net.http.4.3.4.nupkg.sha512"
   ],
-  "logs": []
+  "logs": [
+    {
+      "code": "NU1510",
+      "level": "Warning",
+      "message": "PackageReference System.Net.Http will not be pruned. Consider removing this package from your dependencies, as it is likely unnecessary.",
+      "projectPath": "/home/mrbogdanovich/git/FeelingFine/DotnetApi/DotnetApi.Application/DotnetApi.Application.csproj",
+      "warningLevel": 1,
+      "filePath": "/home/mrbogdanovich/git/FeelingFine/DotnetApi/DotnetApi.Application/DotnetApi.Application.csproj",
+      "libraryId": "System.Net.Http",
+      "targetGraphs": [
+        "net10.0"
+      ]
+    }
+  ]
 }

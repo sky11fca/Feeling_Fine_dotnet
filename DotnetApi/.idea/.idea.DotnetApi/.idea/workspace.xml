@@ -9,18 +9,37 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="44e66928-14ec-4523-9772-45198094e7aa" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/../PythonAI/api/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../PythonAI/api/review_router.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../PythonAI/core/config.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../PythonAI/main.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../PythonAI/model/review_model.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../PythonAI/service/satisfaction_service.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../PythonAI/test_main.http" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.DotnetApi/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.DotnetApi/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DotnetApi.Application/Businesses/Commands/AddBusinessCommandHandler.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DotnetApi.Application/Businesses/Commands/AddBusinessCommandHandler.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DotnetApi.Application/DotnetApi.Application.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/DotnetApi.Application/DotnetApi.Application.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DotnetApi.Application/Reviews/Commands/AddReviewCommandHandler.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DotnetApi.Application/Reviews/Commands/AddReviewCommandHandler.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DotnetApi.Application/Reviews/Queries/GetReviewQueryHandler.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DotnetApi.Application/Reviews/Queries/GetReviewQueryHandler.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DotnetApi.Application/Reviews/Queries/ReviewDto.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DotnetApi.Application/Reviews/Queries/ReviewDto.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/DotnetApi.Application/bin/Debug/net10.0/DotnetApi.Application.dll" beforeDir="false" afterPath="$PROJECT_DIR$/DotnetApi.Application/bin/Debug/net10.0/DotnetApi.Application.dll" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/DotnetApi.Application/bin/Debug/net10.0/DotnetApi.Application.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/DotnetApi.Application/bin/Debug/net10.0/DotnetApi.Application.pdb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/DotnetApi.Application/bin/Debug/net10.0/DotnetApi.Domains.dll" beforeDir="false" afterPath="$PROJECT_DIR$/DotnetApi.Application/bin/Debug/net10.0/DotnetApi.Domains.dll" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/DotnetApi.Application/bin/Debug/net10.0/DotnetApi.Domains.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/DotnetApi.Application/bin/Debug/net10.0/DotnetApi.Domains.pdb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/DotnetApi.Application/obj/Debug/net10.0/DotnetApi.Application.AssemblyInfo.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DotnetApi.Application/obj/Debug/net10.0/DotnetApi.Application.AssemblyInfo.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/DotnetApi.Application/obj/Debug/net10.0/DotnetApi.Application.AssemblyInfoInputs.cache" beforeDir="false" afterPath="$PROJECT_DIR$/DotnetApi.Application/obj/Debug/net10.0/DotnetApi.Application.AssemblyInfoInputs.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DotnetApi.Application/obj/Debug/net10.0/DotnetApi.Application.assets.cache" beforeDir="false" afterPath="$PROJECT_DIR$/DotnetApi.Application/obj/Debug/net10.0/DotnetApi.Application.assets.cache" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/DotnetApi.Application/obj/Debug/net10.0/DotnetApi.Application.csproj.AssemblyReference.cache" beforeDir="false" afterPath="$PROJECT_DIR$/DotnetApi.Application/obj/Debug/net10.0/DotnetApi.Application.csproj.AssemblyReference.cache" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/DotnetApi.Application/obj/Debug/net10.0/DotnetApi.Application.dll" beforeDir="false" afterPath="$PROJECT_DIR$/DotnetApi.Application/obj/Debug/net10.0/DotnetApi.Application.dll" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/DotnetApi.Application/obj/Debug/net10.0/DotnetApi.Application.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/DotnetApi.Application/obj/Debug/net10.0/DotnetApi.Application.pdb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/DotnetApi.Application/obj/Debug/net10.0/DotnetApi.Application.sourcelink.json" beforeDir="false" afterPath="$PROJECT_DIR$/DotnetApi.Application/obj/Debug/net10.0/DotnetApi.Application.sourcelink.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/DotnetApi.Application/obj/Debug/net10.0/ref/DotnetApi.Application.dll" beforeDir="false" afterPath="$PROJECT_DIR$/DotnetApi.Application/obj/Debug/net10.0/ref/DotnetApi.Application.dll" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/DotnetApi.Application/obj/Debug/net10.0/refint/DotnetApi.Application.dll" beforeDir="false" afterPath="$PROJECT_DIR$/DotnetApi.Application/obj/Debug/net10.0/refint/DotnetApi.Application.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DotnetApi.Application/obj/DotnetApi.Application.csproj.nuget.dgspec.json" beforeDir="false" afterPath="$PROJECT_DIR$/DotnetApi.Application/obj/DotnetApi.Application.csproj.nuget.dgspec.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DotnetApi.Application/obj/project.assets.json" beforeDir="false" afterPath="$PROJECT_DIR$/DotnetApi.Application/obj/project.assets.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DotnetApi.Application/obj/project.nuget.cache" beforeDir="false" afterPath="$PROJECT_DIR$/DotnetApi.Application/obj/project.nuget.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DotnetApi.Application/obj/project.packagespec.json" beforeDir="false" afterPath="$PROJECT_DIR$/DotnetApi.Application/obj/project.packagespec.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DotnetApi.Application/obj/rider.project.model.nuget.info" beforeDir="false" afterPath="$PROJECT_DIR$/DotnetApi.Application/obj/rider.project.model.nuget.info" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/DotnetApi.Application/obj/rider.project.restore.info" beforeDir="false" afterPath="$PROJECT_DIR$/DotnetApi.Application/obj/rider.project.restore.info" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/DotnetApi.Domains/bin/Debug/net10.0/DotnetApi.Domains.dll" beforeDir="false" afterPath="$PROJECT_DIR$/DotnetApi.Domains/bin/Debug/net10.0/DotnetApi.Domains.dll" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/DotnetApi.Domains/bin/Debug/net10.0/DotnetApi.Domains.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/DotnetApi.Domains/bin/Debug/net10.0/DotnetApi.Domains.pdb" afterDir="false" />
@@ -31,6 +50,7 @@
       <change beforePath="$PROJECT_DIR$/DotnetApi.Domains/obj/Debug/net10.0/DotnetApi.Domains.sourcelink.json" beforeDir="false" afterPath="$PROJECT_DIR$/DotnetApi.Domains/obj/Debug/net10.0/DotnetApi.Domains.sourcelink.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/DotnetApi.Domains/obj/Debug/net10.0/ref/DotnetApi.Domains.dll" beforeDir="false" afterPath="$PROJECT_DIR$/DotnetApi.Domains/obj/Debug/net10.0/ref/DotnetApi.Domains.dll" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/DotnetApi.Domains/obj/Debug/net10.0/refint/DotnetApi.Domains.dll" beforeDir="false" afterPath="$PROJECT_DIR$/DotnetApi.Domains/obj/Debug/net10.0/refint/DotnetApi.Domains.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DotnetApi.Domains/obj/rider.project.model.nuget.info" beforeDir="false" afterPath="$PROJECT_DIR$/DotnetApi.Domains/obj/rider.project.model.nuget.info" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/DotnetApi.Domains/obj/rider.project.restore.info" beforeDir="false" afterPath="$PROJECT_DIR$/DotnetApi.Domains/obj/rider.project.restore.info" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/DotnetApi.Infrastructure/bin/Debug/net10.0/DotnetApi.Application.dll" beforeDir="false" afterPath="$PROJECT_DIR$/DotnetApi.Infrastructure/bin/Debug/net10.0/DotnetApi.Application.dll" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/DotnetApi.Infrastructure/bin/Debug/net10.0/DotnetApi.Application.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/DotnetApi.Infrastructure/bin/Debug/net10.0/DotnetApi.Application.pdb" afterDir="false" />
@@ -46,35 +66,51 @@
       <change beforePath="$PROJECT_DIR$/DotnetApi.Infrastructure/obj/Debug/net10.0/DotnetApi.Infrastructure.sourcelink.json" beforeDir="false" afterPath="$PROJECT_DIR$/DotnetApi.Infrastructure/obj/Debug/net10.0/DotnetApi.Infrastructure.sourcelink.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/DotnetApi.Infrastructure/obj/Debug/net10.0/ref/DotnetApi.Infrastructure.dll" beforeDir="false" afterPath="$PROJECT_DIR$/DotnetApi.Infrastructure/obj/Debug/net10.0/ref/DotnetApi.Infrastructure.dll" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/DotnetApi.Infrastructure/obj/Debug/net10.0/refint/DotnetApi.Infrastructure.dll" beforeDir="false" afterPath="$PROJECT_DIR$/DotnetApi.Infrastructure/obj/Debug/net10.0/refint/DotnetApi.Infrastructure.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DotnetApi.Infrastructure/obj/DotnetApi.Infrastructure.csproj.nuget.dgspec.json" beforeDir="false" afterPath="$PROJECT_DIR$/DotnetApi.Infrastructure/obj/DotnetApi.Infrastructure.csproj.nuget.dgspec.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DotnetApi.Infrastructure/obj/project.nuget.cache" beforeDir="false" afterPath="$PROJECT_DIR$/DotnetApi.Infrastructure/obj/project.nuget.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DotnetApi.Infrastructure/obj/rider.project.model.nuget.info" beforeDir="false" afterPath="$PROJECT_DIR$/DotnetApi.Infrastructure/obj/rider.project.model.nuget.info" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/DotnetApi.Infrastructure/obj/rider.project.restore.info" beforeDir="false" afterPath="$PROJECT_DIR$/DotnetApi.Infrastructure/obj/rider.project.restore.info" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DotnetApi.Tests/Application/Commands/AddBusinessTests.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DotnetApi.Tests/Application/Commands/AddBusinessTests.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DotnetApi.Tests/Application/Commands/AddReviewTests.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DotnetApi.Tests/Application/Commands/AddReviewTests.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DotnetApi.Tests/bin/Debug/net10.0/DotnetApi.Application.dll" beforeDir="false" afterPath="$PROJECT_DIR$/DotnetApi.Tests/bin/Debug/net10.0/DotnetApi.Application.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DotnetApi.Tests/bin/Debug/net10.0/DotnetApi.Application.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/DotnetApi.Tests/bin/Debug/net10.0/DotnetApi.Application.pdb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DotnetApi.Tests/bin/Debug/net10.0/DotnetApi.Domains.dll" beforeDir="false" afterPath="$PROJECT_DIR$/DotnetApi.Tests/bin/Debug/net10.0/DotnetApi.Domains.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DotnetApi.Tests/bin/Debug/net10.0/DotnetApi.Domains.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/DotnetApi.Tests/bin/Debug/net10.0/DotnetApi.Domains.pdb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DotnetApi.Tests/bin/Debug/net10.0/DotnetApi.Infrastructure.dll" beforeDir="false" afterPath="$PROJECT_DIR$/DotnetApi.Tests/bin/Debug/net10.0/DotnetApi.Infrastructure.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DotnetApi.Tests/bin/Debug/net10.0/DotnetApi.Infrastructure.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/DotnetApi.Tests/bin/Debug/net10.0/DotnetApi.Infrastructure.pdb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DotnetApi.Tests/bin/Debug/net10.0/DotnetApi.Tests.deps.json" beforeDir="false" afterPath="$PROJECT_DIR$/DotnetApi.Tests/bin/Debug/net10.0/DotnetApi.Tests.deps.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DotnetApi.Tests/bin/Debug/net10.0/DotnetApi.Tests.dll" beforeDir="false" afterPath="$PROJECT_DIR$/DotnetApi.Tests/bin/Debug/net10.0/DotnetApi.Tests.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DotnetApi.Tests/bin/Debug/net10.0/DotnetApi.Tests.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/DotnetApi.Tests/bin/Debug/net10.0/DotnetApi.Tests.pdb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DotnetApi.Tests/bin/Debug/net10.0/DotnetApi.WebApi.deps.json" beforeDir="false" afterPath="$PROJECT_DIR$/DotnetApi.Tests/bin/Debug/net10.0/DotnetApi.WebApi.deps.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DotnetApi.Tests/bin/Debug/net10.0/DotnetApi.WebApi.dll" beforeDir="false" afterPath="$PROJECT_DIR$/DotnetApi.Tests/bin/Debug/net10.0/DotnetApi.WebApi.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DotnetApi.Tests/bin/Debug/net10.0/DotnetApi.WebApi.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/DotnetApi.Tests/bin/Debug/net10.0/DotnetApi.WebApi.pdb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DotnetApi.Tests/bin/Debug/net10.0/appsettings.json" beforeDir="false" afterPath="$PROJECT_DIR$/DotnetApi.Tests/bin/Debug/net10.0/appsettings.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/DotnetApi.Tests/obj/Debug/net10.0/DotnetApi.Tests.AssemblyInfo.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DotnetApi.Tests/obj/Debug/net10.0/DotnetApi.Tests.AssemblyInfo.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/DotnetApi.Tests/obj/Debug/net10.0/DotnetApi.Tests.AssemblyInfoInputs.cache" beforeDir="false" afterPath="$PROJECT_DIR$/DotnetApi.Tests/obj/Debug/net10.0/DotnetApi.Tests.AssemblyInfoInputs.cache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DotnetApi.Tests/obj/Debug/net10.0/DotnetApi.Tests.assets.cache" beforeDir="false" afterPath="$PROJECT_DIR$/DotnetApi.Tests/obj/Debug/net10.0/DotnetApi.Tests.assets.cache" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/DotnetApi.Tests/obj/Debug/net10.0/DotnetApi.Tests.csproj.AssemblyReference.cache" beforeDir="false" afterPath="$PROJECT_DIR$/DotnetApi.Tests/obj/Debug/net10.0/DotnetApi.Tests.csproj.AssemblyReference.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DotnetApi.Tests/obj/Debug/net10.0/DotnetApi.Tests.csproj.CoreCompileInputs.cache" beforeDir="false" afterPath="$PROJECT_DIR$/DotnetApi.Tests/obj/Debug/net10.0/DotnetApi.Tests.csproj.CoreCompileInputs.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DotnetApi.Tests/obj/Debug/net10.0/DotnetApi.Tests.csproj.FileListAbsolute.txt" beforeDir="false" afterPath="$PROJECT_DIR$/DotnetApi.Tests/obj/Debug/net10.0/DotnetApi.Tests.csproj.FileListAbsolute.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DotnetApi.Tests/obj/Debug/net10.0/DotnetApi.Tests.dll" beforeDir="false" afterPath="$PROJECT_DIR$/DotnetApi.Tests/obj/Debug/net10.0/DotnetApi.Tests.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DotnetApi.Tests/obj/Debug/net10.0/DotnetApi.Tests.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/DotnetApi.Tests/obj/Debug/net10.0/DotnetApi.Tests.pdb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DotnetApi.Tests/obj/Debug/net10.0/DotnetApi.Tests.sourcelink.json" beforeDir="false" afterPath="$PROJECT_DIR$/DotnetApi.Tests/obj/Debug/net10.0/DotnetApi.Tests.sourcelink.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DotnetApi.Tests/obj/Debug/net10.0/ref/DotnetApi.Tests.dll" beforeDir="false" afterPath="$PROJECT_DIR$/DotnetApi.Tests/obj/Debug/net10.0/ref/DotnetApi.Tests.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DotnetApi.Tests/obj/Debug/net10.0/refint/DotnetApi.Tests.dll" beforeDir="false" afterPath="$PROJECT_DIR$/DotnetApi.Tests/obj/Debug/net10.0/refint/DotnetApi.Tests.dll" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/DotnetApi.Tests/obj/DotnetApi.Tests.csproj.nuget.dgspec.json" beforeDir="false" afterPath="$PROJECT_DIR$/DotnetApi.Tests/obj/DotnetApi.Tests.csproj.nuget.dgspec.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DotnetApi.Tests/obj/project.assets.json" beforeDir="false" afterPath="$PROJECT_DIR$/DotnetApi.Tests/obj/project.assets.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/DotnetApi.Tests/obj/project.nuget.cache" beforeDir="false" afterPath="$PROJECT_DIR$/DotnetApi.Tests/obj/project.nuget.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DotnetApi.Tests/obj/rider.project.model.nuget.info" beforeDir="false" afterPath="$PROJECT_DIR$/DotnetApi.Tests/obj/rider.project.model.nuget.info" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/DotnetApi.Tests/obj/rider.project.restore.info" beforeDir="false" afterPath="$PROJECT_DIR$/DotnetApi.Tests/obj/rider.project.restore.info" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DotnetApi.WebApi/DotnetApi.WebApi.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/DotnetApi.WebApi/DotnetApi.WebApi.csproj" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/DotnetApi.WebApi/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DotnetApi.WebApi/Program.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DotnetApi.WebApi/appsettings.json" beforeDir="false" afterPath="$PROJECT_DIR$/DotnetApi.WebApi/appsettings.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/DotnetApi.WebApi/bin/Debug/net10.0/DotnetApi.Application.dll" beforeDir="false" afterPath="$PROJECT_DIR$/DotnetApi.WebApi/bin/Debug/net10.0/DotnetApi.Application.dll" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/DotnetApi.WebApi/bin/Debug/net10.0/DotnetApi.Application.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/DotnetApi.WebApi/bin/Debug/net10.0/DotnetApi.Application.pdb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/DotnetApi.WebApi/bin/Debug/net10.0/DotnetApi.Domains.dll" beforeDir="false" afterPath="$PROJECT_DIR$/DotnetApi.WebApi/bin/Debug/net10.0/DotnetApi.Domains.dll" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/DotnetApi.WebApi/bin/Debug/net10.0/DotnetApi.Domains.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/DotnetApi.WebApi/bin/Debug/net10.0/DotnetApi.Domains.pdb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/DotnetApi.WebApi/bin/Debug/net10.0/DotnetApi.Infrastructure.dll" beforeDir="false" afterPath="$PROJECT_DIR$/DotnetApi.WebApi/bin/Debug/net10.0/DotnetApi.Infrastructure.dll" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/DotnetApi.WebApi/bin/Debug/net10.0/DotnetApi.Infrastructure.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/DotnetApi.WebApi/bin/Debug/net10.0/DotnetApi.Infrastructure.pdb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DotnetApi.WebApi/bin/Debug/net10.0/DotnetApi.WebApi.deps.json" beforeDir="false" afterPath="$PROJECT_DIR$/DotnetApi.WebApi/bin/Debug/net10.0/DotnetApi.WebApi.deps.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/DotnetApi.WebApi/bin/Debug/net10.0/DotnetApi.WebApi.dll" beforeDir="false" afterPath="$PROJECT_DIR$/DotnetApi.WebApi/bin/Debug/net10.0/DotnetApi.WebApi.dll" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/DotnetApi.WebApi/bin/Debug/net10.0/DotnetApi.WebApi.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/DotnetApi.WebApi/bin/Debug/net10.0/DotnetApi.WebApi.pdb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DotnetApi.WebApi/bin/Debug/net10.0/appsettings.json" beforeDir="false" afterPath="$PROJECT_DIR$/DotnetApi.WebApi/bin/Debug/net10.0/appsettings.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/DotnetApi.WebApi/obj/Debug/net10.0/DotnetApi.WebApi.AssemblyInfo.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DotnetApi.WebApi/obj/Debug/net10.0/DotnetApi.WebApi.AssemblyInfo.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/DotnetApi.WebApi/obj/Debug/net10.0/DotnetApi.WebApi.AssemblyInfoInputs.cache" beforeDir="false" afterPath="$PROJECT_DIR$/DotnetApi.WebApi/obj/Debug/net10.0/DotnetApi.WebApi.AssemblyInfoInputs.cache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DotnetApi.WebApi/obj/Debug/net10.0/DotnetApi.WebApi.MvcApplicationPartsAssemblyInfo.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DotnetApi.WebApi/obj/Debug/net10.0/DotnetApi.WebApi.MvcApplicationPartsAssemblyInfo.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DotnetApi.WebApi/obj/Debug/net10.0/DotnetApi.WebApi.assets.cache" beforeDir="false" afterPath="$PROJECT_DIR$/DotnetApi.WebApi/obj/Debug/net10.0/DotnetApi.WebApi.assets.cache" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/DotnetApi.WebApi/obj/Debug/net10.0/DotnetApi.WebApi.csproj.AssemblyReference.cache" beforeDir="false" afterPath="$PROJECT_DIR$/DotnetApi.WebApi/obj/Debug/net10.0/DotnetApi.WebApi.csproj.AssemblyReference.cache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DotnetApi.WebApi/obj/Debug/net10.0/DotnetApi.WebApi.csproj.CoreCompileInputs.cache" beforeDir="false" afterPath="$PROJECT_DIR$/DotnetApi.WebApi/obj/Debug/net10.0/DotnetApi.WebApi.csproj.CoreCompileInputs.cache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DotnetApi.WebApi/obj/Debug/net10.0/DotnetApi.WebApi.csproj.FileListAbsolute.txt" beforeDir="false" afterPath="$PROJECT_DIR$/DotnetApi.WebApi/obj/Debug/net10.0/DotnetApi.WebApi.csproj.FileListAbsolute.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/DotnetApi.WebApi/obj/Debug/net10.0/DotnetApi.WebApi.dll" beforeDir="false" afterPath="$PROJECT_DIR$/DotnetApi.WebApi/obj/Debug/net10.0/DotnetApi.WebApi.dll" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/DotnetApi.WebApi/obj/Debug/net10.0/DotnetApi.WebApi.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/DotnetApi.WebApi/obj/Debug/net10.0/DotnetApi.WebApi.pdb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/DotnetApi.WebApi/obj/Debug/net10.0/DotnetApi.WebApi.sourcelink.json" beforeDir="false" afterPath="$PROJECT_DIR$/DotnetApi.WebApi/obj/Debug/net10.0/DotnetApi.WebApi.sourcelink.json" afterDir="false" />
@@ -82,13 +118,45 @@
       <change beforePath="$PROJECT_DIR$/DotnetApi.WebApi/obj/Debug/net10.0/refint/DotnetApi.WebApi.dll" beforeDir="false" afterPath="$PROJECT_DIR$/DotnetApi.WebApi/obj/Debug/net10.0/refint/DotnetApi.WebApi.dll" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/DotnetApi.WebApi/obj/Debug/net10.0/rjsmcshtml.dswa.cache.json" beforeDir="false" afterPath="$PROJECT_DIR$/DotnetApi.WebApi/obj/Debug/net10.0/rjsmcshtml.dswa.cache.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/DotnetApi.WebApi/obj/Debug/net10.0/rjsmrazor.dswa.cache.json" beforeDir="false" afterPath="$PROJECT_DIR$/DotnetApi.WebApi/obj/Debug/net10.0/rjsmrazor.dswa.cache.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DotnetApi.WebApi/obj/Debug/net10.0/rpswa.dswa.cache.json" beforeDir="false" afterPath="$PROJECT_DIR$/DotnetApi.WebApi/obj/Debug/net10.0/rpswa.dswa.cache.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/DotnetApi.WebApi/obj/DotnetApi.WebApi.csproj.nuget.dgspec.json" beforeDir="false" afterPath="$PROJECT_DIR$/DotnetApi.WebApi/obj/DotnetApi.WebApi.csproj.nuget.dgspec.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DotnetApi.WebApi/obj/project.assets.json" beforeDir="false" afterPath="$PROJECT_DIR$/DotnetApi.WebApi/obj/project.assets.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/DotnetApi.WebApi/obj/project.nuget.cache" beforeDir="false" afterPath="$PROJECT_DIR$/DotnetApi.WebApi/obj/project.nuget.cache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DotnetApi.WebApi/obj/project.packagespec.json" beforeDir="false" afterPath="$PROJECT_DIR$/DotnetApi.WebApi/obj/project.packagespec.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/DotnetApi.WebApi/obj/rider.project.model.nuget.info" beforeDir="false" afterPath="$PROJECT_DIR$/DotnetApi.WebApi/obj/rider.project.model.nuget.info" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/DotnetApi.WebApi/obj/rider.project.restore.info" beforeDir="false" afterPath="$PROJECT_DIR$/DotnetApi.WebApi/obj/rider.project.restore.info" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../WebApi/WebApi/Models/ReviewDto.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../WebApi/WebApi/Models/ReviewDto.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../WebApi/WebApi/Pages/Reviews.razor" beforeDir="false" afterPath="$PROJECT_DIR$/../WebApi/WebApi/Pages/Reviews.razor" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../WebApi/WebApi/bin/Debug/net10.0/WebApi.dll" beforeDir="false" afterPath="$PROJECT_DIR$/../WebApi/WebApi/bin/Debug/net10.0/WebApi.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../WebApi/WebApi/bin/Debug/net10.0/WebApi.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/../WebApi/WebApi/bin/Debug/net10.0/WebApi.pdb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../WebApi/WebApi/bin/Debug/net10.0/WebApi.staticwebassets.endpoints.json" beforeDir="false" afterPath="$PROJECT_DIR$/../WebApi/WebApi/bin/Debug/net10.0/WebApi.staticwebassets.endpoints.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../WebApi/WebApi/bin/Debug/net10.0/WebApi.staticwebassets.runtime.json" beforeDir="false" afterPath="$PROJECT_DIR$/../WebApi/WebApi/bin/Debug/net10.0/WebApi.staticwebassets.runtime.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../WebApi/WebApi/bin/Debug/net10.0/wwwroot/_framework/WebApi.8auclrl5s3.wasm" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../WebApi/WebApi/bin/Debug/net10.0/wwwroot/_framework/WebApi.8auclrl5s3.wasm.gz" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../WebApi/WebApi/bin/Debug/net10.0/wwwroot/_framework/WebApi.n2njuasnbm.pdb" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../WebApi/WebApi/bin/Debug/net10.0/wwwroot/_framework/WebApi.n2njuasnbm.pdb.gz" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../WebApi/WebApi/bin/Debug/net10.0/wwwroot/_framework/dotnet.asvu8xreml.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../WebApi/WebApi/bin/Debug/net10.0/wwwroot/_framework/dotnet.asvu8xreml.js.gz" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../WebApi/WebApi/obj/Debug/net10.0/WebApi.AssemblyInfo.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../WebApi/WebApi/obj/Debug/net10.0/WebApi.AssemblyInfo.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../WebApi/WebApi/obj/Debug/net10.0/WebApi.AssemblyInfoInputs.cache" beforeDir="false" afterPath="$PROJECT_DIR$/../WebApi/WebApi/obj/Debug/net10.0/WebApi.AssemblyInfoInputs.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../WebApi/WebApi/obj/Debug/net10.0/WebApi.csproj.FileListAbsolute.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../WebApi/WebApi/obj/Debug/net10.0/WebApi.csproj.FileListAbsolute.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../WebApi/WebApi/obj/Debug/net10.0/WebApi.dll" beforeDir="false" afterPath="$PROJECT_DIR$/../WebApi/WebApi/obj/Debug/net10.0/WebApi.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../WebApi/WebApi/obj/Debug/net10.0/WebApi.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/../WebApi/WebApi/obj/Debug/net10.0/WebApi.pdb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../WebApi/WebApi/obj/Debug/net10.0/WebApi.sourcelink.json" beforeDir="false" afterPath="$PROJECT_DIR$/../WebApi/WebApi/obj/Debug/net10.0/WebApi.sourcelink.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../WebApi/WebApi/obj/Debug/net10.0/compressed/5si921m76q-{0}-8auclrl5s3-8auclrl5s3.gz" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../WebApi/WebApi/obj/Debug/net10.0/compressed/8tcqlq5m7g-{0}-df10zcgz5f-df10zcgz5f.gz" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../WebApi/WebApi/obj/Debug/net10.0/compressed/kbxsqear80-{0}-asvu8xreml-asvu8xreml.gz" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../WebApi/WebApi/obj/Debug/net10.0/compressed/p4zuezbzqg-{0}-n2njuasnbm-n2njuasnbm.gz" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../WebApi/WebApi/obj/Debug/net10.0/dotnet.js" beforeDir="false" afterPath="$PROJECT_DIR$/../WebApi/WebApi/obj/Debug/net10.0/dotnet.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../WebApi/WebApi/obj/Debug/net10.0/rbcswa.dswa.cache.json" beforeDir="false" afterPath="$PROJECT_DIR$/../WebApi/WebApi/obj/Debug/net10.0/rbcswa.dswa.cache.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../WebApi/WebApi/obj/Debug/net10.0/ref/WebApi.dll" beforeDir="false" afterPath="$PROJECT_DIR$/../WebApi/WebApi/obj/Debug/net10.0/ref/WebApi.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../WebApi/WebApi/obj/Debug/net10.0/refint/WebApi.dll" beforeDir="false" afterPath="$PROJECT_DIR$/../WebApi/WebApi/obj/Debug/net10.0/refint/WebApi.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../WebApi/WebApi/obj/Debug/net10.0/rjsmcshtml.dswa.cache.json" beforeDir="false" afterPath="$PROJECT_DIR$/../WebApi/WebApi/obj/Debug/net10.0/rjsmcshtml.dswa.cache.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../WebApi/WebApi/obj/Debug/net10.0/rjsmrazor.dswa.cache.json" beforeDir="false" afterPath="$PROJECT_DIR$/../WebApi/WebApi/obj/Debug/net10.0/rjsmrazor.dswa.cache.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../WebApi/WebApi/obj/Debug/net10.0/rpswa.dswa.cache.json" beforeDir="false" afterPath="$PROJECT_DIR$/../WebApi/WebApi/obj/Debug/net10.0/rpswa.dswa.cache.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../WebApi/WebApi/obj/Debug/net10.0/staticwebassets.build.endpoints.json" beforeDir="false" afterPath="$PROJECT_DIR$/../WebApi/WebApi/obj/Debug/net10.0/staticwebassets.build.endpoints.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../WebApi/WebApi/obj/Debug/net10.0/staticwebassets.build.json" beforeDir="false" afterPath="$PROJECT_DIR$/../WebApi/WebApi/obj/Debug/net10.0/staticwebassets.build.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../WebApi/WebApi/obj/Debug/net10.0/staticwebassets.build.json.cache" beforeDir="false" afterPath="$PROJECT_DIR$/../WebApi/WebApi/obj/Debug/net10.0/staticwebassets.build.json.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../WebApi/WebApi/obj/Debug/net10.0/staticwebassets.development.json" beforeDir="false" afterPath="$PROJECT_DIR$/../WebApi/WebApi/obj/Debug/net10.0/staticwebassets.development.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../WebApi/WebApi/obj/Debug/net10.0/staticwebassets/htmlassetplaceholders/build/x3e6wrpya3.html" beforeDir="false" afterPath="$PROJECT_DIR$/../WebApi/WebApi/obj/Debug/net10.0/staticwebassets/htmlassetplaceholders/build/x3e6wrpya3.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../WebApi/WebApi/obj/Debug/net10.0/webcil/WebApi.wasm" beforeDir="false" afterPath="$PROJECT_DIR$/../WebApi/WebApi/obj/Debug/net10.0/webcil/WebApi.wasm" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -99,7 +167,7 @@
     <option name="firstShow" value="false" />
   </component>
   <component name="EmbeddingIndexingInfo">
-    <option name="cachedIndexableFilesCount" value="14" />
+    <option name="cachedIndexableFilesCount" value="15" />
     <option name="fileBasedEmbeddingIndicesEnabled" value="true" />
   </component>
   <component name="Git.Settings">
@@ -113,6 +181,7 @@
     <setting file="file://$PROJECT_DIR$/DotnetApi.Application/Businesses/Queries/GetBusinessQueryHandler.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/DotnetApi.Application/Reviews/Commands/AddReviewCommand.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/DotnetApi.Application/Reviews/Commands/AddReviewCommandHandler.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/DotnetApi.Application/Reviews/Helper/ReviewSentimentAnalysisRequest.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/DotnetApi.Application/Reviews/Queries/GetReviewQuery.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/DotnetApi.Application/Reviews/Queries/GetReviewQueryHandler.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/DotnetApi.Application/Reviews/Queries/ReviewDto.cs" root0="FORCE_HIGHLIGHTING" />
@@ -125,6 +194,7 @@
     <setting file="file://$PROJECT_DIR$/DotnetApi.Infrastructure/Repository/ReviewRepository.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/DotnetApi.Tests/Application/Commands/AddBusinessTests.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/DotnetApi.Tests/Application/Commands/AddReviewTests.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/DotnetApi.Tests/Application/Reviews/Commands/AddReviewTests.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/DotnetApi.Tests/Helpers/ContextHelper.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/DotnetApi.WebApi/Controller/BusinessController.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/DotnetApi.WebApi/Controller/ReviewController.cs" root0="FORCE_HIGHLIGHTING" />
@@ -146,45 +216,45 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    ".NET Launch Settings Profile.DotnetApi.WebApi: http.executor": "Run",
-    "3bd9098c-1c4a-4400-a05a-b8e0c32a5ae7.executor": "Debug",
-    "Docker.DotnetApi.WebApi/Dockerfile.executor": "Run",
-    "ModuleVcsDetector.initialDetectionPerformed": "true",
-    "RunOnceActivity.MCP Project settings loaded": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "RunOnceActivity.typescript.service.memoryLimit.init": "true",
-    "com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1": "true",
-    "git-widget-placeholder": "main",
-    "junie.onboarding.icon.badge.shown": "true",
-    "last_opened_file_path": "/home/mrbogdanovich/git/FeelingFine/WebApi",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "sonarlint",
-    "to.speed.mode.migration.done": "true",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;.NET Launch Settings Profile.DotnetApi.WebApi: http.executor&quot;: &quot;Run&quot;,
+    &quot;3bd9098c-1c4a-4400-a05a-b8e0c32a5ae7.executor&quot;: &quot;Debug&quot;,
+    &quot;Docker.DotnetApi.WebApi/Dockerfile.executor&quot;: &quot;Run&quot;,
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.MCP Project settings loaded&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.typescript.service.memoryLimit.init&quot;: &quot;true&quot;,
+    &quot;com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;junie.onboarding.icon.badge.shown&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/home/mrbogdanovich/git/FeelingFine/WebApi&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;sonarlint&quot;,
+    &quot;to.speed.mode.migration.done&quot;: &quot;true&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
-  "keyToStringList": {
-    "DatabaseDriversLRU": [
-      "postgresql"
+  &quot;keyToStringList&quot;: {
+    &quot;DatabaseDriversLRU&quot;: [
+      &quot;postgresql&quot;
     ],
-    "com.intellij.ide.scratch.ScratchImplUtil$2/New Scratch File": [
-      "TEXT"
+    &quot;com.intellij.ide.scratch.ScratchImplUtil$2/New Scratch File&quot;: [
+      &quot;TEXT&quot;
     ]
   }
-}]]></component>
+}</component>
   <component name="RecapSpentCounter">
     <option name="endsOfQuotaMs" value="1773892903187" />
-    <option name="spentUsd" value="0.10421205" />
+    <option name="spentUsd" value="0.21864605" />
   </component>
   <component name="RecapUselessUpdatesCounter">
-    <option name="suspendCountdown" value="3" />
+    <option name="suspendCountdown" value="1" />
   </component>
   <component name="RunManager" selected=".NET Launch Settings Profile.DotnetApi.WebApi: http">
     <configuration name="DotnetApi.WebApi: http" type="LaunchSettings" factoryName=".NET Launch Settings Profile">
@@ -256,7 +326,10 @@
       <workItem from="1771834612062" duration="1916000" />
       <workItem from="1771861659772" duration="177000" />
       <workItem from="1771862179362" duration="614000" />
-      <workItem from="1772024711281" duration="4691000" />
+      <workItem from="1772024711281" duration="6799000" />
+      <workItem from="1772095925313" duration="643000" />
+      <workItem from="1772110216542" duration="1293000" />
+      <workItem from="1772385985309" duration="3281000" />
     </task>
     <servers />
   </component>
@@ -267,76 +340,46 @@
     <option name="coveragePercentColumnWidth" value="150" />
     <option name="sortOrder" value="DESCENDING" />
     <option name="sortedColumn" value="1" />
-    <option name="symbolColumnWidth" value="323" />
+    <option name="symbolColumnWidth" value="432" />
     <coverage-tree-state>
       <expand>
         <path>
           <item name="rootNode" type="c53c71d1:RiderDotCoverCoverageTreeModel$RootNode" />
-          <item name="Total 26% 216/290" type="8b8fad3a:RiderDotCoverCoverageTreeNode" />
+          <item name="Total 52% 155/322" type="8b8fad3a:RiderDotCoverCoverageTreeNode" />
         </path>
         <path>
           <item name="rootNode" type="c53c71d1:RiderDotCoverCoverageTreeModel$RootNode" />
-          <item name="Total 26% 216/290" type="8b8fad3a:RiderDotCoverCoverageTreeNode" />
-          <item name="DotnetApi.Application 21% 53/67" type="8b8fad3a:RiderDotCoverCoverageTreeNode" />
+          <item name="Total 52% 155/322" type="8b8fad3a:RiderDotCoverCoverageTreeNode" />
+          <item name="DotnetApi.Application 54% 31/67" type="8b8fad3a:RiderDotCoverCoverageTreeNode" />
         </path>
         <path>
           <item name="rootNode" type="c53c71d1:RiderDotCoverCoverageTreeModel$RootNode" />
-          <item name="Total 26% 216/290" type="8b8fad3a:RiderDotCoverCoverageTreeNode" />
-          <item name="DotnetApi.Application 21% 53/67" type="8b8fad3a:RiderDotCoverCoverageTreeNode" />
-          <item name="DotnetApi.Application 21% 53/67" type="8b8fad3a:RiderDotCoverCoverageTreeNode" />
+          <item name="Total 52% 155/322" type="8b8fad3a:RiderDotCoverCoverageTreeNode" />
+          <item name="DotnetApi.Application 54% 31/67" type="8b8fad3a:RiderDotCoverCoverageTreeNode" />
+          <item name="DotnetApi.Application 54% 31/67" type="8b8fad3a:RiderDotCoverCoverageTreeNode" />
         </path>
         <path>
           <item name="rootNode" type="c53c71d1:RiderDotCoverCoverageTreeModel$RootNode" />
-          <item name="Total 26% 216/290" type="8b8fad3a:RiderDotCoverCoverageTreeNode" />
-          <item name="DotnetApi.Application 21% 53/67" type="8b8fad3a:RiderDotCoverCoverageTreeNode" />
-          <item name="DotnetApi.Application 21% 53/67" type="8b8fad3a:RiderDotCoverCoverageTreeNode" />
-          <item name="DotnetApi.Application 21% 53/67" type="8b8fad3a:RiderDotCoverCoverageTreeNode" />
+          <item name="Total 52% 155/322" type="8b8fad3a:RiderDotCoverCoverageTreeNode" />
+          <item name="DotnetApi.Application 54% 31/67" type="8b8fad3a:RiderDotCoverCoverageTreeNode" />
+          <item name="DotnetApi.Application 54% 31/67" type="8b8fad3a:RiderDotCoverCoverageTreeNode" />
+          <item name="DotnetApi.Application 54% 31/67" type="8b8fad3a:RiderDotCoverCoverageTreeNode" />
         </path>
         <path>
           <item name="rootNode" type="c53c71d1:RiderDotCoverCoverageTreeModel$RootNode" />
-          <item name="Total 26% 216/290" type="8b8fad3a:RiderDotCoverCoverageTreeNode" />
-          <item name="DotnetApi.Application 21% 53/67" type="8b8fad3a:RiderDotCoverCoverageTreeNode" />
-          <item name="DotnetApi.Application 21% 53/67" type="8b8fad3a:RiderDotCoverCoverageTreeNode" />
-          <item name="DotnetApi.Application 21% 53/67" type="8b8fad3a:RiderDotCoverCoverageTreeNode" />
-          <item name="Reviews 21% 31/39" type="8b8fad3a:RiderDotCoverCoverageTreeNode" />
+          <item name="Total 52% 155/322" type="8b8fad3a:RiderDotCoverCoverageTreeNode" />
+          <item name="DotnetApi.Application 54% 31/67" type="8b8fad3a:RiderDotCoverCoverageTreeNode" />
+          <item name="DotnetApi.Application 54% 31/67" type="8b8fad3a:RiderDotCoverCoverageTreeNode" />
+          <item name="DotnetApi.Application 54% 31/67" type="8b8fad3a:RiderDotCoverCoverageTreeNode" />
+          <item name="Businesses 57% 12/28" type="8b8fad3a:RiderDotCoverCoverageTreeNode" />
         </path>
         <path>
           <item name="rootNode" type="c53c71d1:RiderDotCoverCoverageTreeModel$RootNode" />
-          <item name="Total 26% 216/290" type="8b8fad3a:RiderDotCoverCoverageTreeNode" />
-          <item name="DotnetApi.Application 21% 53/67" type="8b8fad3a:RiderDotCoverCoverageTreeNode" />
-          <item name="DotnetApi.Application 21% 53/67" type="8b8fad3a:RiderDotCoverCoverageTreeNode" />
-          <item name="DotnetApi.Application 21% 53/67" type="8b8fad3a:RiderDotCoverCoverageTreeNode" />
-          <item name="Reviews 21% 31/39" type="8b8fad3a:RiderDotCoverCoverageTreeNode" />
-          <item name="Commands 6% 16/17" type="8b8fad3a:RiderDotCoverCoverageTreeNode" />
-        </path>
-        <path>
-          <item name="rootNode" type="c53c71d1:RiderDotCoverCoverageTreeModel$RootNode" />
-          <item name="Total 26% 216/290" type="8b8fad3a:RiderDotCoverCoverageTreeNode" />
-          <item name="DotnetApi.Application 21% 53/67" type="8b8fad3a:RiderDotCoverCoverageTreeNode" />
-          <item name="DotnetApi.Application 21% 53/67" type="8b8fad3a:RiderDotCoverCoverageTreeNode" />
-          <item name="DotnetApi.Application 21% 53/67" type="8b8fad3a:RiderDotCoverCoverageTreeNode" />
-          <item name="Reviews 21% 31/39" type="8b8fad3a:RiderDotCoverCoverageTreeNode" />
-          <item name="Commands 6% 16/17" type="8b8fad3a:RiderDotCoverCoverageTreeNode" />
-          <item name="AddReviewCommandHandler 0% 16/16" type="8b8fad3a:RiderDotCoverCoverageTreeNode" />
-        </path>
-        <path>
-          <item name="rootNode" type="c53c71d1:RiderDotCoverCoverageTreeModel$RootNode" />
-          <item name="Total 26% 216/290" type="8b8fad3a:RiderDotCoverCoverageTreeNode" />
-          <item name="DotnetApi.Application 21% 53/67" type="8b8fad3a:RiderDotCoverCoverageTreeNode" />
-          <item name="DotnetApi.Application 21% 53/67" type="8b8fad3a:RiderDotCoverCoverageTreeNode" />
-          <item name="DotnetApi.Application 21% 53/67" type="8b8fad3a:RiderDotCoverCoverageTreeNode" />
-          <item name="Reviews 21% 31/39" type="8b8fad3a:RiderDotCoverCoverageTreeNode" />
-          <item name="Commands 6% 16/17" type="8b8fad3a:RiderDotCoverCoverageTreeNode" />
-          <item name="AddReviewCommandHandler 0% 16/16" type="8b8fad3a:RiderDotCoverCoverageTreeNode" />
-          <item name="Handle(AddReviewCommand,CancellationToken) 0% 15/15" type="8b8fad3a:RiderDotCoverCoverageTreeNode" />
-        </path>
-        <path>
-          <item name="rootNode" type="c53c71d1:RiderDotCoverCoverageTreeModel$RootNode" />
-          <item name="Total 26% 216/290" type="8b8fad3a:RiderDotCoverCoverageTreeNode" />
-          <item name="DotnetApi.Application 21% 53/67" type="8b8fad3a:RiderDotCoverCoverageTreeNode" />
-          <item name="DotnetApi.Application 21% 53/67" type="8b8fad3a:RiderDotCoverCoverageTreeNode" />
-          <item name="DotnetApi.Application 21% 53/67" type="8b8fad3a:RiderDotCoverCoverageTreeNode" />
-          <item name="Businesses 21% 22/28" type="8b8fad3a:RiderDotCoverCoverageTreeNode" />
+          <item name="Total 52% 155/322" type="8b8fad3a:RiderDotCoverCoverageTreeNode" />
+          <item name="DotnetApi.Application 54% 31/67" type="8b8fad3a:RiderDotCoverCoverageTreeNode" />
+          <item name="DotnetApi.Application 54% 31/67" type="8b8fad3a:RiderDotCoverCoverageTreeNode" />
+          <item name="DotnetApi.Application 54% 31/67" type="8b8fad3a:RiderDotCoverCoverageTreeNode" />
+          <item name="Reviews 51% 19/39" type="8b8fad3a:RiderDotCoverCoverageTreeNode" />
         </path>
       </expand>
       <select />

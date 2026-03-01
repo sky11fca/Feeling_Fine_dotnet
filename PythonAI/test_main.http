@@ -1,0 +1,20 @@
+# Test your FastAPI endpoints
+
+POST http://127.0.0.1:8000/ai/review/
+Content-Type: application/json
+
+{
+  "raw_text": "This is great! I really like your services. The UI is so intuitive even a baby can use it",
+  "submitted_on": "google"
+}
+
+###
+
+POST http://127.0.0.1:8000/ai/review/
+Content-Type: application/json
+
+{
+  "raw_text": "I have issues with Stripe payment. For now, I'm going to give you 2 stars till the issue is done. I was expecting more from you :(",
+  "submitted_on": "google"
+}
+

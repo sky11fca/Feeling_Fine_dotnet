@@ -1,11 +1,13 @@
 using DotnetApi.Application.Abstractions;
 using MediatR;
+using System.Net.Http;
+using System.Net.Http.Json;
 
 namespace DotnetApi.Application.Reviews.Queries;
 
-public class GetReviewQueryHandler(IReviewRepository repository): IRequestHandler<GetReviewQuery, List<ReviewDto>>
+public class GetReviewQueryHandler(IReviewRepository repository, HttpClient httpClient) : IRequestHandler<GetReviewQuery, List<ReviewDto>>
 {
-    public Task<List<ReviewDto>> Handle(GetReviewQuery request, CancellationToken cancellationToken)
+    public async Task<List<ReviewDto>> Handle(GetReviewQuery request, CancellationToken cancellationToken)
     {
         if (request.BusinessId == default)
         {
@@ -21,8 +23,22 @@ public class GetReviewQueryHandler(IReviewRepository repository): IRequestHandle
                 (!string.IsNullOrWhiteSpace(request.SubmitedOn) && x.SubmitedOn.Contains(request.SubmitedOn)));
         }
 
-        var reviews = query.Select(x => new ReviewDto(x.Id, x.Rating, x.RatingType.ToString(), x.RawText, x.SubmitedOn)).ToList();
+        var entities = query.ToList();
 
-        return Task.FromResult(reviews);
+        var tasks = entities.Select(async x =>
+        {
+            var response = await httpClient.PostAsJsonAsync("http://localhost:8000/ai/review", new { raw_text = x.RawText, submitted_on = x.SubmitedOn }, cancellationToken);
+            var sentiment = response.IsSuccessStatusCode 
+                ? await response.Content.ReadFromJsonAsync<SentimentResult>(cancellationToken: cancellationToken) 
+                : null;
+
+            return new ReviewDto(x.Id, x.Rating, x.RatingType.ToString(), x.RawText, x.SubmitedOn, sentiment?.Label ?? "Unknown", sentiment?.Score ?? 0);
+        });
+
+        var reviews = await Task.WhenAll(tasks);
+
+        return reviews.ToList();
     }
+
+    private record SentimentResult(string Label, double Score);
 }

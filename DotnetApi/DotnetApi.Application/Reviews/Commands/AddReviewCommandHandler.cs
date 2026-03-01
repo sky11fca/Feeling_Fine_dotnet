@@ -1,6 +1,4 @@
 using DotnetApi.Application.Abstractions;
-using DotnetApi.Application.Businesses.Commands;
-using DotnetApi.Application.Businesses.Validators;
 using DotnetApi.Domains.Entities;
 using DotnetApi.Domains.Enums;
 using FluentValidation;

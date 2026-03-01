@@ -5,5 +5,7 @@ public record ReviewDto(
     decimal Review,
     string RatingType,
     string RawText,
-    string SubmitedOn
+    string SubmittedOn,
+    string SentimentLabel,
+    double SentimentAccuracy
     );

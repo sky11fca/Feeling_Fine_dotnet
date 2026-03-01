@@ -2,7 +2,6 @@ using DotnetApi.Application.Abstractions;
 using DotnetApi.Domains.Entities;
 using FluentValidation;
 using MediatR;
-using ValidationException = System.ComponentModel.DataAnnotations.ValidationException;
 
 namespace DotnetApi.Application.Businesses.Commands;
 

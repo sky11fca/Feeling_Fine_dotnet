@@ -1,5 +1,6 @@
 @page "/reviews/{businessId:guid}"
 @using WebApi.Models
+@using WebApi.Models.Requests
 @using WebApi.Services.Business
 @using WebApi.Services.Reviews
 @inject IReviewsService ReviewsService
@@ -15,6 +16,25 @@ else
     <h3>Reviews</h3>
 }
 
+<div class="card my-3">
+    <div class="card-body">
+        <h5 class="card-title">Add a Review</h5>
+        <EditForm Model="@_reviewInput" OnValidSubmit="@SubmitReview">
+            <DataAnnotationsValidator />
+            <ValidationSummary />
+            <div class="mb-3">
+                <label class="form-label">Rating (1-5)</label>
+                <InputNumber class="form-control" @bind-Value="_reviewInput.Rating" />
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Review</label>
+                <InputTextArea class="form-control" @bind-Value="_reviewInput.RawText" />
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </EditForm>
+    </div>
+</div>
+
 @if (_reviewList.Count != 0)
 {
     <ul class="list-group mt-3">
@@ -24,7 +44,9 @@ else
                 <strong>@review.Id</strong>
                 <p>@review.Review / 5.0 (@review.RatingType)</p>
                 <p>@review.RawText</p>
-                <p>Posted on: @review.SubmitedOn</p>
+                <p>Posted on: @review.SubmittedOn</p>
+                <p>The sentiment conveys is: @review.SentimentLabel</p>
+                <p>Accuracy: @review.SentimentAccuracy</p>
             </li>
             
         }
@@ -42,6 +64,7 @@ else
 
     private List<ReviewDto?> _reviewList = new();
     private BusinessDto? _business;
+    private ReviewInput _reviewInput = new();
 
     protected async override Task OnInitializedAsync()
     {
@@ -56,5 +79,19 @@ else
         {
             _reviewList = new();
         }
+    }
+
+    private async Task SubmitReview()
+    {
+        await ReviewsService.AddReview(BusinessId, _reviewInput.Rating, _reviewInput.RawText, "FeelingFine");
+        
+        _reviewList = await ReviewsService.GetReviewQuery(BusinessId, string.Empty, string.Empty);
+        _reviewInput = new();
+    }
+
+    public class ReviewInput
+    {
+        public decimal Rating { get; set; }
+        public string RawText { get; set; } = string.Empty;
     }
 }
