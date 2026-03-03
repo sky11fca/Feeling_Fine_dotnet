@@ -70,6 +70,7 @@ jobs:
           # Build Python AI
           if (Test-Path "Python AI/requirements.txt") { pip install -r "Python AI/requirements.txt" }
 
+          # Running Test Coverage
           dotnet test "DotnetApi/DotnetApi.Tests/DotnetApi.Tests.csproj" --configuration Release --collect:"XPlat Code Coverage" -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Format=opencover
-
+          dotnet test "WebApi/WebApi.Tests/WebApi.Tests.csproj" --configuration Release --collect:"XPlat Code Coverage" -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Format=opencover
           ${{ runner.temp }}\scanner\dotnet-sonarscanner end /d:sonar.token="${{ secrets.SONAR_TOKEN }}"

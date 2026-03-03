@@ -1,7 +1,5 @@
 from transformers import pipeline
 
-from core.config import settings
-
 
 class SatisfactionService:
     def __init__(self):
@@ -11,6 +9,3 @@ class SatisfactionService:
 
     def analyze(self, text: str):
         return self.classifier(text)[0]
-
-
-satisfaction_service = SatisfactionService()
