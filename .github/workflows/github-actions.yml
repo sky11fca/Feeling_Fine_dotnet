@@ -20,6 +20,11 @@ jobs:
           java-version: 17
           distribution: 'zulu'
 
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.x'
+
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
@@ -52,18 +57,18 @@ jobs:
         shell: powershell
         run: |
           # Use the scanner to begin analysis for the entire .NET suite
-          # We exclude the Python folder here to keep the .NET project clean
           ${{ runner.temp }}\scanner\dotnet-sonarscanner begin /k:"sky11fca_Feeling_Fine_dotnet" `
             /o:"sky11fca" `
             /d:sonar.token="${{ secrets.SONAR_TOKEN }}" `
-            /d:sonar.exclusions="Python AI/**" `
             /d:sonar.host.url="https://sonarcloud.io"
 
           # Build the .NET API and the Blazor Web API
           dotnet build "DotnetApi/DotnetApi.WebApi/DotnetApi.WebApi.csproj"
           dotnet build "WebApi/WebApi/WebApi.csproj"
 
+          # Build Python AI
+          if (Test-Path "Python AI/requirements.txt") { pip install -r "Python AI/requirements.txt" }
 
-          dotnet test "DotnetApi/DotnetApi.Tests/DotnetApi.Tests.csproj" --configuration Release  --no-build --collect:"XPlat Code Coverage" -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Format=opencover
+          dotnet test "DotnetApi/DotnetApi.Tests/DotnetApi.Tests.csproj" --configuration Release --collect:"XPlat Code Coverage" -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Format=opencover
 
           ${{ runner.temp }}\scanner\dotnet-sonarscanner end /d:sonar.token="${{ secrets.SONAR_TOKEN }}"
