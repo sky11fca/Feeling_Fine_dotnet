@@ -60,7 +60,8 @@ jobs:
           ${{ runner.temp }}\scanner\dotnet-sonarscanner begin /k:"sky11fca_Feeling_Fine_dotnet" `
             /o:"sky11fca" `
             /d:sonar.token="${{ secrets.SONAR_TOKEN }}" `
-            /d:sonar.host.url="https://sonarcloud.io"
+            /d:sonar.host.url="https://sonarcloud.io" `
+            /d:sonar.cs.opencover.reportsPaths="**/coverage.opencover.xml"
 
           # Build the .NET API and the Blazor Web API
           dotnet build "DotnetApi/DotnetApi.WebApi/DotnetApi.WebApi.csproj"
