@@ -61,3 +61,4 @@
 /home/mrbogdanovich/git/FeelingFine/DotnetApi/DotnetApi.WebApi/obj/Debug/net10.0/DotnetApi.WebApi.sourcelink.json
 /home/mrbogdanovich/git/FeelingFine/DotnetApi/DotnetApi.WebApi/bin/Debug/net10.0/FluentValidation.AspNetCore.dll
 /home/mrbogdanovich/git/FeelingFine/DotnetApi/DotnetApi.WebApi/bin/Debug/net10.0/FluentValidation.DependencyInjectionExtensions.dll
+/home/mrbogdanovich/git/FeelingFine/DotnetApi/DotnetApi.WebApi/bin/Debug/net10.0/Microsoft.EntityFrameworkCore.InMemory.dll

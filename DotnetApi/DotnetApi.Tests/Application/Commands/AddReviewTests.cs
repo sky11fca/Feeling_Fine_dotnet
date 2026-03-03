@@ -50,6 +50,10 @@ public class AddReviewTests : IDisposable
         _validatorMock
             .Setup(x => x.ValidateAsync(command, It.IsAny<CancellationToken>()))
             .ReturnsAsync(new ValidationResult()); // Valid result (IsValid = true)
+
+        _repositoryMock
+            .Setup(x => x.AddAsync(It.IsAny<Review>(), It.IsAny<CancellationToken>()))
+            .Callback<Review, CancellationToken>((r, ct) => r.Id = Guid.NewGuid());
  
         // Act
         var result = await _handler.Handle(command, CancellationToken.None);

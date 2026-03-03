@@ -17,8 +17,6 @@ public class ReviewController(IMediator mediator) : ControllerBase
         return Created($"/api/v1/review/{id}", new{id});
     }
     
-    //TODO: Implement the review get
-    
     [HttpGet]
     public async Task<IActionResult> GetReview(Guid businessId, string? rawText, string? submitedOn, CancellationToken cancellationToken)
     {

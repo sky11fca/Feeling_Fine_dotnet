@@ -13,7 +13,6 @@ using Microsoft.OpenApi;
 
 var builder = WebApplication.CreateBuilder(args);
 
-//TODO: Hide secret
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
@@ -37,7 +36,16 @@ builder.Services.AddSwaggerGen(c =>
 builder.Services.AddOpenApi();
 
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")).UseSnakeCaseNamingConvention());
+    {
+        if (builder.Environment.IsEnvironment("Testing"))
+        {
+            options.UseInMemoryDatabase("FeelingFineDb");
+        }
+        else
+        {
+            options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")).UseSnakeCaseNamingConvention();
+        }
+    });
 
 builder.Services.AddControllers();
 
@@ -72,7 +80,7 @@ using (var scope = app.Services.CreateScope())
     context.Database.EnsureCreated();
 }
 
-if (app.Environment.IsDevelopment())
+if (app.Environment.IsDevelopment() || app.Environment.IsEnvironment("Testing"))
 {
     app.UseSwagger();
     app.UseSwaggerUI(c =>
@@ -91,3 +99,5 @@ app.UseCors("AllowAll");
 app.MapControllers();
 
 app.Run();
+
+public partial class Program { }

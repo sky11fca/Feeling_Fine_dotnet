@@ -52,6 +52,7 @@ public class AddBusinessTests : IDisposable
         _validatorMock
             .Setup(x => x.ValidateAsync(command, It.IsAny<CancellationToken>()))
             .ReturnsAsync(new ValidationResult()); // Valid result (IsValid = true)
+
  
         // Act
         var result = await _handler.Handle(command, CancellationToken.None);
