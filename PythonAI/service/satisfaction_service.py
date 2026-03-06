@@ -9,3 +9,6 @@ class SatisfactionService:
 
     def analyze(self, text: str):
         return self.classifier(text)[0]
+
+
+satisfaction_service = SatisfactionService()

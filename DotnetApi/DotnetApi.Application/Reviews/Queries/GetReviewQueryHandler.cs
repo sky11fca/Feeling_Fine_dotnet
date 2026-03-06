@@ -32,7 +32,7 @@ public class GetReviewQueryHandler(IReviewRepository repository, HttpClient http
                 ? await response.Content.ReadFromJsonAsync<SentimentResult>(cancellationToken: cancellationToken) 
                 : null;
 
-            return new ReviewDto(x.Id, x.Rating, x.RatingType.ToString(), x.RawText, x.SubmitedOn, sentiment?.Label ?? "Unknown", sentiment?.Score ?? 0);
+            return new ReviewDto(x.Id, x.ClientId, x.Rating, x.RatingType.ToString(), x.RawText, x.SubmitedOn, sentiment?.Label ?? "Unknown", sentiment?.Score ?? 0);
         });
 
         var reviews = await Task.WhenAll(tasks);

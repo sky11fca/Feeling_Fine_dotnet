@@ -7,7 +7,7 @@ public class Review
 
     private Review() { }
 
-    public static Review Create(Guid businessId, decimal rating, RatingType ratingType, string rawText, string submitedOn)
+    public static Review Create(Guid businessId, Guid clientId, decimal rating, RatingType ratingType, string rawText, string submitedOn)
     {
         if(businessId == Guid.Empty)
         {
@@ -26,7 +26,8 @@ public class Review
 
         return new Review
         {
-            Id = new Guid(),
+            Id = Guid.NewGuid(),
+            ClientId = clientId,
             Rating = rating,
             RatingType = ratingType,
             BusinessId = businessId,
@@ -38,6 +39,7 @@ public class Review
     
     public Guid Id { get; set; }
     public Guid BusinessId { get; set; }
+    public Guid ClientId { get; set; }
     public decimal Rating { get; set; }
     public RatingType RatingType { get; set; }
     public string RawText { get; set; } = string.Empty;

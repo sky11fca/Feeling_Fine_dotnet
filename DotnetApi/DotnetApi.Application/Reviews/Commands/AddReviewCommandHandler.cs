@@ -27,7 +27,7 @@ public class AddReviewCommandHandler(IReviewRepository repository, IValidator<Ad
             _ => RatingType.OverwhelminglyNegative
         };
         
-        var review = Review.Create(request.BusinessId, request.Review, finalReviewType, request.RawText, request.SubmitedOn);
+        var review = Review.Create(request.BusinessId, request.ClientId, request.Review, finalReviewType, request.RawText, request.SubmitedOn);
         await repository.AddAsync(review, cancellationToken);
         return review.Id;
     }

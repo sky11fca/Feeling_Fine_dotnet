@@ -16,7 +16,7 @@ public class BusinessController(IMediator mediator) : ControllerBase
         return Created($"/api/v1/business/{id}", new{id});
     }
 
-    [HttpGet()]
+    [HttpGet]
     public async Task<IActionResult> GetBusiness(string? name, string? industry, CancellationToken cancellationToken)
     {
         var business = await mediator.Send(new GetBusinessQuery(name, industry), cancellationToken);
