@@ -1,5 +1,7 @@
 # Test your FastAPI endpoints
 
+### Analyse an obvious positive sentiment
+
 POST http://127.0.0.1:8000/ai/review/
 Content-Type: application/json
 
@@ -8,7 +10,7 @@ Content-Type: application/json
   "submitted_on": "google"
 }
 
-###
+### Analyse an obvious negative sentiment
 
 POST http://127.0.0.1:8000/ai/review/
 Content-Type: application/json
@@ -16,5 +18,16 @@ Content-Type: application/json
 {
   "raw_text": "I have issues with Stripe payment. For now, I'm going to give you 2 stars till the issue is done. I was expecting more from you :(",
   "submitted_on": "google"
+}
+
+### Generate a response
+
+POST http://127.0.0.1:8000/ai/reply/
+Content-Type: application/json
+
+{
+  "raw_text": "WHAT THE HELL IS THIS! Not only the delivery guy was late with my order, but it was also moldy! I ain't gonna order from you guys ever again!",
+  "customer_name": "Alice",
+  "sentiment": "negative"
 }
 
