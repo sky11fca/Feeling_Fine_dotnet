@@ -27,7 +27,7 @@ public class AddReviewTests : IDisposable
     [Fact]
     public async Task GivenInvalidRequestWhenCreatingNewReviewThenReturnsError()
     {
-        var command = new AddReviewCommand(Guid.Empty, -6.7m, "testing", "testing");
+        var command = new AddReviewCommand(Guid.Empty, Guid.NewGuid(),-6.7m, "testing", "testing");
         var validationFailure = new ValidationFailure("BusinessId", "Must not be empty");
         var validationResult = new ValidationResult(new[] { validationFailure });
         
@@ -45,7 +45,7 @@ public class AddReviewTests : IDisposable
     [Fact]
     public async Task GivenValidRequestWhenCreatingNewReviewThenReturnsId()
     {
-        var command = new AddReviewCommand(Guid.NewGuid(), 5.0m, "testing", "test");
+        var command = new AddReviewCommand(Guid.NewGuid(), Guid.NewGuid(),5.0m, "testing", "test");
          
         _validatorMock
             .Setup(x => x.ValidateAsync(command, It.IsAny<CancellationToken>()))

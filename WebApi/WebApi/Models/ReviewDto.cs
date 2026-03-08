@@ -2,6 +2,7 @@ namespace WebApi.Models;
 
 public record ReviewDto(
     Guid Id,
+    Guid ClientId,
     decimal Review,
     string RatingType,
     string RawText,

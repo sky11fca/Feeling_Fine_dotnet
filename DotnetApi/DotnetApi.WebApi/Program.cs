@@ -58,6 +58,7 @@ builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri("http://
 builder.Services.AddScoped<IBusinessRepository, BusinessRepository>();
 builder.Services.AddScoped<IReviewRepository, ReviewRepository>();
 builder.Services.AddScoped<IClientRepository, ClientRepository>();
+builder.Services.AddScoped<IReplyRepository, ReplyRepository>();
 
 builder.Services.AddValidatorsFromAssemblyContaining<AddReviewCommand>();
 builder.Services.AddValidatorsFromAssemblyContaining<AddBusinessCommand>();

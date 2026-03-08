@@ -1,4 +1,5 @@
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 
 import api.review_router
 import api.reply_router
@@ -12,6 +13,14 @@ from service.satisfaction_service import SatisfactionService
 # sentiment_service = SatisfactionService()
 
 app = FastAPI()
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 app.include_router(api.review_router.router)
 app.include_router(api.reply_router.router)

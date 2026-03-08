@@ -25,7 +25,7 @@ public class ReviewControllerTests
     {
         // Arrange
         var expectedId = Guid.NewGuid();
-        var command = new AddReviewCommand(expectedId, 3.5m, "test", "2023-10-27");
+        var command = new AddReviewCommand(expectedId, Guid.NewGuid(),3.5m, "test", "2023-10-27");
 
         _mediatorMock
             .Setup(m => m.Send(command, It.IsAny<CancellationToken>()))
@@ -58,7 +58,7 @@ public class ReviewControllerTests
         var rawText = "test";
         var submitedOn = "2023-10-27";
         var cancellationToken = new CancellationToken();
-        var expectedResult = new List<ReviewDto> { new ReviewDto(businessId, 3.5m, "Mixed", rawText, submitedOn, "Unknown", 0.05)};
+        var expectedResult = new List<ReviewDto> { new ReviewDto(businessId, Guid.NewGuid(),3.5m, "Mixed", rawText, submitedOn, "Unknown", 0.05)};
 
         _mediatorMock
             .Setup(m => m.Send(It.IsAny<GetReviewQuery>(), cancellationToken))

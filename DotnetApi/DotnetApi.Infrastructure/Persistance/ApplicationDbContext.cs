@@ -8,6 +8,7 @@ public class ApplicationDbContext(DbContextOptions options) : DbContext(options)
     public DbSet<Business> Businesses => Set<Business>();
     public DbSet<Review> Reviews => Set<Review>();
     public DbSet<Client> Clients => Set<Client>();
+    public DbSet<Reply> Replies => Set<Reply>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -36,6 +37,14 @@ public class ApplicationDbContext(DbContextOptions options) : DbContext(options)
             e.Property(x => x.Username).IsRequired();
             e.Property(x => x.Email).IsRequired();
             e.Property(x => x.PhoneNumber).IsRequired();
+        });
+
+        modelBuilder.Entity<Reply>(e =>
+        {
+            e.HasKey(x => x.Id);
+            e.Property(x => x.ReviewId).IsRequired();
+            e.Property(x => x.ToClientId).IsRequired();
+            e.Property(x => x.RawText).IsRequired();
         });
     }
     

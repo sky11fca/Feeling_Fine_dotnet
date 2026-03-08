@@ -36,6 +36,10 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = UGFnZXMvSG9tZS5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
+[/home/mrbogdanovich/git/FeelingFine/WebApi/WebApi/Pages/Reply.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXMvUmVwbHkucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
 [/home/mrbogdanovich/git/FeelingFine/WebApi/WebApi/Pages/Reviews.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXMvUmV2aWV3cy5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 

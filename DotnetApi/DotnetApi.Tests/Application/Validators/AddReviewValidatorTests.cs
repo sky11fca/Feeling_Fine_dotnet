@@ -15,7 +15,7 @@ public class AddReviewValidatorTests : IDisposable
     [Fact]
     public void GivenEmptyBusinessIdWhenValidatingThenReturnsError()
     {
-        var review = new AddReviewCommand(Guid.Empty, 1.5m,"testing", "test");
+        var review = new AddReviewCommand(Guid.Empty, Guid.NewGuid(), 1.5m,"testing", "test");
         
         var result = _sut.Validate(review);
         
@@ -27,7 +27,7 @@ public class AddReviewValidatorTests : IDisposable
     [Fact]
     public void GivenInvalidRawTestWhenValidatingThenReturnsError()
     {
-        var review = new AddReviewCommand(Guid.NewGuid(), 1.5m,string.Empty, "test");
+        var review = new AddReviewCommand(Guid.NewGuid(), Guid.NewGuid(),1.5m,string.Empty, "test");
         
         var result = _sut.Validate(review);
         
@@ -38,7 +38,7 @@ public class AddReviewValidatorTests : IDisposable
     [Fact]
     public void GivenInvalidSubmitedOnWhenValidatingThenReturnsError()
     {
-        var review = new AddReviewCommand(Guid.NewGuid(), 1.5m,"testing", string.Empty);
+        var review = new AddReviewCommand(Guid.NewGuid(), Guid.NewGuid(),1.5m,"testing", string.Empty);
         
         var result = _sut.Validate(review);
         
@@ -49,7 +49,7 @@ public class AddReviewValidatorTests : IDisposable
     [Fact]
     public void GivenOutOfRangeReviewWhenValidatingThenReturnsError()
     {
-        var review = new AddReviewCommand(Guid.NewGuid(), 6.9m,"testing", string.Empty);
+        var review = new AddReviewCommand(Guid.NewGuid(), Guid.NewGuid(),6.9m,"testing", string.Empty);
         
         var result = _sut.Validate(review);
         
@@ -60,7 +60,7 @@ public class AddReviewValidatorTests : IDisposable
     [Fact]
     public void GivenValidParametersWhenValidatingTHenReturnsNoErrors()
     {
-        var review = new AddReviewCommand(Guid.NewGuid(), 1.5m,"testing", "test");
+        var review = new AddReviewCommand(Guid.NewGuid(), Guid.NewGuid(),1.5m,"testing", "test");
         
         var result = _sut.Validate(review);
         

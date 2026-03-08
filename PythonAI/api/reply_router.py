@@ -1,6 +1,5 @@
 from fastapi import APIRouter, HTTPException, status
 from fastapi.concurrency import run_in_threadpool
-from pydantic import BaseModel
 
 from model.client_model import ClientModel
 from service.review_service import review_service
