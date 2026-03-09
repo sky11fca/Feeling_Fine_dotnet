@@ -60,6 +60,7 @@ jobs:
           ${{ runner.temp }}\scanner\dotnet-sonarscanner begin /k:"sky11fca_Feeling_Fine_dotnet" `
             /o:"sky11fca" `
             /d:sonar.token="${{ secrets.SONAR_TOKEN }}" `
+            /d:sonae.exclusions="**/bin/**;**/obj/**;**/wwwroot/**" `
             /d:sonar.host.url="https://sonarcloud.io" `
             /d:sonar.cs.opencover.reportsPaths="**/coverage.opencover.xml"
 
