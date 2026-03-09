@@ -28,7 +28,6 @@ builder.Services.AddSwaggerGen(c =>
                 {
                     Name= "Dev: Bazon Bogdan (sky11fca)",
                     Email= "bogdan.bzn@FeelingFine.net",
-                    Url= new Uri("https://github.com/sky11fca")
                 }
             });
     });
@@ -79,7 +78,7 @@ var app = builder.Build();
 using (var scope = app.Services.CreateScope())
 {
     var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
-    context.Database.EnsureCreated();
+    await context.Database.EnsureCreatedAsync();
 }
 
 if (app.Environment.IsDevelopment() || app.Environment.IsEnvironment("Testing"))
@@ -94,12 +93,11 @@ if (app.Environment.IsDevelopment() || app.Environment.IsEnvironment("Testing"))
     app.MapOpenApi();
 }
 
-// app.UseHttpsRedirection();
 
 app.UseCors("AllowAll");
 
 app.MapControllers();
 
-app.Run();
+await app.RunAsync();
 
 public partial class Program { }
