@@ -5,7 +5,7 @@ var e=!1;const t=async()=>WebAssembly.validate(new Uint8Array([0,97,115,109,1,0,
   "mainAssemblyName": "WebApi",
   "applicationEnvironment": "Development",
   "resources": {
-    "hash": "sha256-Q/PuSugZdFwOnZXTJLv2fOvzVIDRg10qnUoIooT/TWE=",
+    "hash": "sha256-SUZ72nxc747DnQihHx0rqi0nIQU6+mKmNfVSNfQo06A=",
     "jsModuleNative": [
       {
         "name": "dotnet.native.xanz2e7ksm.js"
@@ -1039,15 +1039,15 @@ var e=!1;const t=async()=>WebAssembly.validate(new Uint8Array([0,97,115,109,1,0,
       },
       {
         "virtualPath": "WebApi.wasm",
-        "name": "WebApi.oudwac9dq8.wasm",
-        "integrity": "sha256-4Ceu61U0CgvIjNslr/U7wJev2Dr1YUAaIdtHgR97COs="
+        "name": "WebApi.mwdo1mfwme.wasm",
+        "integrity": "sha256-mvrSa+C6U1KuhXDz45ub8BISAsiDu50xUP+N52rkTrs="
       }
     ],
     "pdb": [
       {
         "virtualPath": "WebApi.pdb",
-        "name": "WebApi.y22vxdkfs8.pdb",
-        "integrity": "sha256-ts5y8vf6Vx+KvVz6tbeLOF0T4jnc2RT84s4PeqgnKaA="
+        "name": "WebApi.0prg1cuw2w.pdb",
+        "integrity": "sha256-NCETdOozgSUHAffTKXiP/7L91mIapjWOIIU/cwM1oXg="
       }
     ],
     "libraryInitializers": [

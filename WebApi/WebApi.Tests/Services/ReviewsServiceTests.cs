@@ -19,6 +19,7 @@ namespace WebApi.Tests.Services
             var service = new ReviewsService(httpClient);
             
             var businessId = Guid.NewGuid();
+            var clientId = Guid.NewGuid();
             var review = 5.0m;
             var rawText = "Great service";
             var submittedOn = "2023-10-27";
@@ -35,7 +36,7 @@ namespace WebApi.Tests.Services
                 .ReturnsAsync(new HttpResponseMessage(HttpStatusCode.OK));
 
             // Act
-            await service.AddReview(businessId, review, rawText, submittedOn);
+            await service.AddReview(businessId, clientId, review, rawText, submittedOn);
 
             // Assert
             handlerMock.Protected().Verify(
@@ -57,13 +58,15 @@ namespace WebApi.Tests.Services
             var service = new ReviewsService(httpClient);
 
             var businessId = Guid.NewGuid();
+            var clientId1 = Guid.NewGuid();
+            var clientId2 = Guid.NewGuid();
             // Note: The service implementation currently only uses businessId in the query string
             var expectedUri = $"http://localhost:5160/api/v1/review?businessId={businessId}";
             
             var reviews = new List<ReviewDto>
             {
-                new ReviewDto(Guid.NewGuid(), 5.0m, "Excellent", "Great!", "2023-01-01", "Positive", 0.95),
-                new ReviewDto(Guid.NewGuid(), 1.0m, "Poor", "Bad!", "2023-01-02", "Negative", 0.85)
+                new ReviewDto(Guid.NewGuid(), clientId1,5.0m, "Excellent", "Great!", "2023-01-01", "Positive", 0.95),
+                new ReviewDto(Guid.NewGuid(), clientId2, 1.0m, "Poor", "Bad!", "2023-01-02", "Negative", 0.85)
             };
             
             var jsonResponse = JsonSerializer.Serialize(reviews);

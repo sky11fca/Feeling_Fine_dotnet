@@ -70,10 +70,12 @@ namespace WebApi.Tests.Pages
         {
             // Arrange
             var businessId = Guid.NewGuid();
+            var clientId1 = Guid.NewGuid();
+            var clientId2 = Guid.NewGuid();
             var reviews = new List<ReviewDto?>
             {
-                new ReviewDto ( Guid.NewGuid(), 5.0m, "Great!",  "TEXT1",  "test", "TEST", 0.999 ),
-                new ReviewDto ( Guid.NewGuid(), 1.0m, "Bad!",  "TEXT2",  "test", "TEST", 0.999 ),
+                new ReviewDto ( Guid.NewGuid(), clientId1,5.0m, "Great!",  "TEXT1",  "test", "TEST", 0.999 ),
+                new ReviewDto ( Guid.NewGuid(), clientId2, 1.0m, "Bad!",  "TEXT2",  "test", "TEST", 0.999 ),
             };
 
             var mockBusinessService = new Mock<IBusinessService>();
@@ -103,6 +105,7 @@ namespace WebApi.Tests.Pages
         {
             // Arrange
             var businessId = Guid.NewGuid();
+            var clientId = Guid.NewGuid();
             var mockBusinessService = new Mock<IBusinessService>();
             mockBusinessService.Setup(s => s.GetBusinessQuery(It.IsAny<string>(), It.IsAny<string>()))
                 .ReturnsAsync(new List<BusinessDto>());
@@ -123,7 +126,7 @@ namespace WebApi.Tests.Pages
             cut.Find("button[type='submit']").Click();
 
             // Assert
-            mockReviewsService.Verify(s => s.AddReview(businessId, 4, "Good service", "FeelingFine"), Times.Once);
+            mockReviewsService.Verify(s => s.AddReview(businessId, clientId, 4, "Good service", "FeelingFine"), Times.Once);
             mockReviewsService.Verify(s => s.GetReviewQuery(businessId, It.IsAny<string>(), It.IsAny<string>()), Times.Exactly(2));
         }
     }
