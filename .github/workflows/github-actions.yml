@@ -69,7 +69,7 @@ jobs:
             /d:sonar.host.url="https://sonarcloud.io" `
             /d:sonar.cs.opencover.reportsPaths="**/coverage.opencover.xml" `
             /d:sonar.python.version="3.x" `
-            /d:sonar.python.coverage.reportPath="PythonAI/coverage.xml"
+            /d:sonar.python.coverage.reportPath="**/coverage.xml"
 
           # Build the .NET API and the Blazor Web API
           dotnet build "DotnetApi/DotnetApi.WebApi/DotnetApi.WebApi.csproj" --no-restore
