@@ -67,7 +67,7 @@ jobs:
             /d:sonar.token="$($env:SONAR_TOKEN)" `
             /d:sonar.exclusions="**/bin/**,**/obj/**,**/wwwroot/**" `
             /d:sonar.host.url="https://sonarcloud.io" `
-            /d:sonar.cs.opencover.reportsPaths="**/coverage.opencover.xml"
+            /d:sonar.cs.opencover.reportsPaths="**/coverage.opencover.xml" `
             /d:sonar.python.version="3.x" `
             /d:sonar.python.coverage.reportPath="PythonAI/coverage.xml"
 
