@@ -59,7 +59,7 @@ jobs:
           # Use the scanner to begin analysis for the entire .NET suite
           ${{ runner.temp }}\scanner\dotnet-sonarscanner begin /k:"sky11fca_Feeling_Fine_dotnet" `
             /o:"sky11fca" `
-            /d:sonar.token=$SONAR_TOKEN `
+            /d:sonar.token="$($env:SONAR_TOKEN)" `
             /d:sonar.exclusions="**/bin/**,**/obj/**,**/wwwroot/**" `
             /d:sonar.host.url="https://sonarcloud.io" `
             /d:sonar.cs.opencover.reportsPaths="**/coverage.opencover.xml"
@@ -74,4 +74,4 @@ jobs:
           # Running Test Coverage
           dotnet test "DotnetApi/DotnetApi.Tests/DotnetApi.Tests.csproj" --configuration Release --collect:"XPlat Code Coverage" -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Format=opencover
           dotnet test "WebApi/WebApi.Tests/WebApi.Tests.csproj" --configuration Release --collect:"XPlat Code Coverage" -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Format=opencover
-          ${{ runner.temp }}\scanner\dotnet-sonarscanner end /d:sonar.token=$SONAR_TOKEN
+          ${{ runner.temp }}\scanner\dotnet-sonarscanner end /d:sonar.token="$($env:SONAR_TOKEN)"
