@@ -77,6 +77,7 @@ jobs:
           if (Test-Path "PythonAI/requirements.txt") { 
             python -m pip install --upgrade pip 
             pip install -r "PythonAI/requirements.txt" 
+            pytest --cov=service --cov-report=xml:PythonAI/coverage.xml "PythonAI/tests"
           }
 
           # Running Test Coverage
