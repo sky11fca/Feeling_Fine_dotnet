@@ -56,6 +56,11 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         shell: powershell
         run: |
+
+          dotnet restore "DotnetApi/DotnetApi.WebApi/DotnetApi.WebApi.csproj"
+          dotnet restore "WebApi/WebApi/WebApi.csproj"
+
+
           # Use the scanner to begin analysis for the entire .NET suite
           ${{ runner.temp }}\scanner\dotnet-sonarscanner begin /k:"sky11fca_Feeling_Fine_dotnet" `
             /o:"sky11fca" `
@@ -65,8 +70,8 @@ jobs:
             /d:sonar.cs.opencover.reportsPaths="**/coverage.opencover.xml"
 
           # Build the .NET API and the Blazor Web API
-          dotnet build "DotnetApi/DotnetApi.WebApi/DotnetApi.WebApi.csproj"
-          dotnet build "WebApi/WebApi/WebApi.csproj"
+          dotnet build "DotnetApi/DotnetApi.WebApi/DotnetApi.WebApi.csproj" --no-restore
+          dotnet build "WebApi/WebApi/WebApi.csproj" --no-restore
 
           # Build Python AI
           if (Test-Path "Python AI/requirements.txt") { pip install -r "Python AI/requirements.txt" }
@@ -74,4 +79,6 @@ jobs:
           # Running Test Coverage
           dotnet test "DotnetApi/DotnetApi.Tests/DotnetApi.Tests.csproj" --configuration Release --collect:"XPlat Code Coverage" -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Format=opencover
           dotnet test "WebApi/WebApi.Tests/WebApi.Tests.csproj" --configuration Release --collect:"XPlat Code Coverage" -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Format=opencover
+          
+          
           ${{ runner.temp }}\scanner\dotnet-sonarscanner end /d:sonar.token="$($env:SONAR_TOKEN)"
