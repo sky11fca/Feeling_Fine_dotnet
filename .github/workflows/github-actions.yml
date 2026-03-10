@@ -74,7 +74,10 @@ jobs:
           dotnet build "WebApi/WebApi/WebApi.csproj" --no-restore
 
           # Build Python AI
-          if (Test-Path "Python AI/requirements.txt") { pip install -r "Python AI/requirements.txt" }
+          if (Test-Path "PythonAI/requirements.txt") { 
+            python -m pip install --upgrade pip 
+            pip install -r "PythonAI/requirements.txt" 
+          }
 
           # Running Test Coverage
           dotnet test "DotnetApi/DotnetApi.Tests/DotnetApi.Tests.csproj" --configuration Release --collect:"XPlat Code Coverage" -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Format=opencover
