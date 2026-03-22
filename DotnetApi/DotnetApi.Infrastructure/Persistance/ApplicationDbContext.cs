@@ -9,6 +9,7 @@ public class ApplicationDbContext(DbContextOptions options) : DbContext(options)
     public DbSet<Review> Reviews => Set<Review>();
     public DbSet<Client> Clients => Set<Client>();
     public DbSet<Reply> Replies => Set<Reply>();
+    public DbSet<User> Users => Set<User>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -27,7 +28,7 @@ public class ApplicationDbContext(DbContextOptions options) : DbContext(options)
             e.HasKey(x => x.Id);
             e.Property(x => x.BusinessId).IsRequired();
             e.Property(x => x.RawText).IsRequired();
-            e.Property(x => x.SubmitedOn).IsRequired();
+            e.Property(x => x.SubmittedOn).IsRequired();
             e.Property(x => x.CreatedAt).IsRequired();
         });
         
@@ -45,6 +46,16 @@ public class ApplicationDbContext(DbContextOptions options) : DbContext(options)
             e.Property(x => x.ReviewId).IsRequired();
             e.Property(x => x.ToClientId).IsRequired();
             e.Property(x => x.RawText).IsRequired();
+        });
+        
+        modelBuilder.Entity<User>(e =>
+        {
+            e.HasKey(x => x.Id);
+            e.Property(x => x.BusinessId).IsRequired();
+            e.Property(x => x.Username).IsRequired();
+            e.Property(x => x.Email).IsRequired();
+            e.Property(x => x.Password).IsRequired();
+            e.Property(x => x.UserRole).IsRequired();
         });
     }
     

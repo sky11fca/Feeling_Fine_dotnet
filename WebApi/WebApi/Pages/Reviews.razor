@@ -8,6 +8,8 @@
 @inject IBusinessService BusinessService
 @inject IClientService ClientService
 @inject IReplyService ReplyService
+@inject IJSRuntime JSRuntime
+@inject NavigationManager NavigationManager
 
 @if (_business != null)
 {
@@ -74,13 +76,20 @@ else
     private ReviewInput _reviewInput = new();
     private Dictionary<Guid, string> _clientNames = new();
     private Dictionary<Guid, ReplyDto> _replies = new();
+    private bool _isAdmin = false;
 
     protected async override Task OnInitializedAsync()
     {
+        var token = await JSRuntime.InvokeAsync<string>("localStorage.getItem", "authToken");
+        if (string.IsNullOrEmpty(token))
+        {
+            NavigationManager.NavigateTo("/login");
+            return;
+        }
 
         try
         {
-            _reviewList = await ReviewsService.GetReviewQuery(BusinessId, string.Empty, string.Empty);
+            _reviewList = await ReviewsService.GetReviewQuery(Guid.Empty, string.Empty, string.Empty);
             await FetchClientNames();
             await FetchReplies();
             var business = await BusinessService.GetBusinessQuery(string.Empty, string.Empty);
@@ -134,7 +143,8 @@ else
     {
         await ReviewsService.AddReview(BusinessId, _reviewInput.ClientId, _reviewInput.Rating, _reviewInput.RawText, "FeelingFine");
         
-        _reviewList = await ReviewsService.GetReviewQuery(BusinessId, string.Empty, string.Empty);
+        var queryBusinessId = _isAdmin ? Guid.Empty : BusinessId;
+        _reviewList = await ReviewsService.GetReviewQuery(queryBusinessId, string.Empty, string.Empty);
         await FetchReplies();
         _reviewInput = new();
     }
@@ -144,5 +154,16 @@ else
         public Guid ClientId { get; set; } = Guid.NewGuid();
         public decimal Rating { get; set; }
         public string RawText { get; set; } = string.Empty;
+    }
+
+    private byte[] ParseBase64WithoutPadding(string base64)
+    {
+        base64 = base64.Replace('-', '+').Replace('_', '/');
+        switch (base64.Length % 4)
+        {
+            case 2: base64 += "=="; break;
+            case 3: base64 += "="; break;
+        }
+        return Convert.FromBase64String(base64);
     }
 }

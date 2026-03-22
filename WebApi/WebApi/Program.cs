@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using WebApi;
+using WebApi.Services.Authentication;
 using WebApi.Services.Business;
 using WebApi.Services.Client;
 using WebApi.Services.Reply;
@@ -16,5 +17,6 @@ builder.Services.AddScoped<IBusinessService, BusinessService>();
 builder.Services.AddScoped<IReviewsService, ReviewsService>();
 builder.Services.AddScoped<IClientService, ClientService>();
 builder.Services.AddScoped<IReplyService, ReplyService>();
+builder.Services.AddScoped<IAuthenticationService, AuthenticationService>();
 
 await builder.Build().RunAsync();

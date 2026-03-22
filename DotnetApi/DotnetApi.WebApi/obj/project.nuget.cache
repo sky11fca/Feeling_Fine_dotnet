@@ -1,9 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "WYVJ+buD6rk=",
+  "dgSpecHash": "lHMUtHWz31k=",
   "success": true,
   "projectFilePath": "/home/mrbogdanovich/git/FeelingFine/DotnetApi/DotnetApi.WebApi/DotnetApi.WebApi.csproj",
   "expectedPackageFiles": [
+    "/home/mrbogdanovich/.nuget/packages/bcrypt.net-core/1.6.0/bcrypt.net-core.1.6.0.nupkg.sha512",
     "/home/mrbogdanovich/.nuget/packages/efcore.namingconventions/10.0.1/efcore.namingconventions.10.0.1.nupkg.sha512",
     "/home/mrbogdanovich/.nuget/packages/fluentvalidation/12.1.1/fluentvalidation.12.1.1.nupkg.sha512",
     "/home/mrbogdanovich/.nuget/packages/fluentvalidation.aspnetcore/11.3.1/fluentvalidation.aspnetcore.11.3.1.nupkg.sha512",
@@ -18,10 +19,10 @@
     "/home/mrbogdanovich/.nuget/packages/microsoft.entityframeworkcore.relational/10.0.1/microsoft.entityframeworkcore.relational.10.0.1.nupkg.sha512",
     "/home/mrbogdanovich/.nuget/packages/microsoft.extensions.apidescription.server/10.0.0/microsoft.extensions.apidescription.server.10.0.0.nupkg.sha512",
     "/home/mrbogdanovich/.nuget/packages/microsoft.extensions.configuration.json/10.0.3/microsoft.extensions.configuration.json.10.0.3.nupkg.sha512",
-    "/home/mrbogdanovich/.nuget/packages/microsoft.identitymodel.abstractions/8.14.0/microsoft.identitymodel.abstractions.8.14.0.nupkg.sha512",
-    "/home/mrbogdanovich/.nuget/packages/microsoft.identitymodel.jsonwebtokens/8.14.0/microsoft.identitymodel.jsonwebtokens.8.14.0.nupkg.sha512",
-    "/home/mrbogdanovich/.nuget/packages/microsoft.identitymodel.logging/8.14.0/microsoft.identitymodel.logging.8.14.0.nupkg.sha512",
-    "/home/mrbogdanovich/.nuget/packages/microsoft.identitymodel.tokens/8.14.0/microsoft.identitymodel.tokens.8.14.0.nupkg.sha512",
+    "/home/mrbogdanovich/.nuget/packages/microsoft.identitymodel.abstractions/8.16.0/microsoft.identitymodel.abstractions.8.16.0.nupkg.sha512",
+    "/home/mrbogdanovich/.nuget/packages/microsoft.identitymodel.jsonwebtokens/8.16.0/microsoft.identitymodel.jsonwebtokens.8.16.0.nupkg.sha512",
+    "/home/mrbogdanovich/.nuget/packages/microsoft.identitymodel.logging/8.16.0/microsoft.identitymodel.logging.8.16.0.nupkg.sha512",
+    "/home/mrbogdanovich/.nuget/packages/microsoft.identitymodel.tokens/8.16.0/microsoft.identitymodel.tokens.8.16.0.nupkg.sha512",
     "/home/mrbogdanovich/.nuget/packages/microsoft.openapi/2.4.1/microsoft.openapi.2.4.1.nupkg.sha512",
     "/home/mrbogdanovich/.nuget/packages/nettopologysuite/2.6.0/nettopologysuite.2.6.0.nupkg.sha512",
     "/home/mrbogdanovich/.nuget/packages/nettopologysuite.io.postgis/2.1.0/nettopologysuite.io.postgis.2.1.0.nupkg.sha512",
@@ -32,7 +33,8 @@
     "/home/mrbogdanovich/.nuget/packages/swashbuckle.aspnetcore/10.1.4/swashbuckle.aspnetcore.10.1.4.nupkg.sha512",
     "/home/mrbogdanovich/.nuget/packages/swashbuckle.aspnetcore.swagger/10.1.4/swashbuckle.aspnetcore.swagger.10.1.4.nupkg.sha512",
     "/home/mrbogdanovich/.nuget/packages/swashbuckle.aspnetcore.swaggergen/10.1.4/swashbuckle.aspnetcore.swaggergen.10.1.4.nupkg.sha512",
-    "/home/mrbogdanovich/.nuget/packages/swashbuckle.aspnetcore.swaggerui/10.1.4/swashbuckle.aspnetcore.swaggerui.10.1.4.nupkg.sha512"
+    "/home/mrbogdanovich/.nuget/packages/swashbuckle.aspnetcore.swaggerui/10.1.4/swashbuckle.aspnetcore.swaggerui.10.1.4.nupkg.sha512",
+    "/home/mrbogdanovich/.nuget/packages/system.identitymodel.tokens.jwt/8.16.0/system.identitymodel.tokens.jwt.8.16.0.nupkg.sha512"
   ],
   "logs": [
     {

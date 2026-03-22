@@ -7,7 +7,7 @@ public class Review
 
     private Review() { }
 
-    public static Review Create(Guid businessId, Guid clientId, decimal rating, RatingType ratingType, string rawText, string submitedOn)
+    public static Review Create(Guid businessId, Guid clientId, decimal rating, RatingType ratingType, string rawText, string submittedOn)
     {
         if(businessId == Guid.Empty)
         {
@@ -19,9 +19,9 @@ public class Review
             throw new ArgumentNullException(nameof(rawText));
         }
 
-        if (string.IsNullOrEmpty(submitedOn))
+        if (string.IsNullOrEmpty(submittedOn))
         {
-            throw new ArgumentNullException(nameof(submitedOn));
+            throw new ArgumentNullException(nameof(submittedOn));
         }
 
         return new Review
@@ -32,17 +32,17 @@ public class Review
             RatingType = ratingType,
             BusinessId = businessId,
             RawText = rawText,
-            SubmitedOn = submitedOn,
+            SubmittedOn = submittedOn,
             CreatedAt = DateTime.UtcNow
         };
     }
     
-    public Guid Id { get; set; }
-    public Guid BusinessId { get; set; }
-    public Guid ClientId { get; set; }
-    public decimal Rating { get; set; }
-    public RatingType RatingType { get; set; }
-    public string RawText { get; set; } = string.Empty;
-    public string SubmitedOn { get; set; } = string.Empty;
-    public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+    public Guid Id { get; private set; }
+    public Guid BusinessId { get; private set; }
+    public Guid ClientId { get; private set; }
+    public decimal Rating { get; private set; }
+    public RatingType RatingType { get; private set; }
+    public string RawText { get; private set; } = string.Empty;
+    public string SubmittedOn { get; private set; } = string.Empty;
+    public DateTime CreatedAt { get; private set; } = DateTime.UtcNow;
 }

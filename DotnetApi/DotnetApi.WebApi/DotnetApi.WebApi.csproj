@@ -5,6 +5,7 @@
         <Nullable>enable</Nullable>
         <ImplicitUsings>enable</ImplicitUsings>
       <UserSecretsId>a0636cef-9faf-4806-9107-c29b49814747</UserSecretsId>
+      <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
   </PropertyGroup>
 
     <ItemGroup>
@@ -29,6 +30,12 @@
       <ProjectReference Include="..\DotnetApi.Application\DotnetApi.Application.csproj" />
       <ProjectReference Include="..\DotnetApi.Domains\DotnetApi.Domains.csproj" />
       <ProjectReference Include="..\DotnetApi.Infrastructure\DotnetApi.Infrastructure.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Content Include="..\.dockerignore">
+        <Link>.dockerignore</Link>
+      </Content>
     </ItemGroup>
 
 </Project>

@@ -1,5 +1,3 @@
-using DotnetApi.Domains.Entities;
-
 namespace DotnetApi.Application.Abstractions;
 
 public interface IReplyRepository

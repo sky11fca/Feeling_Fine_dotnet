@@ -30,6 +30,6 @@ public class Client
     
     public Guid Id { get; private set; }
     public string Username { get; private set; } = string.Empty;
-    public string Email { get; private set; }
-    public string PhoneNumber { get; private set; }
+    public string Email { get; private set; } = string.Empty;
+    public string PhoneNumber { get; private set; } = string.Empty;
 }

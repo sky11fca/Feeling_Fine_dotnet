@@ -1,15 +1,20 @@
 using DotnetApi.Application.Abstractions;
+using DotnetApi.Application.Authentication.Command;
 using DotnetApi.Application.Businesses.Commands;
 using DotnetApi.Application.Businesses.Queries;
 using DotnetApi.Application.Reviews.Commands;
 using DotnetApi.Application.Reviews.Validators;
+using DotnetApi.Infrastructure.Authentication;
 using DotnetApi.Infrastructure.Persistance;
 using DotnetApi.Infrastructure.Repository;
 using DotnetApi.WebApi.Controller;
 using FluentValidation;
 using FluentValidation.AspNetCore;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi;
+
+AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -58,9 +63,16 @@ builder.Services.AddScoped<IBusinessRepository, BusinessRepository>();
 builder.Services.AddScoped<IReviewRepository, ReviewRepository>();
 builder.Services.AddScoped<IClientRepository, ClientRepository>();
 builder.Services.AddScoped<IReplyRepository, ReplyRepository>();
+builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IPasswordHasher, PasswordHasher>();
+builder.Services.AddScoped<IJwtTokenGenerator, JwtTokenGenerator>();
+
 
 builder.Services.AddValidatorsFromAssemblyContaining<AddReviewCommand>();
 builder.Services.AddValidatorsFromAssemblyContaining<AddBusinessCommand>();
+builder.Services.AddValidatorsFromAssemblyContaining<LoginCommand>();
+builder.Services.AddValidatorsFromAssemblyContaining<RegisterCommand>();
+
 
 builder.Services.AddCors(option =>
 {

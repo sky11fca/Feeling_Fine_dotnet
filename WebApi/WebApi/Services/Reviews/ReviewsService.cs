@@ -16,7 +16,8 @@ public class ReviewsService(HttpClient httpClient) : IReviewsService
 
     public async Task<List<ReviewDto?>> GetReviewQuery(Guid businessId, string rawText, string submitedOn)
     {
+        var fullUrl = businessId != Guid.Empty  ? $"{BaseUri}?businessId={businessId}" : BaseUri;
         return await httpClient.GetFromJsonAsync<List<ReviewDto?>>(
-            $"{BaseUri}?businessId={businessId}")!;
+            fullUrl)!;
     }
 }

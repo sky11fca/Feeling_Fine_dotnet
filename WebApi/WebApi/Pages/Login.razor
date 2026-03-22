@@ -1,0 +1,60 @@
+@page "/login"
+@using WebApi.Models
+@using WebApi.Models.Requests
+@using WebApi.Services.Authentication
+@using System.Text.Json
+@inject HttpClient Http
+@inject NavigationManager NavigationManager
+@inject IAuthenticationService AuthenticationService
+@inject IJSRuntime JSRuntime
+
+<h3>Login</h3>
+
+<div class="card">
+    <div class="card-body">
+        <div class="form-group">
+            <label>Email</label>
+            <input class="form-control" @bind="loginDto.Email" />
+        </div>
+        <div class="form-group">
+            <label>Password</label>
+            <input type="password" class="form-control" @bind="loginDto.Password" />
+        </div>
+        <button class="btn btn-primary" @onclick="LoginUser">Login</button>
+    </div>
+</div>
+
+@code {
+    
+    private LoginCommand loginDto = new LoginCommand();
+    private async Task LoginUser()
+    {
+        var token = await AuthenticationService.Login(loginDto.Email, loginDto.Password);
+        if (!string.IsNullOrEmpty(token))
+        {
+            await JSRuntime.InvokeVoidAsync("localStorage.setItem", "authToken", token);
+            
+            var payload = token.Split('.')[1];
+            var jsonBytes = ParseBase64WithoutPadding(payload);
+            var keyValuePairs = JsonSerializer.Deserialize<Dictionary<string, object>>(jsonBytes);
+            
+            if (keyValuePairs != null && keyValuePairs.TryGetValue("jti", out var businessIdObj))
+            {
+                var businessId = businessIdObj.ToString();
+                await JSRuntime.InvokeVoidAsync("localStorage.setItem", "businessId", businessId);
+                NavigationManager.NavigateTo($"/reviews/{businessId}");
+            }
+        }
+    }
+
+    private byte[] ParseBase64WithoutPadding(string base64)
+    {
+        base64 = base64.Replace('-', '+').Replace('_', '/');
+        switch (base64.Length % 4)
+        {
+            case 2: base64 += "=="; break;
+            case 3: base64 += "="; break;
+        }
+        return Convert.FromBase64String(base64);
+    }
+}

@@ -20,6 +20,7 @@
           "net10.0"
         ],
         "sources": {
+          "/home/mrbogdanovich/.dotnet/library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -371,6 +372,7 @@
           "net10.0"
         ],
         "sources": {
+          "/home/mrbogdanovich/.dotnet/library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {

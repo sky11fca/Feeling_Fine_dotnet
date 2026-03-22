@@ -9,26 +9,14 @@
     <p>Choose a Company</p>
 </div>
 
-@if (_allBusinesses.Count != 0)
-{
-    <ul class="list-group mt-3">
-        @foreach (var business in _allBusinesses)
-        {
-            <li class="list-group-item list-group-item-action" 
-                @onclick="() => NavigateToReviews(business.Id)" 
-                style="cursor: pointer;">
-                <strong>@business.Name</strong>
-                <p>@business.Industry</p>
-            </li>
-        }
-    </ul>
-}else{
-    <p>No businesses found</p>
-}
+<div>
+    <button onclick="@(() => NavManager.NavigateTo("/login"))"> Login </button>
+    <button onclick="@(() => NavManager.NavigateTo("/register"))"> Register </button>
+</div>
 
 
 
-@code {
+@*@code {
     private List<BusinessDto> _allBusinesses = new();
 
     protected async override Task OnInitializedAsync()
@@ -45,4 +33,4 @@
     }
     
     private void NavigateToReviews(Guid businessId) => NavManager.NavigateTo($"/reviews/{businessId}");
-}
+}*@

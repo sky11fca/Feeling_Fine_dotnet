@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "P0G8kD6rOZQ=",
+  "dgSpecHash": "P0vdf0UIOEg=",
   "success": true,
   "projectFilePath": "/home/mrbogdanovich/git/FeelingFine/WebApi/WebApi/WebApi.csproj",
   "expectedPackageFiles": [
@@ -35,8 +35,9 @@
     "/home/mrbogdanovich/.nuget/packages/microsoft.jsinterop/10.0.0/microsoft.jsinterop.10.0.0.nupkg.sha512",
     "/home/mrbogdanovich/.nuget/packages/microsoft.jsinterop.webassembly/10.0.0/microsoft.jsinterop.webassembly.10.0.0.nupkg.sha512",
     "/home/mrbogdanovich/.nuget/packages/microsoft.net.illink.tasks/10.0.0/microsoft.net.illink.tasks.10.0.0.nupkg.sha512",
-    "/home/mrbogdanovich/.nuget/packages/microsoft.net.sdk.webassembly.pack/10.0.0/microsoft.net.sdk.webassembly.pack.10.0.0.nupkg.sha512",
-    "/home/mrbogdanovich/.nuget/packages/microsoft.netcore.app.runtime.mono.browser-wasm/10.0.0/microsoft.netcore.app.runtime.mono.browser-wasm.10.0.0.nupkg.sha512"
+    "/home/mrbogdanovich/.nuget/packages/microsoft.net.sdk.webassembly.pack/10.0.3/microsoft.net.sdk.webassembly.pack.10.0.3.nupkg.sha512",
+    "/home/mrbogdanovich/.nuget/packages/microsoft.netcore.app.ref/10.0.3/microsoft.netcore.app.ref.10.0.3.nupkg.sha512",
+    "/home/mrbogdanovich/.nuget/packages/microsoft.netcore.app.runtime.mono.browser-wasm/10.0.3/microsoft.netcore.app.runtime.mono.browser-wasm.10.0.3.nupkg.sha512"
   ],
   "logs": []
 }

@@ -14,7 +14,7 @@ public class AddReplyCommandHandler(IReplyRepository repository, IValidator<AddR
             throw new ValidationException(result.Errors);
         }
 
-        var reply = DotnetApi.Domains.Entities.Reply.Create(request.ReviewId, request.ToClientId, request.RawText);
+        var reply = Domains.Entities.Reply.Create(request.ReviewId, request.ToClientId, request.RawText);
         await repository.AddAsync(reply, cancellationToken);
         return reply;
     }

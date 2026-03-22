@@ -8,10 +8,11 @@ public class BusinessService(HttpClient httpClient) : IBusinessService
 {
     private readonly string BaseUri = "http://localhost:5160/api/v1/business";
     
-    public async Task AddBusiness(string name, string industry)
+    public async Task<Guid> AddBusiness(string name, string industry)
     {
         var request = new AddBusinessCommand(name, industry);
-        await httpClient.PostAsJsonAsync(BaseUri, request);
+        var response = await httpClient.PostAsJsonAsync(BaseUri, request);
+        return response.Content.ReadFromJsonAsync<Guid>().Result;
     }
 
     public async  Task<List<BusinessDto?>> GetBusinessQuery(string name, string industry)

@@ -53,7 +53,8 @@ public class AddReviewTests : IDisposable
 
         _repositoryMock
             .Setup(x => x.AddAsync(It.IsAny<Review>(), It.IsAny<CancellationToken>()))
-            .Callback<Review, CancellationToken>((r, ct) => r.Id = Guid.NewGuid());
+            .Callback<Review, CancellationToken>((r, ct) => 
+                typeof(Review).GetProperty(nameof(Review.Id))!.SetValue(r, Guid.NewGuid()));
  
         // Act
         var result = await _handler.Handle(command, CancellationToken.None);
