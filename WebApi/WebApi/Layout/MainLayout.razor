@@ -1,16 +1,68 @@
 ﻿@inherits LayoutComponentBase
-<div class="page">
-    @*<div class="sidebar">
-        <NavMenu/>
-    </div>*@
 
-    <main>
-        @*<div class="top-row px-4">
-            <a href="https://learn.microsoft.com/aspnet/core/" target="_blank">About</a>
-        </div>*@
+<MudThemeProvider Theme="@_liquidGlassTheme" IsDarkMode="true" />
+<MudPopoverProvider />
+<MudDialogProvider />
+<MudSnackbarProvider />
 
-        <article class="content px-4">
-            @Body
-        </article>
-    </main>
-</div>
+<MudLayout>
+    <MudMainContent Class="liquid-glass-content">
+        @Body
+    </MudMainContent>
+</MudLayout>
+
+@code {
+    private MudTheme _liquidGlassTheme = new MudTheme()
+    {
+        PaletteDark = new PaletteDark()
+        {
+            Primary = "#7fafff",
+            PrimaryDarken = "#64a1ff",
+            Secondary = "#acaaad", // on-surface-variant
+            Tertiary = "#68d3ff",
+            Background = "#0e0e10", // surface
+            Surface = "#19191c", // surface-container
+            AppbarBackground = "#131315", // surface-container-low
+            DrawerBackground = "#131315", // surface-container-low
+            DrawerText = "#ffffff",
+            TextPrimary = "#ffffff", // on-surface
+            TextSecondary = "#acaaad", // on-surface-variant
+            ActionDefault = "#ffffff",
+            ActionDisabled = "rgba(255,255,255, 0.26)",
+            ActionDisabledBackground = "rgba(255,255,255, 0.12)"
+        },
+        Typography = new Typography()
+        {
+            Default = new DefaultTypography()
+            {
+                FontFamily = new[] { "Inter", "Helvetica", "Arial", "sans-serif" },
+                LineHeight = "1.6",
+                LetterSpacing = "normal"
+            },
+            H1 = new H1Typography()
+            {
+                FontFamily = new[] { "Inter", "Helvetica", "Arial", "sans-serif" },
+                FontSize = "3.5rem", // display-lg
+                FontWeight = "700",
+                LetterSpacing = "-0.02em"
+            },
+            H2 = new H2Typography()
+            {
+                FontFamily = new[] { "Inter", "Helvetica", "Arial", "sans-serif" },
+                FontSize = "2rem", // headline-lg
+                FontWeight = "600",
+                LineHeight = "1.2"
+            },
+            Body1 = new Body1Typography()
+            {
+                FontFamily = new[] { "Inter", "Helvetica", "Arial", "sans-serif" },
+                FontSize = "1rem", // body-lg
+                LineHeight = "1.6"
+            }
+        },
+        LayoutProperties = new LayoutProperties()
+        {
+            DefaultBorderRadius = "1.5rem", // Input Fields (Recessed Wells) md
+        }
+    };
+}

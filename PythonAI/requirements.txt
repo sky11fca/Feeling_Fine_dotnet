@@ -6,3 +6,4 @@ transformers~=5.2.0
 pytest~=8.0.0
 pytest-cov
 uvicorn
+torch

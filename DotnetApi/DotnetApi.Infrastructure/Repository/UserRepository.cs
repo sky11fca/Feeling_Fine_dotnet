@@ -21,10 +21,11 @@ public class UserRepository : IUserRepository
         return user;
     }
 
-    public async Task<User?> GetUserAsync(Guid id, CancellationToken cancellationToken = default)
+    public async Task<List<User?>> GetUsersAsync(CancellationToken cancellationToken = default)
     {
-        return await _context.Users.FirstOrDefaultAsync(u => u.Id == id, cancellationToken);
+        return await _context.Users.ToListAsync(cancellationToken);
     }
+    
 
     public async Task<User?> GetUserByEmailAsync(string email, CancellationToken cancellationToken = default)
     {

@@ -3,34 +3,84 @@
 @using WebApi.Services.Business
 @inject NavigationManager NavManager
 @inject IBusinessService BusinessService
+@inject IJSRuntime JSRuntime
 
-<div>
-    <h3>Welcome</h3>
-    <p>Choose a Company</p>
-</div>
+<MudContainer MaxWidth="MaxWidth.Large" Class="mt-10 mb-16">
+    <MudGrid Justify="Justify.Center" AlignItems="AlignItems.Center" Spacing="8">
+        <MudItem xs="12" md="6">
+            <MudText Typo="Typo.h1" Class="mb-4" Style="font-weight: 700;">FeelingFine</MudText>
+            <MudText Typo="Typo.h5" Class="mb-6 mud-text-secondary">Empower your workplace culture.</MudText>
+            <MudText Typo="Typo.body1" Class="mb-8">
+                Discover a better way to measure, understand, and improve employee well-being. 
+                Whether you are an employer looking to nurture your team or an employee wanting 
+                to share your daily experiences, FeelingFine provides the insights you need for a healthier workplace.
+            </MudText>
 
-<div>
-    <button onclick="@(() => NavManager.NavigateTo("/login"))"> Login </button>
-    <button onclick="@(() => NavManager.NavigateTo("/register"))"> Register </button>
-</div>
+            <div class="d-flex gap-4 flex-wrap">
+                <MudButton Variant="Variant.Filled" 
+                           Class="liquid-glass-btn-primary px-10 py-3" 
+                           OnClick="@(() => NavManager.NavigateTo("/login"))">
+                    Login
+                </MudButton>
+                <MudButton Variant="Variant.Filled" 
+                           Class="liquid-glass-btn-secondary px-10 py-3" 
+                           OnClick="@(() => NavManager.NavigateTo("/register"))">
+                    Register
+                </MudButton>
+            </div>
+        </MudItem>
 
+        <MudItem xs="12" md="6" Class="d-flex justify-center">
+            <MudImage Src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" 
+                      Alt="Team working together" 
+                      Elevation="6" 
+                      Class="rounded-xl" 
+                      Style="max-width: 100%; height: auto; object-fit: cover; aspect-ratio: 4/3;" />
+        </MudItem>
+    </MudGrid>
 
+    <MudGrid Class="mt-16" Spacing="6" Justify="Justify.Center">
+        <MudItem xs="12" md="4">
+            <MudCard Elevation="3" Class="liquid-glass-card h-100 pa-4 rounded-xl">
+                <MudCardContent>
+                    <MudIcon Icon="@Icons.Material.Filled.Mood" Color="Color.Primary" Size="Size.Large" Class="mb-4" />
+                    <MudText Typo="Typo.h6" Class="mb-2">Track Well-being</MudText>
+                    <MudText Typo="Typo.body2">Regularly check in on how you feel. Create an environment where mental health and workplace happiness are top priorities.</MudText>
+                </MudCardContent>
+            </MudCard>
+        </MudItem>
+        <MudItem xs="12" md="4">
+            <MudCard Elevation="3" Class="liquid-glass-card h-100 pa-4 rounded-xl">
+                <MudCardContent>
+                    <MudIcon Icon="@Icons.Material.Filled.Business" Color="Color.Secondary" Size="Size.Large" Class="mb-4" />
+                    <MudText Typo="Typo.h6" Class="mb-2">Company Insights</MudText>
+                    <MudText Typo="Typo.body2">View actionable metrics and reviews for businesses to help leadership foster a more inclusive and productive culture.</MudText>
+                </MudCardContent>
+            </MudCard>
+        </MudItem>
+        <MudItem xs="12" md="4">
+            <MudCard Elevation="3" Class="liquid-glass-card h-100 pa-4 rounded-xl">
+                <MudCardContent>
+                    <MudIcon Icon="@Icons.Material.Filled.Security" Color="Color.Info" Size="Size.Large" Class="mb-4" />
+                    <MudText Typo="Typo.h6" Class="mb-2">Safe & Anonymous</MudText>
+                    <MudText Typo="Typo.body2">Share your thoughts without fear. We ensure reviews and mood check-ins can be managed securely and confidentially.</MudText>
+                </MudCardContent>
+            </MudCard>
+        </MudItem>
+    </MudGrid>
+</MudContainer>
 
-@*@code {
-    private List<BusinessDto> _allBusinesses = new();
-
-    protected async override Task OnInitializedAsync()
+@code {
+    protected override async Task OnInitializedAsync()
     {
-
-        try
+        var token = await JSRuntime.InvokeAsync<string>("localStorage.getItem", "authToken");
+        if (!string.IsNullOrEmpty(token))
         {
-            _allBusinesses = await BusinessService.GetBusinessQuery(string.Empty, string.Empty);
-        }
-        catch
-        {
-            _allBusinesses = new();
+            var businessId = await JSRuntime.InvokeAsync<string>("localStorage.getItem", "businessId");
+            if (!string.IsNullOrEmpty(businessId))
+            {
+                NavManager.NavigateTo($"/reviews/{businessId}");
+            }
         }
     }
-    
-    private void NavigateToReviews(Guid businessId) => NavManager.NavigateTo($"/reviews/{businessId}");
-}*@
+}

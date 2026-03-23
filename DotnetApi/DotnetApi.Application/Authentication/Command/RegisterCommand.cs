@@ -9,4 +9,4 @@ public record RegisterCommand(
     string Email,
     string Password,
     string UserRole
-    ): IRequest<User?>;
+    ): IRequest<Domains.Entities.User?>;

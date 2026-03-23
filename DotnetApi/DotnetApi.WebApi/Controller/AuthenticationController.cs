@@ -1,4 +1,5 @@
 using DotnetApi.Application.Authentication.Command;
+using DotnetApi.Application.User.Query;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -28,4 +29,7 @@ public class AuthenticationController : ControllerBase
         var result = await _mediator.Send(command);
         return Ok(result);
     }
+
+    [HttpGet()]
+    public async Task<IActionResult> GetAllUsers() => Ok(await _mediator.Send(new GetUserQuery()));
 }

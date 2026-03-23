@@ -4,5 +4,5 @@ namespace DotnetApi.Application.Abstractions;
 
 public interface IJwtTokenGenerator
 {
-    string GenerateToken(User user);
+    string GenerateToken(Domains.Entities.User user);
 }

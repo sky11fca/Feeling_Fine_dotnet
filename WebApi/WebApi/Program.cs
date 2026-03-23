@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
+using MudBlazor.Services;
 using WebApi;
 using WebApi.Services.Authentication;
 using WebApi.Services.Business;
@@ -18,5 +19,7 @@ builder.Services.AddScoped<IReviewsService, ReviewsService>();
 builder.Services.AddScoped<IClientService, ClientService>();
 builder.Services.AddScoped<IReplyService, ReplyService>();
 builder.Services.AddScoped<IAuthenticationService, AuthenticationService>();
+
+builder.Services.AddMudServices();
 
 await builder.Build().RunAsync();

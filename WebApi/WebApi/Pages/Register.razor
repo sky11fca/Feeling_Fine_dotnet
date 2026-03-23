@@ -1,4 +1,5 @@
 @page "/register"
+@using WebApi.Models
 @using WebApi.Models.Requests
 @using WebApi.Services.Authentication
 @using WebApi.Services.Business
@@ -6,77 +7,115 @@
 @inject NavigationManager NavigationManager
 @inject IBusinessService BusinessService
 @inject IAuthenticationService AuthenticationService
+@inject IJSRuntime JSRuntime
 
-<h3>Register</h3>
+<MudContainer MaxWidth="MaxWidth.Small" Class="mt-16">
+    <MudText Typo="Typo.h1" Align="Align.Center" Class="mb-16">Register</MudText>
 
-<div class="card">
-    <div class="card-body">
-        <div class="form-group">
-            <label>Username</label>
-            <input class="form-control" @bind="_registerDto.Username" />
-        </div>
-        <div class="form-group">
-            <label>Email</label>
-            <input class="form-control" @bind="_registerDto.Email" />
-        </div>
-        <div class="form-group">
-            <label>Password</label>
-            <input type="password" class="form-control" @bind="_registerDto.Password" />
-        </div>
-        <div class="form-group">
-            <label>Role</label>
-            <input class="form-control" @bind="_registerDto.UserRole" />
-        </div>
-        <div class="form-group">
-            <label>Business Name</label>
-            <input class="form-control" @bind="_businessInput.Name" />
-        </div>
-        <div class="form-group">
-            <label>Business Industry</label>
-            <input class="form-control" @bind="_businessInput.Industry" />
-        </div>
-        <button class="btn btn-primary" @onclick="RegisterUser">Register</button>
+    <div class="liquid-glass-card">
+        <MudTextField @bind-Value="_registerDto.Username" 
+                      Label="Username" 
+                      Underline="false"
+                      Variant="Variant.Filled" 
+                      Class="liquid-glass-input mb-6" />
+
+        <MudTextField @bind-Value="_registerDto.Email" 
+                      Label="Email" 
+                      Underline="false"
+                      Variant="Variant.Filled" 
+                      Class="liquid-glass-input mb-6" 
+                      InputType="InputType.Email" />
+
+        <MudTextField @bind-Value="_registerDto.Password" 
+                      Label="Password" 
+                      Underline="false"
+                      Variant="Variant.Filled" 
+                      Class="liquid-glass-input mb-6" 
+                      InputType="InputType.Password" />
+
+        <MudTextField @bind-Value="_confirmPassword" 
+                      Label="Confirm Password" 
+                      Underline="false"
+                      Variant="Variant.Filled" 
+                      Class="liquid-glass-input mb-6" 
+                      InputType="InputType.Password" />
+
+        <MudSelect T="string" @bind-Value="_registerDto.UserRole" 
+                   Label="Role" 
+                   Variant="Variant.Filled" 
+                   Underline="false"
+                   Class="liquid-glass-input mb-6">
+            <MudSelectItem Value="@("Admin")">Admin</MudSelectItem>
+            <MudSelectItem Value="@("Employer")">Employer</MudSelectItem>
+            <MudSelectItem Value="@("Employee")">Employee</MudSelectItem>
+        </MudSelect>
+
+        <MudSelect T="Guid?" @bind-Value="_selectedBusinessId" 
+                   Label="Select a Business" 
+                   Variant="Variant.Filled" 
+                   Underline="false"
+                   Class="liquid-glass-input mb-16">
+            @foreach (var business in _businesses)
+            {
+                <MudSelectItem T="Guid?" Value="@(business.Id)">@business.Name</MudSelectItem>
+            }
+        </MudSelect>
+
+        @if (!string.IsNullOrEmpty(_errorMessage))
+        {
+            <MudText Color="Color.Error" Typo="Typo.body2" Class="mb-4">@_errorMessage</MudText>
+        }
+
+        <MudButton Variant="Variant.Filled" 
+                   Class="liquid-glass-btn-primary full-width py-3" 
+                   OnClick="RegisterUser">
+            Register
+        </MudButton>
     </div>
-</div>
+</MudContainer>
 
 @code {
     private RegisterCommand _registerDto = new RegisterCommand();
-    private BusinessInput _businessInput = new BusinessInput();
+    private Guid? _selectedBusinessId;
+    private string _confirmPassword = string.Empty;
+    private string _errorMessage = string.Empty;
+
+    private List<BusinessDto> _businesses = new List<BusinessDto>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        var token = await JSRuntime.InvokeAsync<string>("localStorage.getItem", "authToken");
+        if (!string.IsNullOrEmpty(token))
+        {
+            var businessId = await JSRuntime.InvokeAsync<string>("localStorage.getItem", "businessId");
+            if (!string.IsNullOrEmpty(businessId))
+            {
+                NavigationManager.NavigateTo($"/reviews/{businessId}");
+                return;
+            }
+        }
+
+        _businesses = await BusinessService.GetBusinessQuery(string.Empty, string.Empty);
+    }
 
     private async Task RegisterUser()
     {
-        var businessId = Guid.Empty;
-        var queryResponse = await BusinessService.GetBusinessQuery(_businessInput.Name, _businessInput.Industry);
-        if (queryResponse.Count == 0)
+        _errorMessage = string.Empty;
+        
+        if (_registerDto.Password != _confirmPassword)
         {
-            businessId = await BusinessService.AddBusiness(_businessInput.Name, _businessInput.Industry);
-            await AuthenticationService.Register(new RegisterCommand
-            {
-                Email = _registerDto.Email,
-                BusinessId = businessId,
-                Password = _registerDto.Password,
-                Username = _registerDto.Username,
-                UserRole = _registerDto.UserRole
-            });
-            NavigationManager.NavigateTo("/login");
+            _errorMessage = "Passwords do not match.";
             return;
         }
 
-        businessId = queryResponse[0].Id;
         await AuthenticationService.Register(new RegisterCommand
         {
             Email = _registerDto.Email,
-            BusinessId = businessId,
+            BusinessId = _selectedBusinessId ?? Guid.Empty,
             Password = _registerDto.Password,
             Username = _registerDto.Username,
             UserRole = _registerDto.UserRole
         });
         NavigationManager.NavigateTo("/login");
-    }
-
-    private class BusinessInput()
-    {
-        public string Name { get; set; }
-        public string Industry { get; set; }
     }
 }

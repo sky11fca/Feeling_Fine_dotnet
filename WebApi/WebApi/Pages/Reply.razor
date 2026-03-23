@@ -3,35 +3,61 @@
 @using WebApi.Services.Reply
 @using System.Net.Http.Json
 @using System.Text.Json.Serialization
+@using WebApi.Shared
 @inject IReplyService ReplyService
 @inject NavigationManager NavigationManager
 @inject HttpClient http
 @inject IJSRuntime JSRuntime
 
-<h3>Reply to Review</h3>
+<MudContainer MaxWidth="MaxWidth.Medium" Class="mt-16">
+    <Navbar/>
+    
+    <MudText Typo="Typo.h1" Align="Align.Center" Class="mb-16">Reply to Review</MudText>
 
-    <div class="card my-3">
-        <div class="card-body">
-            <h5 class="card-title">Review by @ClientName</h5>
-            <h6 class="card-subtitle mb-2 text-muted">Sentiment: @Sentiment</h6>
-            <p class="card-text">@RawText</p>
+    <div class="liquid-glass-section">
+        <MudText Typo="Typo.h2" Class="mb-6">Review Details</MudText>
+        <div class="liquid-glass-card">
+            <MudText Typo="Typo.h6" Class="mb-2" Color="Color.Primary">Review by @ClientName</MudText>
+            <MudChip T="string" Size="Size.Small" Class="mb-4" Color="Color.Secondary">
+                Sentiment: @Sentiment
+            </MudChip>
+            <MudText Typo="Typo.body1" Class="text-white">@RawText</MudText>
         </div>
     </div>
 
-    <div class="card my-3">
-        <div class="card-body">
-            <h5 class="card-title">Leave a Reply</h5>
+    <div class="liquid-glass-section">
+        <MudText Typo="Typo.h2" Class="mb-6">Leave a Reply</MudText>
+        <div class="liquid-glass-card">
             <EditForm Model="@_replyInput" OnValidSubmit="@SubmitReply">
-                <DataAnnotationsValidator />
-                <ValidationSummary />
-                <div class="mb-3">
-                    <label class="form-label">Reply</label>
-                    <InputTextArea class="form-control" @bind-Value="_replyInput.RawText" />
-                </div>
-                <button type="submit" class="btn btn-primary">Submit</button>
+                <DataAnnotationsValidator/>
+                <ValidationSummary/>
+
+                @if (_isGeneratingReply)
+                {
+                    <div class="d-flex flex-column align-center justify-center py-8">
+                        <MudProgressCircular Color="Color.Primary" Indeterminate="true" Size="Size.Large" Class="mb-4"/>
+                        <MudText Typo="Typo.body1" Color="Color.Primary">Generating AI reply...</MudText>
+                    </div>
+                }
+                else
+                {
+                    <MudTextField @bind-Value="_replyInput.RawText"
+                                  Label="Reply"
+                                  Variant="Variant.Filled"
+                                  Underline="false"
+                                  Lines="6"
+                                  Class="liquid-glass-input mb-6"/>
+
+                    <MudButton ButtonType="ButtonType.Submit"
+                               Variant="Variant.Filled"
+                               Class="liquid-glass-btn-primary full-width py-3">
+                        Submit
+                    </MudButton>
+                }
             </EditForm>
         </div>
     </div>
+</MudContainer>
 
 @code {
     [Parameter]
@@ -53,6 +79,7 @@
     public string Sentiment { get; set; } = string.Empty;
 
     private ReplyInput _replyInput = new();
+    private bool _isGeneratingReply = true;
 
     protected async override Task OnInitializedAsync()
     {
@@ -65,6 +92,7 @@
 
         try
         {
+            _isGeneratingReply = true;
             var response = await http.PostAsJsonAsync("http://localhost:8000/ai/reply/", new {raw_text = RawText, customer_name = ClientName, sentiment = Sentiment});
             if (response.IsSuccessStatusCode)
             {
@@ -78,6 +106,10 @@
         catch
         {
             _replyInput.RawText = string.Empty;
+        }
+        finally
+        {
+            _isGeneratingReply = false;
         }
     }
 

@@ -5,6 +5,7 @@
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
         <IsPackable>false</IsPackable>
+        <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
     </PropertyGroup>
 
     <ItemGroup>
@@ -37,6 +38,12 @@
       <ProjectReference Include="..\DotnetApi.Domains\DotnetApi.Domains.csproj" />
       <ProjectReference Include="..\DotnetApi.Infrastructure\DotnetApi.Infrastructure.csproj" />
       <ProjectReference Include="..\DotnetApi.WebApi\DotnetApi.WebApi.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Content Include="..\.dockerignore">
+        <Link>.dockerignore</Link>
+      </Content>
     </ItemGroup>
 
 </Project>

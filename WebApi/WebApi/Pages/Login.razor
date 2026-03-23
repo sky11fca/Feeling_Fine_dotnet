@@ -8,25 +8,49 @@
 @inject IAuthenticationService AuthenticationService
 @inject IJSRuntime JSRuntime
 
-<h3>Login</h3>
+<MudContainer MaxWidth="MaxWidth.Small" Class="mt-16">
+    <MudText Typo="Typo.h1" Align="Align.Center" Class="mb-16">Login</MudText>
 
-<div class="card">
-    <div class="card-body">
-        <div class="form-group">
-            <label>Email</label>
-            <input class="form-control" @bind="loginDto.Email" />
-        </div>
-        <div class="form-group">
-            <label>Password</label>
-            <input type="password" class="form-control" @bind="loginDto.Password" />
-        </div>
-        <button class="btn btn-primary" @onclick="LoginUser">Login</button>
+    <div class="liquid-glass-card">
+        <MudTextField @bind-Value="loginDto.Email" 
+                      Label="Email" 
+                      Underline="false"
+                      Variant="Variant.Filled" 
+                      Class="liquid-glass-input mb-6" 
+                      InputType="InputType.Email" />
+
+        <MudTextField @bind-Value="loginDto.Password" 
+                      Label="Password" 
+                      Underline="false"
+                      Variant="Variant.Filled" 
+                      Class="liquid-glass-input mb-16" 
+                      InputType="InputType.Password" />
+
+        <MudButton Variant="Variant.Filled" 
+                   Class="liquid-glass-btn-primary full-width py-3" 
+                   OnClick="LoginUser">
+            Login
+        </MudButton>
     </div>
-</div>
+</MudContainer>
 
 @code {
     
     private LoginCommand loginDto = new LoginCommand();
+
+    protected override async Task OnInitializedAsync()
+    {
+        var token = await JSRuntime.InvokeAsync<string>("localStorage.getItem", "authToken");
+        if (!string.IsNullOrEmpty(token))
+        {
+            var businessId = await JSRuntime.InvokeAsync<string>("localStorage.getItem", "businessId");
+            if (!string.IsNullOrEmpty(businessId))
+            {
+                NavigationManager.NavigateTo($"/reviews/{businessId}");
+            }
+        }
+    }
+
     private async Task LoginUser()
     {
         var token = await AuthenticationService.Login(loginDto.Email, loginDto.Password);

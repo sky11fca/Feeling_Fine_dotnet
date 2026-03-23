@@ -6,9 +6,9 @@ using MediatR;
 
 namespace DotnetApi.Application.Authentication.Command;
 
-public class RegisterCommandHandler(IUserRepository userRepository, IPasswordHasher passwordHasher, IValidator<RegisterCommand> validator): IRequestHandler<RegisterCommand, User?>
+public class RegisterCommandHandler(IUserRepository userRepository, IPasswordHasher passwordHasher, IValidator<RegisterCommand> validator): IRequestHandler<RegisterCommand, Domains.Entities.User?>
 {
-    public async Task<User?> Handle(RegisterCommand request, CancellationToken cancellationToken)
+    public async Task<Domains.Entities.User?> Handle(RegisterCommand request, CancellationToken cancellationToken)
     {
         var result = await validator.ValidateAsync(request, cancellationToken);
         if (!result.IsValid)
@@ -19,7 +19,7 @@ public class RegisterCommandHandler(IUserRepository userRepository, IPasswordHas
         var hashedPassword = passwordHasher.Hash(request.Password);
         
         
-        var user = User.Create(
+        var user = Domains.Entities.User.Create(
             request.BusinessId, 
             request.Username, 
             request.Email, 

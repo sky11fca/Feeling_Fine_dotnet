@@ -4,6 +4,7 @@
 @using WebApi.Services.Client
 @using WebApi.Services.Reviews
 @using WebApi.Services.Reply
+@using WebApi.Shared
 @inject IReviewsService ReviewsService
 @inject IBusinessService BusinessService
 @inject IClientService ClientService
@@ -11,60 +12,116 @@
 @inject IJSRuntime JSRuntime
 @inject NavigationManager NavigationManager
 
-@if (_business != null)
-{
-    <h3>Reviews for @_business.Name</h3>
-    <p>@_business.Industry</p>
-}
-else
-{
-    <h3>Reviews</h3>
-}
+<MudContainer MaxWidth="MaxWidth.Large" Class="mt-16">
+    
+    <Navbar/>
+    @if (_business != null)
+    {
+        <MudText Typo="Typo.h1" Align="Align.Center" Class="mb-4">Reviews for @_business.Name</MudText>
+        <MudText Typo="Typo.body1" Align="Align.Center" Class="mb-16 mud-text-secondary">@_business.Industry</MudText>
+    }
+    else
+    {
+        <MudText Typo="Typo.h1" Align="Align.Center" Class="mb-16">Reviews</MudText>
+    }
 
-<div class="card my-3">
-    <div class="card-body">
-        <h5 class="card-title">Add a Review</h5>
-        <EditForm Model="@_reviewInput" OnValidSubmit="@SubmitReview">
-            <DataAnnotationsValidator />
-            <ValidationSummary />
-            <div class="mb-3">
-                <label class="form-label">Rating (1-5)</label>
-                <InputNumber class="form-control" @bind-Value="_reviewInput.Rating" />
-            </div>
-            <div class="mb-3">
-                <label class="form-label">Review</label>
-                <InputTextArea class="form-control" @bind-Value="_reviewInput.RawText" />
-            </div>
-            <button type="submit" class="btn btn-primary">Submit</button>
-        </EditForm>
+    <div class="liquid-glass-section">
+        <MudText Typo="Typo.h2" Class="mb-6">Add a Review</MudText>
+        <div class="liquid-glass-card">
+            <EditForm Model="@_reviewInput" OnValidSubmit="@SubmitReview">
+                <DataAnnotationsValidator/>
+                <ValidationSummary/>
+
+                <MudSelect T="Guid" @bind-Value="_reviewInput.BusinessId"
+                           Label="Select Business"
+                           Underline="false"
+                           Variant="Variant.Filled"
+                           Class="liquid-glass-input mb-6"
+                           AnchorOrigin="Origin.BottomCenter">
+                    @foreach (var b in _allBusinesses)
+                    {
+                        <MudSelectItem T="Guid" Value="@b.Id">@b.Name</MudSelectItem>
+                    }
+                </MudSelect>
+
+                <MudSelect T="Guid" @bind-Value="_reviewInput.ClientId"
+                           Label="Select Client"
+                           Underline="false"
+                           Variant="Variant.Filled"
+                           Class="liquid-glass-input mb-6"
+                           AnchorOrigin="Origin.BottomCenter">
+                    @foreach (var c in _allClients)
+                    {
+                        <MudSelectItem T="Guid" Value="@c.Id">@c.Username</MudSelectItem>
+                    }
+                </MudSelect>
+
+                <MudNumericField @bind-Value="_reviewInput.Rating"
+                                 Label="Rating (1-5)"
+                                 Underline="false"
+                                 Min="1" Max="5"
+                                 Variant="Variant.Filled"
+                                 Class="liquid-glass-input mb-6"/>
+
+                <MudTextField @bind-Value="_reviewInput.RawText"
+                              Label="Review"
+                              Underline="false"
+                              Variant="Variant.Filled"
+                              Lines="4"
+                              Class="liquid-glass-input mb-6"/>
+
+                <MudButton ButtonType="ButtonType.Submit"
+                           Variant="Variant.Filled"
+                           Class="liquid-glass-btn-primary full-width py-3">
+                    Submit
+                </MudButton>
+            </EditForm>
+        </div>
     </div>
-</div>
 
-@if (_reviewList.Count != 0)
-{
-    <div class="list-group mt-3">
-        @foreach (var review in _reviewList)
-        {
-            <a href="/review/@review.Id?businessId=@BusinessId&clientId=@review.ClientId&rawText=@Uri.EscapeDataString(review.RawText)&clientName=@Uri.EscapeDataString(_clientNames.TryGetValue(review.ClientId, out var name) ? name : "Unknown")&sentiment=@Uri.EscapeDataString(review.SentimentLabel)" class="list-group-item list-group-item-action">
-                <strong>@(_clientNames.TryGetValue(review.ClientId, out var username) ? username : review.Id.ToString())</strong>
-                <p>@review.Review / 5.0 (@review.RatingType)</p>
-                <p>@review.RawText</p>
-                <p>Posted on: @review.SubmittedOn</p>
-                <p>The sentiment conveys is: @review.SentimentLabel</p>
-                <p>Accuracy: @review.SentimentAccuracy</p>
-                @if (_replies.TryGetValue(review.Id, out var reply))
+    @if (_reviewList.Count != 0)
+    {
+        <div class="liquid-glass-section">
+            <MudText Typo="Typo.h2" Class="mb-6">All Reviews</MudText>
+            <MudStack Spacing="6">
+                @foreach (var review in _reviewList)
                 {
-                    <p class="ms-4"><strong>Reply:</strong> @reply.RawText</p>
+                    <a href="/review/@review.Id?businessId=@BusinessId&clientId=@review.ClientId&rawText=@Uri.EscapeDataString(review.RawText)&clientName=@Uri.EscapeDataString(_clientNames.TryGetValue(review.ClientId, out var name) ? name : "Unknown")&sentiment=@Uri.EscapeDataString(review.SentimentLabel)" style="text-decoration: none;">
+                        <div class="liquid-glass-card">
+                            <MudText Typo="Typo.h6" Class="mb-2" Color="Color.Primary">
+                                <strong>@(_clientNames.TryGetValue(review.ClientId, out var username) ? username : review.Id.ToString())</strong>
+                            </MudText>
+                            <MudChip T="string" Size="Size.Small" Class="mb-2" Color="Color.Secondary">
+                                Rating: @review.Review / 5.0 (@review.RatingType)
+                            </MudChip>
+                            <MudText Typo="Typo.body1" Class="mb-4 text-white">@review.RawText</MudText>
+
+                            <MudGrid>
+                                <MudItem xs="12" sm="6">
+                                    <MudText Typo="Typo.body2" Class="mud-text-secondary">Posted on: @review.SubmittedOn</MudText>
+                                </MudItem>
+                                <MudItem xs="12" sm="6">
+                                    <MudText Typo="Typo.body2" Class="mud-text-secondary">Sentiment: @review.SentimentLabel (Accuracy: @review.SentimentAccuracy)</MudText>
+                                </MudItem>
+                            </MudGrid>
+
+                            @if (_replies.TryGetValue(review.Id, out var reply))
+                            {
+                                <div class="mt-4 p-4 liquid-glass-floating">
+                                    <MudText Typo="Typo.body2" Class="text-white"><strong>Reply:</strong> @reply.RawText</MudText>
+                                </div>
+                            }
+                        </div>
+                    </a>
                 }
-            </a>
-            
-        }
-    </div>
-}
-else
-{
-    <p>No reviews found</p>
-}
+            </MudStack>
+        </div>
+    }
+    else
+    {
+        <MudText Typo="Typo.body1" Align="Align.Center" Class="mud-text-secondary">No reviews found</MudText>
+    }
+</MudContainer>
 
 @code {
 
@@ -73,6 +130,8 @@ else
 
     private List<ReviewDto?> _reviewList = new();
     private BusinessDto? _business;
+    private List<BusinessDto> _allBusinesses = new();
+    private List<ClientDto> _allClients = new();
     private ReviewInput _reviewInput = new();
     private Dictionary<Guid, string> _clientNames = new();
     private Dictionary<Guid, ReplyDto> _replies = new();
@@ -92,8 +151,12 @@ else
             _reviewList = await ReviewsService.GetReviewQuery(Guid.Empty, string.Empty, string.Empty);
             await FetchClientNames();
             await FetchReplies();
-            var business = await BusinessService.GetBusinessQuery(string.Empty, string.Empty);
-            _business = business.Find(b => b.Id == BusinessId);
+            _allBusinesses = await BusinessService.GetBusinessQuery(string.Empty, string.Empty);
+            _business = _allBusinesses.Find(b => b.Id == BusinessId);
+            
+            // Assumed method to fetch all clients; adjust to match your IClientService signature
+            _allClients = await ClientService.Query();
+            _reviewInput.BusinessId = BusinessId;
         }
         catch
         {
@@ -141,17 +204,18 @@ else
 
     private async Task SubmitReview()
     {
-        await ReviewsService.AddReview(BusinessId, _reviewInput.ClientId, _reviewInput.Rating, _reviewInput.RawText, "FeelingFine");
+        await ReviewsService.AddReview(_reviewInput.BusinessId, _reviewInput.ClientId, _reviewInput.Rating, _reviewInput.RawText,"FeelingFine.net");
         
-        var queryBusinessId = _isAdmin ? Guid.Empty : BusinessId;
-        _reviewList = await ReviewsService.GetReviewQuery(queryBusinessId, string.Empty, string.Empty);
+        _reviewList = await ReviewsService.GetReviewQuery(Guid.Empty, string.Empty, string.Empty);
+        await FetchClientNames();
         await FetchReplies();
-        _reviewInput = new();
+        _reviewInput = new ReviewInput { BusinessId = BusinessId };
     }
 
     public class ReviewInput
     {
-        public Guid ClientId { get; set; } = Guid.NewGuid();
+        public Guid BusinessId { get; set; }
+        public Guid ClientId { get; set; }
         public decimal Rating { get; set; }
         public string RawText { get; set; } = string.Empty;
     }

@@ -24,7 +24,7 @@ public class GetReviewQueryHandler(IReviewRepository repository, HttpClient http
 
         var tasks = entities.Select(async x =>
         {
-            var response = await httpClient.PostAsJsonAsync("http://localhost:8000/ai/review", new { raw_text = x.RawText, submitted_on = x.SubmittedOn }, cancellationToken);
+            var response = await httpClient.PostAsJsonAsync("http://localhost:8000/ai/review", new { raw_text = x.RawText, submitted_on = x.SubmittedOn });
             var sentiment = response.IsSuccessStatusCode 
                 ? await response.Content.ReadFromJsonAsync<SentimentAnalysisResult>(cancellationToken: cancellationToken) 
                 : null;

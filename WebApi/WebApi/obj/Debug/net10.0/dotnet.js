@@ -5,7 +5,7 @@ var e=!1;const t=async()=>WebAssembly.validate(new Uint8Array([0,97,115,109,1,0,
   "mainAssemblyName": "WebApi",
   "applicationEnvironment": "Development",
   "resources": {
-    "hash": "sha256-FcATvOAON9BhMvH/azsRJT9RZh3Ez8qZUb6fxaRm8fQ=",
+    "hash": "sha256-Ud7evrfEuN9Rg45qc3v6CqmQxz9V3s1eHNDguBJZd+E=",
     "jsModuleNative": [
       {
         "name": "dotnet.native.69poregybn.js"
@@ -173,6 +173,18 @@ var e=!1;const t=async()=>WebAssembly.validate(new Uint8Array([0,97,115,109,1,0,
         "cache": "force-cache"
       },
       {
+        "virtualPath": "Microsoft.Extensions.Localization.wasm",
+        "name": "Microsoft.Extensions.Localization.xcslyy3nju.wasm",
+        "integrity": "sha256-L2P/tLhZ6FSR1KG27vIE/jer8JBjOAPRMf7D9eFEUNs=",
+        "cache": "force-cache"
+      },
+      {
+        "virtualPath": "Microsoft.Extensions.Localization.Abstractions.wasm",
+        "name": "Microsoft.Extensions.Localization.Abstractions.6jkolue1ka.wasm",
+        "integrity": "sha256-8grIRMMlBKEKAmoTlVDM1GNP0SIWIFWIJHeqfc6fel4=",
+        "cache": "force-cache"
+      },
+      {
         "virtualPath": "Microsoft.Extensions.Logging.wasm",
         "name": "Microsoft.Extensions.Logging.05o184w673.wasm",
         "integrity": "sha256-dEjzt1uKX3R6EmoJQrRj6zcO9nfGtBCBS4OOMUzbXIg=",
@@ -218,6 +230,12 @@ var e=!1;const t=async()=>WebAssembly.validate(new Uint8Array([0,97,115,109,1,0,
         "virtualPath": "Microsoft.JSInterop.WebAssembly.wasm",
         "name": "Microsoft.JSInterop.WebAssembly.9udcqny0aq.wasm",
         "integrity": "sha256-EQfaQose2do/RGDJFP6YWTTeOWA2gufnJurZZZh2XLU=",
+        "cache": "force-cache"
+      },
+      {
+        "virtualPath": "MudBlazor.wasm",
+        "name": "MudBlazor.k6079czmkm.wasm",
+        "integrity": "sha256-rAWwqD56vrMaVnbnDn2OUp7WOeNWO7wmZlQczvKeZLI=",
         "cache": "force-cache"
       },
       {
@@ -1242,16 +1260,16 @@ var e=!1;const t=async()=>WebAssembly.validate(new Uint8Array([0,97,115,109,1,0,
       },
       {
         "virtualPath": "WebApi.wasm",
-        "name": "WebApi.yrhlvxn8g3.wasm",
-        "integrity": "sha256-wp/OVp/qycKC+7k3vgKS9RzP0+vQVnut3WBQmafcP+k=",
+        "name": "WebApi.zsth7hykfr.wasm",
+        "integrity": "sha256-Ixw9emQXMB8xFHFt2PK02I6zadpu+zIhYrf/8lI1+Ak=",
         "cache": "force-cache"
       }
     ],
     "pdb": [
       {
         "virtualPath": "WebApi.pdb",
-        "name": "WebApi.rwitetpxmw.pdb",
-        "integrity": "sha256-+zaFRq1QhIpAJLbptJVUoC2YcsBX3gPFtWUySeooTlc=",
+        "name": "WebApi.ul5fbl3u87.pdb",
+        "integrity": "sha256-ItkgACO+InM2VklquH8i+1sfulMckqNamh3pCG49rs8=",
         "cache": "force-cache"
       }
     ],
