@@ -1,0 +1,83 @@
+services:
+  # ---------------------------------------------------------
+  # Ollama Local LLM Service
+  # ---------------------------------------------------------
+  ollama:
+    image: ollama/ollama:latest
+    container_name: feelingfine-ollama
+    ports:
+      - "11434:11434"
+    volumes:
+      - ollama_data:/root/.ollama
+    restart: unless-stopped
+
+  # Helper service to automatically pull the model used in ReviewService
+  ollama-init:
+    image: ollama/ollama:latest
+    container_name: feelingfine-ollama-init
+    depends_on:
+      - ollama
+    command: pull gemma:2b
+    environment:
+      - OLLAMA_HOST=ollama:11434
+
+  # ---------------------------------------------------------
+  # Python AI Module
+  # ---------------------------------------------------------
+  python-ai:
+    build:
+      context: ./PythonAI
+      dockerfile: Dockerfile
+    container_name: feelingfine-python-ai
+    ports:
+      - "8000:8000" # Adjust port to match your Python framework (FastAPI/Django)
+    environment:
+      # This tells the Python 'ollama' SDK where the local LLM container is located
+      - OLLAMA_HOST=http://ollama:11434
+      # Explicitly set the Hugging Face cache directory
+      - HF_HOME=/huggingface_cache
+    depends_on:
+      - ollama
+    volumes:
+      - hf_data:/huggingface_cache
+    restart: unless-stopped
+
+  # ---------------------------------------------------------
+  # .NET EF Core API
+  # ---------------------------------------------------------
+  dotnet-api:
+    build:
+      context: ./DotnetApi
+      dockerfile: DotnetApi.WebApi/Dockerfile # Adjust path if your Dockerfile is located elsewhere
+    container_name: feelingfine-dotnet-api
+    ports:
+      - "5000:5000" # Exposed on port 5000. Uses internal port 8080 (standard for .NET 8)
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_HTTP_PORTS=5000
+      # Example connection string setup (uncomment and configure if adding a local DB container)
+      # - ConnectionStrings__DefaultConnection=Host=db;Database=FeelingFine;Username=postgres;Password=postgres
+      - ConnectionStrings__DefaultConnection=User Id=postgres.iqycdvnkmygdhshdwdkv;Password=bobbyFeelingFine3002;Server=aws-1-eu-west-1.pooler.supabase.com;Port=5432;Database=postgres      
+      # Overrides the Python AI URL for Docker Compose.
+      # Change "PythonApiBaseUrl" to the exact key name you use in your appsettings.json!
+      - PythonAiSettings__ReviewUrl=http://localhost:8000/ai/review/
+    restart: unless-stopped
+
+  # ---------------------------------------------------------
+  # Web UI (Blazor WebAssembly)
+  # ---------------------------------------------------------
+  web-ui:
+    build:
+      context: ./WebApi
+      dockerfile: WebApi/Dockerfile # Adjust path if your Dockerfile is located elsewhere
+    container_name: feelingfine-web-ui
+    ports:
+      - "3000:80" # Exposed on port 3000. Uses standard internal port 80 for Nginx.
+    depends_on:
+      - dotnet-api
+      - python-ai
+    restart: unless-stopped
+
+volumes:
+  ollama_data:
+  hf_data:

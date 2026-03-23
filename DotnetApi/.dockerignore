@@ -1,7 +1,0 @@
-**/.dockerignore
-**/.env
-**/bin/
-**/obj/
-**/.git/
-**/.vs/
-**/.vscode/

@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "lHMUtHWz31k=",
+  "dgSpecHash": "yRREruooh+o=",
   "success": true,
   "projectFilePath": "/home/mrbogdanovich/git/FeelingFine/DotnetApi/DotnetApi.WebApi/DotnetApi.WebApi.csproj",
   "expectedPackageFiles": [
@@ -18,7 +18,7 @@
     "/home/mrbogdanovich/.nuget/packages/microsoft.entityframeworkcore.inmemory/10.0.3/microsoft.entityframeworkcore.inmemory.10.0.3.nupkg.sha512",
     "/home/mrbogdanovich/.nuget/packages/microsoft.entityframeworkcore.relational/10.0.1/microsoft.entityframeworkcore.relational.10.0.1.nupkg.sha512",
     "/home/mrbogdanovich/.nuget/packages/microsoft.extensions.apidescription.server/10.0.0/microsoft.extensions.apidescription.server.10.0.0.nupkg.sha512",
-    "/home/mrbogdanovich/.nuget/packages/microsoft.extensions.configuration.json/10.0.3/microsoft.extensions.configuration.json.10.0.3.nupkg.sha512",
+    "/home/mrbogdanovich/.nuget/packages/microsoft.extensions.configuration.json/10.0.5/microsoft.extensions.configuration.json.10.0.5.nupkg.sha512",
     "/home/mrbogdanovich/.nuget/packages/microsoft.identitymodel.abstractions/8.16.0/microsoft.identitymodel.abstractions.8.16.0.nupkg.sha512",
     "/home/mrbogdanovich/.nuget/packages/microsoft.identitymodel.jsonwebtokens/8.16.0/microsoft.identitymodel.jsonwebtokens.8.16.0.nupkg.sha512",
     "/home/mrbogdanovich/.nuget/packages/microsoft.identitymodel.logging/8.16.0/microsoft.identitymodel.logging.8.16.0.nupkg.sha512",
