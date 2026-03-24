@@ -2,9 +2,8 @@ using Bunit;
 using Microsoft.Extensions.DependencyInjection;
 using Moq;
 using System;
-using System.Collections.Generic;
+using System.Linq;
 using Microsoft.AspNetCore.Components;
-using WebApi.Models;
 using WebApi.Pages;
 using WebApi.Services.Business;
 using Xunit;
@@ -17,104 +16,78 @@ namespace WebApi.Tests.Pages
         public void Renders_WelcomeMessage()
         {
             // Arrange
+            JSInterop.Setup<string>("localStorage.getItem", _ => true).SetResult(string.Empty);
             var mockBusinessService = new Mock<IBusinessService>();
-            mockBusinessService.Setup(s => s.GetBusinessQuery(It.IsAny<string>(), It.IsAny<string>()))
-                .ReturnsAsync(new List<BusinessDto>());
-
             Services.AddSingleton(mockBusinessService.Object);
 
             // Act
             var cut = Render<Home>();
 
             // Assert
-            cut.Find("h3").MarkupMatches("<h3>Welcome</h3>");
-            cut.Find("p").MarkupMatches("<p>Choose a Company</p>");
+            Assert.Contains("FeelingFine", cut.Markup);
+            Assert.Contains("Empower your workplace culture.", cut.Markup);
         }
 
         [Fact]
-        public void Renders_BusinessList_WhenBusinessesExist()
+        public void Redirects_ToReviews_WhenTokenAndBusinessIdExist()
         {
             // Arrange
-            var businesses = new List<BusinessDto>
-            {
-                new BusinessDto(Guid.NewGuid(), "Biz 1", "Tech" ),
-                new BusinessDto (Guid.NewGuid(), "Biz 2", "Food")
-            };
-
+            var businessId = Guid.NewGuid().ToString();
+            JSInterop.Setup<string>("localStorage.getItem", "authToken").SetResult("token");
+            JSInterop.Setup<string>("localStorage.getItem", "businessId").SetResult(businessId);
+            
             var mockBusinessService = new Mock<IBusinessService>();
-            mockBusinessService.Setup(s => s.GetBusinessQuery(string.Empty, string.Empty))
-                .ReturnsAsync(businesses);
-
             Services.AddSingleton(mockBusinessService.Object);
-
-            // Act
-            var cut = Render<Home>();
-
-            // Assert
-            var listItems = cut.FindAll("li");
-            Assert.Equal(2, listItems.Count);
-            Assert.Contains("Biz 1", listItems[0].TextContent);
-            Assert.Contains("Biz 2", listItems[1].TextContent);
-        }
-
-        [Fact]
-        public void Renders_NoBusinessesFound_WhenListIsEmpty()
-        {
-            // Arrange
-            var mockBusinessService = new Mock<IBusinessService>();
-            mockBusinessService.Setup(s => s.GetBusinessQuery(It.IsAny<string>(), It.IsAny<string>()))
-                .ReturnsAsync(new List<BusinessDto>());
-
-            Services.AddSingleton(mockBusinessService.Object);
-
-            // Act
-            var cut = Render<Home>();
-
-            // Assert
-            // Index 1 because index 0 is "Choose a Company"
-            cut.FindAll("p")[1].MarkupMatches("<p>No businesses found</p>");
-        }
-
-        [Fact]
-        public void Renders_NoBusinessesFound_WhenServiceThrows()
-        {
-            // Arrange
-            var mockBusinessService = new Mock<IBusinessService>();
-            mockBusinessService.Setup(s => s.GetBusinessQuery(It.IsAny<string>(), It.IsAny<string>()))
-                .ThrowsAsync(new Exception("Service failure"));
-
-            Services.AddSingleton(mockBusinessService.Object);
-
-            // Act
-            var cut = Render<Home>();
-
-            // Assert
-            cut.FindAll("p")[1].MarkupMatches("<p>No businesses found</p>");
-        }
-
-        [Fact]
-        public void Navigates_ToReviews_WhenBusinessClicked()
-        {
-            // Arrange
-            var businessId = Guid.NewGuid();
-            var businesses = new List<BusinessDto>
-            {
-                new BusinessDto(businessId, "Biz Test", "Test" ),
-            };
-
-            var mockBusinessService = new Mock<IBusinessService>();
-            mockBusinessService.Setup(s => s.GetBusinessQuery(string.Empty, string.Empty))
-                .ReturnsAsync(businesses);
-
-            Services.AddSingleton(mockBusinessService.Object);
-
-            // Act
-            var cut = Render<Home>();
-            cut.Find("li").Click();
-
-            // Assert
+            
             var navMan = Services.GetRequiredService<NavigationManager>();
+
+            // Act
+            var cut = Render<Home>();
+
+            // Assert
             Assert.EndsWith($"/reviews/{businessId}", navMan.Uri);
+        }
+
+        [Fact]
+        public void Navigates_ToLogin_WhenLoginClicked()
+        {
+            // Arrange
+            JSInterop.Setup<string>("localStorage.getItem", _ => true).SetResult(string.Empty);
+            var mockBusinessService = new Mock<IBusinessService>();
+            Services.AddSingleton(mockBusinessService.Object);
+            
+            var navMan = Services.GetRequiredService<NavigationManager>();
+
+            var cut = Render<Home>();
+
+            // Act
+            var buttons = cut.FindAll("button");
+            var loginButton = buttons.FirstOrDefault(b => b.TextContent.Contains("Login"));
+            loginButton?.Click();
+
+            // Assert
+            Assert.EndsWith("/login", navMan.Uri);
+        }
+
+        [Fact]
+        public void Navigates_ToRegister_WhenRegisterClicked()
+        {
+            // Arrange
+            JSInterop.Setup<string>("localStorage.getItem", _ => true).SetResult(string.Empty);
+            var mockBusinessService = new Mock<IBusinessService>();
+            Services.AddSingleton(mockBusinessService.Object);
+            
+            var navMan = Services.GetRequiredService<NavigationManager>();
+
+            var cut = Render<Home>();
+
+            // Act
+            var buttons = cut.FindAll("button");
+            var registerButton = buttons.FirstOrDefault(b => b.TextContent.Contains("Register"));
+            registerButton?.Click();
+
+            // Assert
+            Assert.EndsWith("/register", navMan.Uri);
         }
     }
 }

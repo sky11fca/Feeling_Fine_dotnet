@@ -142,3 +142,5 @@
 /home/mrbogdanovich/git/FeelingFine/WebApi/WebApi.Tests/obj/Debug/net10.0/WebApi.Tests.pdb
 /home/mrbogdanovich/git/FeelingFine/WebApi/WebApi.Tests/obj/Debug/net10.0/WebApi.Tests.genruntimeconfig.cache
 /home/mrbogdanovich/git/FeelingFine/WebApi/WebApi.Tests/obj/Debug/net10.0/ref/WebApi.Tests.dll
+/home/mrbogdanovich/git/FeelingFine/WebApi/WebApi.Tests/bin/Debug/net10.0/Microsoft.Extensions.Localization.dll
+/home/mrbogdanovich/git/FeelingFine/WebApi/WebApi.Tests/bin/Debug/net10.0/MudBlazor.dll
