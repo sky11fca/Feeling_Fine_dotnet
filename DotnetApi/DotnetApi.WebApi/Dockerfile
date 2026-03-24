@@ -1,7 +1,7 @@
 ﻿FROM mcr.microsoft.com/dotnet/aspnet:10.0 AS base
 WORKDIR /app
-EXPOSE 5000
-ENV ASPNETCORE_HTTP_PORTS=5000
+EXPOSE 5160
+ENV ASPNETCORE_HTTP_PORTS=5160
 
 FROM mcr.microsoft.com/dotnet/sdk:10.0 AS build
 ARG BUILD_CONFIGURATION=Release
