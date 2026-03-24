@@ -29,7 +29,6 @@
 
     <ItemGroup>
       <Folder Include="Api\" />
-      <Folder Include="Application\Queries\" />
       <Folder Include="Infrastructure\" />
     </ItemGroup>
 
