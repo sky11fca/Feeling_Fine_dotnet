@@ -5,6 +5,7 @@ using DotnetApi.Domains.Enums;
 using FluentAssertions;
 using Moq;
 using Moq.Protected;
+using Microsoft.Extensions.Configuration;
 using System.Net;
 using System.Net.Http.Json;
 
@@ -15,6 +16,7 @@ public class GetReviewTests
     private readonly Mock<IReviewRepository> _repositoryMock;
     private readonly Mock<HttpMessageHandler> _httpMessageHandlerMock;
     private readonly HttpClient _httpClient;
+    private readonly Mock<IConfiguration> _configurationMock;
     private readonly GetReviewQueryHandler _handler;
 
     public GetReviewTests()
@@ -25,7 +27,8 @@ public class GetReviewTests
         {
             BaseAddress = new Uri("http://localhost:8000")
         };
-        _handler = new GetReviewQueryHandler(_repositoryMock.Object, _httpClient);
+        _configurationMock = new Mock<IConfiguration>();
+        _handler = new GetReviewQueryHandler(_repositoryMock.Object, _httpClient, _configurationMock.Object);
     }
 
     [Fact]

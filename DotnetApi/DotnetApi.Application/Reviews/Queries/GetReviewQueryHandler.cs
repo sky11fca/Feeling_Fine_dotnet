@@ -7,7 +7,7 @@ using Microsoft.Extensions.Configuration;
 
 namespace DotnetApi.Application.Reviews.Queries;
 
-public class GetReviewQueryHandler(IReviewRepository repository, HttpClient httpClient) : IRequestHandler<GetReviewQuery, List<ReviewDto>>
+public class GetReviewQueryHandler(IReviewRepository repository, HttpClient httpClient, IConfiguration configuration) : IRequestHandler<GetReviewQuery, List<ReviewDto>>
 {
     public async Task<List<ReviewDto>> Handle(GetReviewQuery request, CancellationToken cancellationToken)
     {
@@ -33,10 +33,15 @@ public class GetReviewQueryHandler(IReviewRepository repository, HttpClient http
 
         var tasks = entities.Select(async x =>
         {
+            var aiServiceUrl = configuration["AiServiceUrl"] ?? "http://localhost:8000/ai/review/";
+
             SentimentAnalysisResult? sentiment = null;
             try
             {
-                var response = await httpClient.PostAsJsonAsync($"http://localhost:8000/ai/review/", new { raw_text = x.RawText, submitted_on = x.SubmittedOn }, cancellationToken);
+                var response = await httpClient.PostAsJsonAsync(aiServiceUrl, new { raw_text = x.RawText, submitted_on = x.SubmittedOn }, cancellationToken);
+                
+                Console.WriteLine(response.Content.ToString());
+                
                 sentiment = response.IsSuccessStatusCode 
                     ? await response.Content.ReadFromJsonAsync<SentimentAnalysisResult>(cancellationToken: cancellationToken) 
                     : null;

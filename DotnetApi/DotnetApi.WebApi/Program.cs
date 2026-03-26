@@ -55,7 +55,7 @@ builder.Services.AddControllers();
 
 builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(GetBusinessQuery).Assembly));
 
-builder.Services.AddScoped(sp => new HttpClient {BaseAddress = new Uri("http://localhost:8000/ai/review")});
+builder.Services.AddScoped<HttpClient>();
 
 // Dependency Injection
 

@@ -11,7 +11,7 @@ services:
       - ollama_data:/root/.ollama
     restart: unless-stopped
 
-  # Helper service to automatically pull the model used in ReviewService
+  # Helper service to automatically pull the models used in the AI services
   ollama-init:
     image: ollama/ollama:latest
     container_name: feelingfine-ollama-init
@@ -58,9 +58,7 @@ services:
       # Example connection string setup (uncomment and configure if adding a local DB container)
       # - ConnectionStrings__DefaultConnection=Host=db;Database=FeelingFine;Username=postgres;Password=postgres
       - ConnectionStrings__DefaultConnection=User Id=postgres.iqycdvnkmygdhshdwdkv;Password=bobbyFeelingFine3002;Server=aws-1-eu-west-1.pooler.supabase.com;Port=5432;Database=postgres      
-      # Overrides the Python AI URL for Docker Compose.
-      # Change "PythonApiBaseUrl" to the exact key name you use in your appsettings.json!
-      - PythonAiSettings__ReviewUrl=http://localhost:8000
+      - AiServiceUrl=http://python-ai:8000/ai/review/
     restart: unless-stopped
 
   # ---------------------------------------------------------
