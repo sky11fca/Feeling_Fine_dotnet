@@ -3,6 +3,7 @@ from fastapi.middleware.cors import CORSMiddleware
 
 import api.review_router
 import api.reply_router
+import api.statistics_router
 import os
 from service.satisfaction_service import SatisfactionService
 
@@ -23,3 +24,4 @@ app.add_middleware(
 
 app.include_router(api.review_router.router)
 app.include_router(api.reply_router.router)
+app.include_router(api.statistics_router.router)

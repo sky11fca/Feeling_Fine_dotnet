@@ -1,6 +1,7 @@
 using System.Net.Http.Json;
 using WebApi.Models;
 using WebApi.Models.Requests;
+using WebApi.Models.Responses;
 
 namespace WebApi.Services.Reviews;
 
@@ -19,5 +20,24 @@ public class ReviewsService(HttpClient httpClient) : IReviewsService
         var fullUrl = businessId != Guid.Empty  ? $"{BaseUri}?businessId={businessId}" : BaseUri;
         return await httpClient.GetFromJsonAsync<List<ReviewDto?>>(
             fullUrl)!;
+    }
+
+    public async Task<AiStatisticsResponse?> GetAiStatistics(List<ReviewDto?> reviews)
+    {
+        var aiBaseUri = "http://localhost:8000/ai/statistics/";
+        var validReviews = reviews.Where(r => r != null).Select(r => new ReviewAiModel
+        {
+            RawText = r!.RawText,
+            SubmittedOn = r.SubmittedOn,
+            Rating = (double)r.Review,
+            ClientId = r.ClientId.ToString()
+        }).ToList();
+
+        var response = await httpClient.PostAsJsonAsync(aiBaseUri, validReviews);
+        if (response.IsSuccessStatusCode)
+        {
+            return await response.Content.ReadFromJsonAsync<AiStatisticsResponse>();
+        }
+        return null;
     }
 }

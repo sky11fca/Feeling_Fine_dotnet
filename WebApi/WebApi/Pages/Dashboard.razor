@@ -1,0 +1,218 @@
+@page "/dashboard"
+@using WebApi.Models
+@using WebApi.Services.Business
+@using WebApi.Services.Client
+@using WebApi.Shared
+@inject IBusinessService BusinessService
+@inject IClientService ClientService
+@inject NavigationManager NavigationManager
+
+<MudContainer MaxWidth="MaxWidth.Large" Class="mt-16">
+    <Navbar/>
+    
+    <MudText Typo="Typo.h1" Align="Align.Center" Class="mb-16">Dashboard</MudText>
+
+    <div class="d-flex justify-center gap-4 mb-8">
+        <MudButton Variant="@(activeTab == "businesses" ? Variant.Filled : Variant.Outlined)"
+                   Color="Color.Primary"
+                   OnClick="@(() => SetActiveTab("businesses"))"
+                   Class="liquid-glass-btn-primary px-6 py-3">
+            Businesses
+        </MudButton>
+        <MudButton Variant="@(activeTab == "clients" ? Variant.Filled : Variant.Outlined)"
+                   Color="Color.Primary"
+                   OnClick="@(() => SetActiveTab("clients"))"
+                   Class="liquid-glass-btn-primary px-6 py-3">
+            Clients
+        </MudButton>
+    </div>
+
+    @if (activeTab == "businesses")
+    {
+        <div class="liquid-glass-section">
+            <div class="d-flex justify-space-between align-center mb-6">
+                <MudText Typo="Typo.h2">Businesses</MudText>
+                <MudButton Variant="Variant.Filled"
+                           Color="Color.Secondary"
+                           OnClick="CreateNewBusiness"
+                           Class="liquid-glass-btn-primary px-4 py-2">
+                    Create New Business
+                </MudButton>
+            </div>
+            
+            <div class="liquid-glass-card">
+                @if (businesses == null)
+                {
+                    <div class="d-flex justify-center my-8">
+                        <MudProgressCircular Color="Color.Primary" Indeterminate="true" />
+                    </div>
+                }
+                else
+                {
+                    <MudTable Items="@businesses" Hover="true" Breakpoint="Breakpoint.Sm" Elevation="0" Style="background: transparent; color: white;">
+                        <HeaderContent>
+                            <MudTh Style="color: white; font-weight: bold;">Name</MudTh>
+                            <MudTh Style="color: white; font-weight: bold;">Industry</MudTh>
+                        </HeaderContent>
+                        <RowTemplate>
+                            @if (context != null)
+                            {
+                                <MudTd DataLabel="Name" Style="color: white;">@context.Name</MudTd>
+                                <MudTd DataLabel="Industry" Style="color: white;">@context.Industry</MudTd>
+                            }
+                        </RowTemplate>
+                    </MudTable>
+                }
+            </div>
+        </div>
+    }
+    else if (activeTab == "clients")
+    {
+        <div class="liquid-glass-section">
+            <div class="d-flex justify-space-between align-center mb-6">
+                <MudText Typo="Typo.h2">Clients</MudText>
+                <MudButton Variant="Variant.Filled"
+                           Color="Color.Secondary"
+                           OnClick="CreateNewClient"
+                           Class="liquid-glass-btn-primary px-4 py-2">
+                    Create New Client
+                </MudButton>
+            </div>
+            
+            <div class="liquid-glass-card">
+                @if (clients == null)
+                {
+                    <div class="d-flex justify-center my-8">
+                        <MudProgressCircular Color="Color.Primary" Indeterminate="true" />
+                    </div>
+                }
+                else
+                {
+                    <MudTable Items="@clients" Hover="true" Breakpoint="Breakpoint.Sm" Elevation="0" Style="background: transparent; color: white;">
+                        <HeaderContent>
+                            <MudTh Style="color: white; font-weight: bold;">Username</MudTh>
+                            <MudTh Style="color: white; font-weight: bold;">Email</MudTh>
+                            <MudTh Style="color: white; font-weight: bold;">Phone Number</MudTh>
+                        </HeaderContent>
+                        <RowTemplate>
+                            @if (context != null)
+                            {
+                                <MudTd DataLabel="Username" Style="color: white;">@context.Username</MudTd>
+                                <MudTd DataLabel="Email" Style="color: white;">@context.Email</MudTd>
+                                <MudTd DataLabel="Phone Number" Style="color: white;">@context.PhoneNumber</MudTd>
+                            }
+                        </RowTemplate>
+                    </MudTable>
+                }
+            </div>
+        </div>
+    }
+</MudContainer>
+
+<MudDialog @bind-Visible="_isBusinessDialogOpen" Options="@(new DialogOptions { CloseButton = true, MaxWidth = MaxWidth.Small, FullWidth = true })">
+    <TitleContent>
+        <MudText Typo="Typo.h6">Create New Business</MudText>
+    </TitleContent>
+    <DialogContent>
+        <MudTextField @bind-Value="_newBusinessName" Label="Business Name" Required="true" Class="mb-4" />
+        <MudTextField @bind-Value="_newBusinessIndustry" Label="Industry" Required="true" />
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="@(() => _isBusinessDialogOpen = false)">Cancel</MudButton>
+        <MudButton Color="Color.Primary" Variant="Variant.Filled" OnClick="SubmitNewBusiness">Create</MudButton>
+    </DialogActions>
+</MudDialog>
+
+<MudDialog @bind-Visible="_isClientDialogOpen" Options="@(new DialogOptions { CloseButton = true, MaxWidth = MaxWidth.Small, FullWidth = true })">
+    <TitleContent>
+        <MudText Typo="Typo.h6">Create New Client</MudText>
+    </TitleContent>
+    <DialogContent>
+        <MudTextField @bind-Value="_newClientUsername" Label="Username" Required="true" Class="mb-4" />
+        <MudTextField @bind-Value="_newClientEmail" Label="Email" Required="true" Class="mb-4" />
+        <MudTextField @bind-Value="_newClientPhoneNumber" Label="Phone Number" Required="true" />
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="@(() => _isClientDialogOpen = false)">Cancel</MudButton>
+        <MudButton Color="Color.Primary" Variant="Variant.Filled" OnClick="SubmitNewClient">Create</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    private string activeTab = "businesses";
+    private List<BusinessDto?>? businesses;
+    private List<ClientDto>? clients;
+
+    private bool _isBusinessDialogOpen;
+    private string _newBusinessName = string.Empty;
+    private string _newBusinessIndustry = string.Empty;
+
+    private bool _isClientDialogOpen;
+    private string _newClientUsername = string.Empty;
+    private string _newClientEmail = string.Empty;
+    private string _newClientPhoneNumber = string.Empty;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadData();
+    }
+
+    private async Task LoadData()
+    {
+        if (activeTab == "businesses")
+        {
+            businesses = await BusinessService.GetBusinessQuery("", "");
+        }
+        else if (activeTab == "clients")
+        {
+            clients = await ClientService.Query();
+        }
+    }
+
+    private async Task SetActiveTab(string tab)
+    {
+        activeTab = tab;
+        await LoadData();
+    }
+
+    private void CreateNewBusiness()
+    {
+        _newBusinessName = string.Empty;
+        _newBusinessIndustry = string.Empty;
+        _isBusinessDialogOpen = true;
+    }
+
+    private void CreateNewClient()
+    {
+        _newClientUsername = string.Empty;
+        _newClientEmail = string.Empty;
+        _newClientPhoneNumber = string.Empty;
+        _isClientDialogOpen = true;
+    }
+
+    private async Task SubmitNewBusiness()
+    {
+        if (string.IsNullOrWhiteSpace(_newBusinessName)) return;
+
+        // Note: Please ensure 'CreateAsync' and the constructor parameters match your actual DTO / Service implementation.
+        var businessId = await BusinessService.AddBusiness(_newBusinessName, _newBusinessIndustry);
+        
+        Console.WriteLine($"Successfully created business {businessId}");
+        
+        _isBusinessDialogOpen = false;
+        businesses = null; // Temporarily nullify to show the loading spinner during the refresh
+        await LoadData();
+    }
+
+    private async Task SubmitNewClient()
+    {
+        if (string.IsNullOrWhiteSpace(_newClientUsername)) return;
+
+        // Note: Please ensure 'CreateAsync' and the constructor parameters match your actual DTO / Service implementation.
+        await ClientService.AddAsync( _newClientUsername, _newClientEmail, _newClientPhoneNumber);
+        
+        _isClientDialogOpen = false;
+        clients = null; // Temporarily nullify to show the loading spinner during the refresh
+        await LoadData();
+    }
+}

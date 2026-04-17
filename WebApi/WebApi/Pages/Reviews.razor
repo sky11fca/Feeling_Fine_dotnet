@@ -148,20 +148,77 @@
 
         try
         {
-            _reviewList = await ReviewsService.GetReviewQuery(Guid.Empty, string.Empty, string.Empty);
+            var claims = ParseClaimsFromJwt(token).ToList();
+            var roleClaim = claims.FirstOrDefault(c => c.Type == "role" || c.Type == "http://schemas.microsoft.com/ws/2008/06/identity/claims/role")?.Value;
+            _isAdmin = roleClaim?.Equals("Admin", StringComparison.OrdinalIgnoreCase) ?? false;
+
+            // If Admin, get all reviews. If not, filter strictly by businessId from JWT/Storage
+            Guid targetBusinessId = Guid.Empty;
+            if (!_isAdmin)
+            {
+                var businessIdStr = await JSRuntime.InvokeAsync<string>("localStorage.getItem", "businessId");
+                if (!string.IsNullOrWhiteSpace(businessIdStr))
+                {
+                    Guid.TryParse(businessIdStr.Trim('"', '\''), out targetBusinessId);
+                }
+                
+                // Fallback/Verify with JWT jti claim
+                if (targetBusinessId == Guid.Empty)
+                {
+                    var jtiClaim = claims.FirstOrDefault(c => c.Type == "jti")?.Value;
+                    if (!string.IsNullOrEmpty(jtiClaim)) Guid.TryParse(jtiClaim, out targetBusinessId);
+                }
+
+                // If non-admin and STILL no businessId, redirect or show empty
+                if (targetBusinessId == Guid.Empty)
+                {
+                     _reviewList = new();
+                     return;
+                }
+            }
+            else
+            {
+                // Admin can use the URL parameter if provided, otherwise see all
+                targetBusinessId = BusinessId != Guid.Empty ? BusinessId : Guid.Empty;
+            }
+
+            _reviewList = await ReviewsService.GetReviewQuery(targetBusinessId, string.Empty, string.Empty);
             await FetchClientNames();
             await FetchReplies();
             _allBusinesses = await BusinessService.GetBusinessQuery(string.Empty, string.Empty);
-            _business = _allBusinesses.Find(b => b.Id == BusinessId);
-            
-            // Assumed method to fetch all clients; adjust to match your IClientService signature
+
+            if (targetBusinessId != Guid.Empty)
+            {
+                _business = _allBusinesses.Find(b => b.Id == targetBusinessId);
+            }
+
             _allClients = await ClientService.Query();
-            _reviewInput.BusinessId = BusinessId;
+            _reviewInput.BusinessId = targetBusinessId != Guid.Empty ? targetBusinessId : BusinessId;
         }
-        catch
+        catch (Exception ex)
         {
+            Console.WriteLine($"Error loading reviews: {ex.Message}");
             _reviewList = new();
         }
+    }
+
+    private IEnumerable<System.Security.Claims.Claim> ParseClaimsFromJwt(string jwt)
+    {
+        var claims = new List<System.Security.Claims.Claim>();
+        var parts = jwt.Split('.');
+        if (parts.Length < 2) return claims;
+
+        var payload = parts[1];
+        payload = payload.Replace('-', '+').Replace('_', '/');
+        switch (payload.Length % 4)
+        {
+            case 2: payload += "=="; break;
+            case 3: payload += "="; break;
+        }
+        var jsonBytes = Convert.FromBase64String(payload);
+        var keyValuePairs = System.Text.Json.JsonSerializer.Deserialize<Dictionary<string, object>>(jsonBytes);
+        if (keyValuePairs != null) foreach (var kvp in keyValuePairs) claims.Add(new System.Security.Claims.Claim(kvp.Key, kvp.Value?.ToString() ?? string.Empty));
+        return claims;
     }
 
     private async Task FetchClientNames()

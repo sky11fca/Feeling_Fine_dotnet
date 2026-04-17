@@ -1,0 +1,9 @@
+# IDE and git files
+.git
+.gitignore
+.vs
+.vscode
+
+# Build artifacts
+**/bin
+**/obj

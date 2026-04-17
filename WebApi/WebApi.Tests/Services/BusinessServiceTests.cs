@@ -3,8 +3,8 @@ using Moq.Protected;
 using System.Net;
 using System.Text.Json;
 using WebApi.Models;
+using WebApi.Models.Responses;
 using WebApi.Services.Business;
-using Xunit;
 
 namespace WebApi.Tests.Services
 {
@@ -22,7 +22,7 @@ namespace WebApi.Tests.Services
             var industry = "IT";
             var expectedUri = "http://localhost:5160/api/v1/business";
             var expectedGuid = Guid.NewGuid();
-            var jsonResponse = JsonSerializer.Serialize(expectedGuid);
+            var jsonResponse = JsonSerializer.Serialize(new AddBusinessResponse(expectedGuid));
 
             handlerMock.Protected()
                 .Setup<Task<HttpResponseMessage>>(
@@ -95,7 +95,7 @@ namespace WebApi.Tests.Services
             handlerMock.Protected().Verify(
                 "SendAsync",
                 Times.Once(),
-                ItExpr.IsAny<HttpRequestMessage>(),
+                ItExpr.Is<HttpRequestMessage>(req => req.Method == HttpMethod.Get && req.RequestUri!.ToString() == expectedUri),
                 ItExpr.IsAny<CancellationToken>()
             );
         }
