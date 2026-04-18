@@ -1,0 +1,40 @@
+name: Deploy to Google App Engine
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v4
+
+    - name: Authenticate to Google Cloud
+      uses: google-github-actions/auth@v2
+      with:
+        credentials_json: ${{ secrets.GCP_SA_KEY }}
+
+    - name: Set up Cloud SDK
+      uses: google-github-actions/setup-gcloud@v2
+      with:
+        project_id: ${{ secrets.GCP_PROJECT_ID }}
+
+    - name: Deploy Python AI Service
+      run: |
+        gcloud app deploy PythonAI/app.yaml --quiet
+
+    - name: Deploy Dotnet API Service
+      run: |
+        gcloud app deploy DotnetApi/DotnetApi.WebApi/app.yaml --quiet
+
+    - name: Deploy WebUI (Default) Service
+      run: |
+        gcloud app deploy WebApi/WebApi/app.yaml --quiet
+
+    - name: Deploy Dispatch Rules
+      run: |
+        gcloud app deploy dispatch.yaml --quiet

@@ -1,0 +1,10 @@
+runtime: custom
+env: flex
+service: dotnet-api
+
+network:
+  session_affinity: true
+
+env_variables:
+  ASPNETCORE_ENVIRONMENT: "Production"
+  AiServiceUrl: "https://python-ai-dot-[YOUR_PROJECT_ID].appspot.com/ai/review/"

@@ -6,7 +6,7 @@ namespace WebApi.Services.Reply;
 
 public class ReplyService(HttpClient client) : IReplyService
 {
-    private readonly string BaseUri = "http://localhost:5160/api/v1/reply";
+    private readonly string BaseUri = "api/v1/reply";
 
     public async Task AddReviewAsync(Guid reviewId, Guid toClientId, string rawText)
     {

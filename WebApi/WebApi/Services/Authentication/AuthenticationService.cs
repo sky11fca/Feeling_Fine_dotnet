@@ -7,7 +7,7 @@ namespace WebApi.Services.Authentication;
 public class AuthenticationService(HttpClient client) : IAuthenticationService
 {
 
-    private readonly string BaseUrl = "http://localhost:5160/api/Authentication/";
+    private readonly string BaseUrl = "api/Authentication/";
     
     public async Task<string?> Login(string email, string password)
     {

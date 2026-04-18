@@ -1,0 +1,13 @@
+runtime: custom
+env: flex
+service: dotnet-api
+
+# .NET 10 requires custom runtime (Docker) on App Engine Flex
+# This will use the existing Dockerfile in DotnetApi.WebApi
+
+network:
+  session_affinity: true
+
+env_variables:
+  ASPNETCORE_ENVIRONMENT: "Production"
+  AiServiceUrl: "http://python-ai.dot.feelingfine.appspot.com/ai/review/"

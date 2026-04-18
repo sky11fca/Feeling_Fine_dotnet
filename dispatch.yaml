@@ -1,0 +1,12 @@
+dispatch:
+  # Route API calls to the .NET backend
+  - url: "*/api/*"
+    service: dotnet-api
+
+  # Route AI calls to the Python backend
+  - url: "*/ai/*"
+    service: python-ai
+
+  # Everything else goes to the Blazor UI
+  - url: "*/*"
+    service: default
