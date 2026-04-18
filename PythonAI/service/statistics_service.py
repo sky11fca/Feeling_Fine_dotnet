@@ -14,16 +14,18 @@ class StatisticsService:
             reviews_data.append({
                 "text": r.raw_text,
                 "rating": r.rating,
-                "client_id": r.client_id
+                "client_id": r.client_id,
+                "type": r.rating_type
             })
 
         system_instruction = (
-            "You are a data analyst. Analyze the provided list of reviews and return a JSON object with 3 statistics: "
-            "1. 'ratings': Count of reviews per star rating (e.g., '1.0 Stars', '5.0 Stars'). "
-            "2. 'clients': Count of reviews per client_id (use truncated IDs). "
-            "3. 'sentiments': Count of reviews per sentiment (Positive, Negative, Neutral). "
-            "Return ONLY a valid JSON object with the following structure: "
-            "{\"ratings\": {\"labels\": [], \"data\": []}, \"clients\": {\"labels\": [], \"data\": []}, \"sentiments\": {\"labels\": [], \"data\": []}}"
+            "You are a professional data analyst. Analyze the provided list of reviews and generate aggregated statistics for a dashboard. "
+            "CRITICAL: Labels in each category must be UNIQUE. You must SUM the counts for identical categories. "
+            "1. 'ratings': Group and count by the 'type' field (the review category/metric). "
+            "2. 'clients': Group and count the frequency of each 'client_id'. "
+            "3. 'sentiments': Analyze the 'text' and count occurrences of 'Positive', 'Negative', and 'Neutral' sentiments. "
+            "Return ONLY a valid JSON object. No duplicates in labels. "
+            "Structure: {\"ratings\": {\"labels\": [], \"data\": []}, \"clients\": {\"labels\": [], \"data\": []}, \"sentiments\": {\"labels\": [], \"data\": []}}"
         )
 
         user_content = f"Analyze these reviews: {json.dumps(reviews_data)}"
@@ -42,7 +44,46 @@ class StatisticsService:
             )
 
             content = response["message"]["content"].strip()
-            return json.loads(content)
+            raw_stats = json.loads(content)
+
+            # Post-process to fix LLM hallucinations (floats, duplicates, bogus sentiments)
+            clean_stats = {
+                "ratings": {"labels": [], "data": []},
+                "clients": {"labels": [], "data": []},
+                "sentiments": {"labels": [], "data": []}
+            }
+
+            # Helper to merge duplicates and fix floats
+            def clean_category(source_dict, target_dict, is_sentiment=False):
+                merged = {}
+                labels = source_dict.get("labels", [])
+                data = source_dict.get("data", [])
+                
+                for i in range(min(len(labels), len(data))):
+                    label = str(labels[i]).strip()
+                    
+                    try:
+                        val = int(float(data[i])) # Convert float like 1.0 to int 1
+                    except (ValueError, TypeError):
+                        val = 0 # Fallback if LLM outputs text instead of number
+                    
+                    if is_sentiment:
+                        # Fix bogus sentiments
+                        l_upper = label.upper()
+                        if "POS" in l_upper: label = "Positive"
+                        elif "NEG" in l_upper: label = "Negative"
+                        else: label = "Neutral"
+                        
+                    merged[label] = merged.get(label, 0) + val
+                    
+                target_dict["labels"] = list(merged.keys())
+                target_dict["data"] = list(merged.values())
+
+            clean_category(raw_stats.get("ratings", {}), clean_stats["ratings"])
+            clean_category(raw_stats.get("clients", {}), clean_stats["clients"])
+            clean_category(raw_stats.get("sentiments", {}), clean_stats["sentiments"], is_sentiment=True)
+
+            return clean_stats
         except Exception as e:
             print(f"Error calling Ollama: {e}")
             # Fallback to empty structure if AI fails

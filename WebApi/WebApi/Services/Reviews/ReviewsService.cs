@@ -30,7 +30,8 @@ public class ReviewsService(HttpClient httpClient) : IReviewsService
             RawText = r!.RawText,
             SubmittedOn = r.SubmittedOn,
             Rating = (double)r.Review,
-            ClientId = r.ClientId.ToString()
+            ClientId = r.ClientId.ToString(),
+            RatingType = r.RatingType
         }).ToList();
 
         var response = await httpClient.PostAsJsonAsync(aiBaseUri, validReviews);

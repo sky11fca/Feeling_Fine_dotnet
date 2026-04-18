@@ -43,11 +43,7 @@
         var token = await JSRuntime.InvokeAsync<string>("localStorage.getItem", "authToken");
         if (!string.IsNullOrEmpty(token))
         {
-            var businessId = await JSRuntime.InvokeAsync<string>("localStorage.getItem", "businessId");
-            if (!string.IsNullOrEmpty(businessId))
-            {
-                NavigationManager.NavigateTo($"/reviews/{businessId}");
-            }
+            NavigationManager.NavigateTo("/reviews");
         }
     }
 
@@ -62,11 +58,12 @@
             var jsonBytes = ParseBase64WithoutPadding(payload);
             var keyValuePairs = JsonSerializer.Deserialize<Dictionary<string, object>>(jsonBytes);
             
-            if (keyValuePairs != null && keyValuePairs.TryGetValue("jti", out var businessIdObj))
+            if (keyValuePairs != null)
             {
-                var businessId = businessIdObj.ToString();
+                var businessId = keyValuePairs.TryGetValue("businessId", out var bIdObj) ? bIdObj.ToString() : Guid.Empty.ToString();
                 await JSRuntime.InvokeVoidAsync("localStorage.setItem", "businessId", businessId);
-                NavigationManager.NavigateTo($"/reviews/{businessId}");
+                
+                NavigationManager.NavigateTo("/reviews");
             }
         }
     }

@@ -64,9 +64,6 @@
     public Guid ReviewId { get; set; }
 
     [SupplyParameterFromQuery]
-    public Guid BusinessId { get; set; }
-
-    [SupplyParameterFromQuery]
     public Guid ClientId { get; set; }
 
     [SupplyParameterFromQuery]
@@ -116,7 +113,7 @@
     private async Task SubmitReply()
     {
         await ReplyService.AddReviewAsync(ReviewId, ClientId, _replyInput.RawText);
-        NavigationManager.NavigateTo($"/reviews/{BusinessId}");
+        NavigationManager.NavigateTo("/reviews");
     }
 
     public class ReplyInput

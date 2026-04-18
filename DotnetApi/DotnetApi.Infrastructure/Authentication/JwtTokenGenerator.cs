@@ -29,10 +29,12 @@ public class JwtTokenGenerator : IJwtTokenGenerator
 
         var claims = new[]
         {
+            new Claim("username", user.Username),
+            new Claim("email", user.Email),
+            new Claim("businessId", user.BusinessId.ToString()),
+            new Claim("role", user.UserRole.ToString()),
             new Claim(JwtRegisteredClaimNames.Sub, user.Id.ToString()),
-            new Claim(JwtRegisteredClaimNames.Jti, user.BusinessId.ToString()),
-            new Claim(JwtRegisteredClaimNames.Email, user.Email),
-            new Claim(ClaimTypes.Role, user.UserRole.ToString())
+            new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()) // jti should be a unique identifier for the token
         };
 
         var token = new JwtSecurityToken(

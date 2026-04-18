@@ -1,4 +1,4 @@
-@page "/reviews/{businessId:guid}"
+@page "/reviews"
 @using WebApi.Models
 @using WebApi.Services.Business
 @using WebApi.Services.Client
@@ -15,6 +15,14 @@
 <MudContainer MaxWidth="MaxWidth.Large" Class="mt-16">
     
     <Navbar/>
+
+    @if (_isAdmin)
+    {
+        <div class="d-flex justify-center mb-4">
+            <MudChip T="string" Color="Color.Primary" Variant="Variant.Filled" Icon="@Icons.Material.Filled.AdminPanelSettings">Admin Mode: Viewing All Platform Reviews</MudChip>
+        </div>
+    }
+
     @if (_business != null)
     {
         <MudText Typo="Typo.h1" Align="Align.Center" Class="mb-4">Reviews for @_business.Name</MudText>
@@ -32,17 +40,20 @@
                 <DataAnnotationsValidator/>
                 <ValidationSummary/>
 
-                <MudSelect T="Guid" @bind-Value="_reviewInput.BusinessId"
-                           Label="Select Business"
-                           Underline="false"
-                           Variant="Variant.Filled"
-                           Class="liquid-glass-input mb-6"
-                           AnchorOrigin="Origin.BottomCenter">
-                    @foreach (var b in _allBusinesses)
-                    {
-                        <MudSelectItem T="Guid" Value="@b.Id">@b.Name</MudSelectItem>
-                    }
-                </MudSelect>
+                @if (_isAdmin)
+                {
+                    <MudSelect T="Guid" @bind-Value="_reviewInput.BusinessId"
+                               Label="Select Business"
+                               Underline="false"
+                               Variant="Variant.Filled"
+                               Class="liquid-glass-input mb-6"
+                               AnchorOrigin="Origin.BottomCenter">
+                        @foreach (var b in _allBusinesses)
+                        {
+                            <MudSelectItem T="Guid" Value="@b.Id">@b.Name</MudSelectItem>
+                        }
+                    </MudSelect>
+                }
 
                 <MudSelect T="Guid" @bind-Value="_reviewInput.ClientId"
                            Label="Select Client"
@@ -86,7 +97,7 @@
             <MudStack Spacing="6">
                 @foreach (var review in _reviewList)
                 {
-                    <a href="/review/@review.Id?businessId=@BusinessId&clientId=@review.ClientId&rawText=@Uri.EscapeDataString(review.RawText)&clientName=@Uri.EscapeDataString(_clientNames.TryGetValue(review.ClientId, out var name) ? name : "Unknown")&sentiment=@Uri.EscapeDataString(review.SentimentLabel)" style="text-decoration: none;">
+                    <a href="/review/@review.Id?clientId=@review.ClientId&rawText=@Uri.EscapeDataString(review.RawText)&clientName=@Uri.EscapeDataString(_clientNames.TryGetValue(review.ClientId, out var name) ? name : "Unknown")&sentiment=@Uri.EscapeDataString(review.SentimentLabel)" style="text-decoration: none;">
                         <div class="liquid-glass-card">
                             <MudText Typo="Typo.h6" Class="mb-2" Color="Color.Primary">
                                 <strong>@(_clientNames.TryGetValue(review.ClientId, out var username) ? username : review.Id.ToString())</strong>
@@ -125,9 +136,6 @@
 
 @code {
 
-    [Parameter]
-    public Guid BusinessId { get; set; }
-
     private List<ReviewDto?> _reviewList = new();
     private BusinessDto? _business;
     private List<BusinessDto> _allBusinesses = new();
@@ -136,8 +144,14 @@
     private Dictionary<Guid, string> _clientNames = new();
     private Dictionary<Guid, ReplyDto> _replies = new();
     private bool _isAdmin = false;
+    private Guid _targetBusinessId = Guid.Empty;
 
     protected async override Task OnInitializedAsync()
+    {
+        await LoadData();
+    }
+
+    private async Task LoadData()
     {
         var token = await JSRuntime.InvokeAsync<string>("localStorage.getItem", "authToken");
         if (string.IsNullOrEmpty(token))
@@ -152,48 +166,47 @@
             var roleClaim = claims.FirstOrDefault(c => c.Type == "role" || c.Type == "http://schemas.microsoft.com/ws/2008/06/identity/claims/role")?.Value;
             _isAdmin = roleClaim?.Equals("Admin", StringComparison.OrdinalIgnoreCase) ?? false;
 
-            // If Admin, get all reviews. If not, filter strictly by businessId from JWT/Storage
-            Guid targetBusinessId = Guid.Empty;
+            // If Admin, get all reviews (Empty Guid). If not, filter strictly by businessId from JWT/Storage
+            _targetBusinessId = Guid.Empty;
             if (!_isAdmin)
             {
                 var businessIdStr = await JSRuntime.InvokeAsync<string>("localStorage.getItem", "businessId");
                 if (!string.IsNullOrWhiteSpace(businessIdStr))
                 {
-                    Guid.TryParse(businessIdStr.Trim('"', '\''), out targetBusinessId);
+                    Guid.TryParse(businessIdStr.Trim('"', '\''), out _targetBusinessId);
                 }
-                
-                // Fallback/Verify with JWT jti claim
-                if (targetBusinessId == Guid.Empty)
+
+                // Fallback/Verify with JWT businessId claim
+                if (_targetBusinessId == Guid.Empty)
                 {
-                    var jtiClaim = claims.FirstOrDefault(c => c.Type == "jti")?.Value;
-                    if (!string.IsNullOrEmpty(jtiClaim)) Guid.TryParse(jtiClaim, out targetBusinessId);
+                    var bIdClaim = claims.FirstOrDefault(c => c.Type == "businessId")?.Value;
+                    if (!string.IsNullOrEmpty(bIdClaim)) Guid.TryParse(bIdClaim, out _targetBusinessId);
                 }
 
                 // If non-admin and STILL no businessId, redirect or show empty
-                if (targetBusinessId == Guid.Empty)
+                if (_targetBusinessId == Guid.Empty)
                 {
                      _reviewList = new();
                      return;
                 }
             }
-            else
-            {
-                // Admin can use the URL parameter if provided, otherwise see all
-                targetBusinessId = BusinessId != Guid.Empty ? BusinessId : Guid.Empty;
-            }
 
-            _reviewList = await ReviewsService.GetReviewQuery(targetBusinessId, string.Empty, string.Empty);
+            _reviewList = await ReviewsService.GetReviewQuery(_targetBusinessId, string.Empty, string.Empty);
             await FetchClientNames();
             await FetchReplies();
             _allBusinesses = await BusinessService.GetBusinessQuery(string.Empty, string.Empty);
 
-            if (targetBusinessId != Guid.Empty)
+            if (_targetBusinessId != Guid.Empty)
             {
-                _business = _allBusinesses.Find(b => b.Id == targetBusinessId);
+                _business = _allBusinesses.Find(b => b.Id == _targetBusinessId);
+            }
+            else
+            {
+                _business = null;
             }
 
             _allClients = await ClientService.Query();
-            _reviewInput.BusinessId = targetBusinessId != Guid.Empty ? targetBusinessId : BusinessId;
+            _reviewInput.BusinessId = _targetBusinessId;
         }
         catch (Exception ex)
         {
@@ -263,10 +276,8 @@
     {
         await ReviewsService.AddReview(_reviewInput.BusinessId, _reviewInput.ClientId, _reviewInput.Rating, _reviewInput.RawText,"FeelingFine.net");
         
-        _reviewList = await ReviewsService.GetReviewQuery(Guid.Empty, string.Empty, string.Empty);
-        await FetchClientNames();
-        await FetchReplies();
-        _reviewInput = new ReviewInput { BusinessId = BusinessId };
+        await LoadData();
+        _reviewInput = new ReviewInput { BusinessId = _targetBusinessId };
     }
 
     public class ReviewInput

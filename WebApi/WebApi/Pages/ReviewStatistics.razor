@@ -14,6 +14,13 @@
     
     <MudText Typo="Typo.h1" Align="Align.Center" Class="mb-8">AI Review Analytics</MudText>
 
+    @if (_stats != null && _isAdmin)
+    {
+        <div class="d-flex justify-center mb-6">
+            <MudChip T="string" Color="Color.Primary" Variant="Variant.Filled" Icon="@Icons.Material.Filled.AdminPanelSettings">Admin Mode: Platform-Wide Analytics</MudChip>
+        </div>
+    }
+
     @if (_isProcessing)
     {
         <div class="d-flex flex-column align-center justify-center my-16">
@@ -33,10 +40,10 @@
         </MudText>
 
         <MudGrid>
-            @* Rating Chart *@
+            @* Rating Chart *@ 
             <MudItem xs="12" md="4">
                 <MudPaper Elevation="4" Class="pa-6 rounded-xl" Style="height: 450px;">
-                    <MudText Typo="Typo.h6" Align="Align.Center" Class="mb-4">Rating Distribution</MudText>
+                    <MudText Typo="Typo.h6" Align="Align.Center" Class="mb-4">Reviews per Category</MudText>
                     <div style="height: 320px; width: 100%;">
                         <canvas id="ratingChart"></canvas>
                     </div>
@@ -44,14 +51,14 @@
             </MudItem>
 
             @* Client Chart *@
-            <MudItem xs="12" md="4">
+            @* <MudItem xs="12" md="4">
                 <MudPaper Elevation="4" Class="pa-6 rounded-xl" Style="height: 450px;">
                     <MudText Typo="Typo.h6" Align="Align.Center" Class="mb-4">Top Clients</MudText>
                     <div style="height: 320px; width: 100%;">
                         <canvas id="clientChart"></canvas>
                     </div>
                 </MudPaper>
-            </MudItem>
+            </MudItem> *@ @*It doesn't work and I don't know why*@
 
             @* Sentiment Chart *@
             <MudItem xs="12" md="4">
@@ -84,6 +91,7 @@
 
 @code {
     private bool _isProcessing = true;
+    private bool _isAdmin = false;
     private string? _error;
     private AiStatisticsResponse? _stats;
     private int _totalReviews = 0;
@@ -133,6 +141,7 @@
                                                        c.Type == "http://schemas.microsoft.com/ws/2008/06/identity/claims/role")?.Value;
             
             var isAdmin = roleClaim?.Equals("Admin", StringComparison.OrdinalIgnoreCase) ?? false;
+            _isAdmin = isAdmin;
 
             var businessIdStr = await JSRuntime.InvokeAsync<string>("localStorage.getItem", "businessId");
             Guid businessId = Guid.Empty;
@@ -145,13 +154,13 @@
                     Guid.TryParse(businessIdStr.Trim('"', '\''), out businessId);
                 }
                 
-                // If not in localStorage, MUST get from JWT 'jti' claim
+                // If not in localStorage, MUST get from JWT 'businessId' claim
                 if (businessId == Guid.Empty)
                 {
-                    var jtiClaim = claims.FirstOrDefault(c => c.Type == "jti")?.Value;
-                    if (!string.IsNullOrEmpty(jtiClaim))
+                    var bIdClaim = claims.FirstOrDefault(c => c.Type == "businessId")?.Value;
+                    if (!string.IsNullOrEmpty(bIdClaim))
                     {
-                        Guid.TryParse(jtiClaim, out businessId);
+                        Guid.TryParse(bIdClaim, out businessId);
                     }
                 }
                 
@@ -186,16 +195,32 @@
                 catch { }
             }
 
-            var aiResponse = await ReviewsService.GetAiStatistics(_reviews);
+                var aiResponse = await ReviewsService.GetAiStatistics(_reviews);
             if (aiResponse != null)
             {
                 _stats = aiResponse;
                 
-                // Map client labels in the object itself before rendering
-                _stats.Clients.Labels = _stats.Clients.Labels.Select(label => {
+                // Map client labels and MERGE duplicates to fix Chart.js display and legend issues
+                var mergedClients = new Dictionary<string, int>(StringComparer.OrdinalIgnoreCase);
+                for (int i = 0; i < _stats.Clients.Labels.Length; i++)
+                {
+                    var label = _stats.Clients.Labels[i];
+                    var val = i < _stats.Clients.Data.Length ? _stats.Clients.Data[i] : 0;
+                    
                     var match = _clientMap.Keys.FirstOrDefault(k => k.Contains(label.ToLower()));
-                    return !string.IsNullOrEmpty(match) ? _clientMap[match] : label;
-                }).ToArray();
+                    var mappedName = !string.IsNullOrEmpty(match) ? _clientMap[match] : label;
+                    
+                    // Standardize capitalization to make the chart look nice (e.g., "john_doe" -> "John_doe")
+                    if (mappedName.Length > 0 && char.IsLower(mappedName[0]))
+                    {
+                        mappedName = char.ToUpper(mappedName[0]) + mappedName.Substring(1);
+                    }
+                    
+                    mergedClients[mappedName] = mergedClients.GetValueOrDefault(mappedName, 0) + val;
+                }
+                
+                _stats.Clients.Labels = mergedClients.Keys.ToArray();
+                _stats.Clients.Data = mergedClients.Values.ToArray();
             }
             else
             {

@@ -20,7 +20,7 @@ public class ChartData
     public string[] Labels { get; set; } = Array.Empty<string>();
 
     [JsonPropertyName("data")]
-    public double[] Data { get; set; } = Array.Empty<double>();
+    public int[] Data { get; set; } = Array.Empty<int>();
 }
 
 public class ReviewAiModel
@@ -36,4 +36,7 @@ public class ReviewAiModel
 
     [JsonPropertyName("client_id")]
     public string ClientId { get; set; } = string.Empty;
+
+    [JsonPropertyName("rating_type")]
+    public string RatingType { get; set; } = string.Empty;
 }

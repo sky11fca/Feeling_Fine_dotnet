@@ -87,12 +87,8 @@
         var token = await JSRuntime.InvokeAsync<string>("localStorage.getItem", "authToken");
         if (!string.IsNullOrEmpty(token))
         {
-            var businessId = await JSRuntime.InvokeAsync<string>("localStorage.getItem", "businessId");
-            if (!string.IsNullOrEmpty(businessId))
-            {
-                NavigationManager.NavigateTo($"/reviews/{businessId}");
-                return;
-            }
+            NavigationManager.NavigateTo("/reviews");
+            return;
         }
 
         _businesses = await BusinessService.GetBusinessQuery(string.Empty, string.Empty);
