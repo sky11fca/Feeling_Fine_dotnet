@@ -31,7 +31,8 @@ public class ReviewsService(HttpClient httpClient) : IReviewsService
             SubmittedOn = r.SubmittedOn,
             Rating = (double)r.Review,
             ClientId = r.ClientId.ToString(),
-            RatingType = r.RatingType
+            RatingType = r.RatingType,
+            SentimentLabel = r.SentimentLabel
         }).ToList();
 
         var response = await httpClient.PostAsJsonAsync(aiBaseUri, validReviews);

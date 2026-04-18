@@ -8,3 +8,4 @@ class ReviewModel(BaseModel):
     rating: Optional[float] = 0.0
     client_id: Optional[str] = ""
     rating_type: Optional[str] = ""
+    sentiment_label: Optional[str] = ""

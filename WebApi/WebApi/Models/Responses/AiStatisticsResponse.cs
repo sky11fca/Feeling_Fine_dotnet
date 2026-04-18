@@ -39,4 +39,7 @@ public class ReviewAiModel
 
     [JsonPropertyName("rating_type")]
     public string RatingType { get; set; } = string.Empty;
+
+    [JsonPropertyName("sentiment_label")]
+    public string SentimentLabel { get; set; } = string.Empty;
 }
