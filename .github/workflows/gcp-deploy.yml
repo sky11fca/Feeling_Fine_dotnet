@@ -17,6 +17,8 @@ jobs:
       run : |
         echo "repository: ${{ github.repository }}"
         echo "actor: ${{ github.actor }}"
+        echo "WIF Provider: ${{ secrets.GCP_WIF_PROVIDER }}"
+        echo "Project ID: ${{ secrets.GCP_PROJECT_ID }}"
 
     - name: Checkout Code
       uses: actions/checkout@v4
