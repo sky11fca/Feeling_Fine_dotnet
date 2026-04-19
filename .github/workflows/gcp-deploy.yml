@@ -13,6 +13,11 @@ jobs:
       id-token: write
 
     steps:
+    - name: Debug OIDC Token 
+      run : |
+        echo "repository: ${{ github.repository }}"
+        echo "actor: ${{ github.actor }}"
+
     - name: Checkout Code
       uses: actions/checkout@v4
 
@@ -21,7 +26,7 @@ jobs:
       uses: google-github-actions/auth@v2
       with:
         workload_identity_provider: ${{ secrets.GCP_WIF_PROVIDER }}
-        service_account: github-deployer@${{ secrets.GCP_PROJECT_ID }}.iam.gserviceaccount.io
+        service_account: github-deployer@${{ secrets.GCP_PROJECT_ID }}.iam.gserviceaccount.com
 
     - name: Set up Cloud SDK
       uses: google-github-actions/setup-gcloud@v2
