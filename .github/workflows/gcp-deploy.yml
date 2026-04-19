@@ -23,6 +23,10 @@ jobs:
         workload_identity_provider: ${{ secrets.GCP_WIF_PROVIDER }}
         service_account: github-deployer@${{ secrets.GCP_PROJECT_ID }}.iam.gserviceaccount.com
         project_id: ${{ secrets.GCP_PROJECT_ID }}
+    - name: Debug Project ID 
+      run: |
+        gcloud config get-value project
+        gcloud auth list
 
     - name: Set up Cloud SDK
       uses: google-github-actions/setup-gcloud@v2
