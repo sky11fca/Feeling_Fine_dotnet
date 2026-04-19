@@ -8,20 +8,23 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
 
     steps:
     - name: Checkout Code
       uses: actions/checkout@v4
 
     - name: Authenticate to Google Cloud
+      id: auth
       uses: google-github-actions/auth@v2
       with:
-        credentials_json: ${{ secrets.GCP_SA_KEY }}
+        workload_identity_provider: ${{ secrets.GCP_WIF_PROVIDER }}
+        service_account: github-deployer@${{ secrets.GCP_PROJECT_ID }}.iam.gserviceaccount.io
 
     - name: Set up Cloud SDK
       uses: google-github-actions/setup-gcloud@v2
-      with:
-        project_id: ${{ secrets.GCP_PROJECT_ID }}
 
     - name: Deploy Python AI Service
       run: |
@@ -31,7 +34,7 @@ jobs:
       run: |
         gcloud app deploy DotnetApi/DotnetApi.WebApi/app.yaml --quiet
 
-    - name: Deploy WebUI (Default) Service
+    - name: Deploy Web UI (Default) Service
       run: |
         gcloud app deploy WebApi/WebApi/app.yaml --quiet
 
