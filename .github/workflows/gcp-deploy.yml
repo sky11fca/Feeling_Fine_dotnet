@@ -28,15 +28,15 @@ jobs:
 
     - name: Deploy Python AI Service
       run: |
-        gcloud app deploy PythonAI/app.yaml --quiet
+        gcloud app deploy PythonAI/app.yaml --project=${{ secrets.GCP_PROJECT_ID }}--quiet
 
     - name: Deploy Dotnet API Service
       run: |
-        gcloud app deploy DotnetApi/DotnetApi.WebApi/app.yaml --quiet
+        gcloud app deploy DotnetApi/DotnetApi.WebApi/app.yaml --project=${{ secrets.GCP_PROJECT_ID }} --quiet
 
     - name: Deploy Web UI (Default) Service
       run: |
-        gcloud app deploy WebApi/WebApi/app.yaml --quiet
+        gcloud app deploy WebApi/WebApi/app.yaml --project=${{ secrets.GCP_PROJECT_ID }} --quiet
 
     - name: Deploy Dispatch Rules
       run: |
