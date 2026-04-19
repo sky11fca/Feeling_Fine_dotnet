@@ -1,9 +1,0 @@
-runtime: custom
-env: flex
-service: python-ai
-
-network:
-  session_affinity: true
-
-env_variables:
-  OLLAMA_HOST: "http://10.128.0.2:11434"
