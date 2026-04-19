@@ -30,6 +30,11 @@ jobs:
 
     - name: Set up Cloud SDK
       uses: google-github-actions/setup-gcloud@v2
+    
+    - name: Debug auth 
+      run: |
+        gcloud auth list
+        gcloud config list
 
     - name: Deploy Python AI Service
       run: |
