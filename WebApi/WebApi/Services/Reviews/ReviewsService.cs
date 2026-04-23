@@ -8,7 +8,7 @@ namespace WebApi.Services.Reviews;
 public class ReviewsService(HttpClient httpClient) : IReviewsService
 {
 
-    private readonly string BaseUri = "api/v1/review";
+    private readonly string BaseUri = "http://localhost:5160/api/v1/review";
     public async Task AddReview(Guid businessId, Guid clientId, decimal review, string rawText, string submitedOn)
     {
         var request = new AddReviewCommand(businessId, clientId, review, rawText, submitedOn);
@@ -24,7 +24,7 @@ public class ReviewsService(HttpClient httpClient) : IReviewsService
 
     public async Task<AiStatisticsResponse?> GetAiStatistics(List<ReviewDto?> reviews)
     {
-        var aiBaseUri = "ai/statistics/";
+        var aiBaseUri = "http://localhost:8000/ai/statistics/";
         var validReviews = reviews.Where(r => r != null).Select(r => new ReviewAiModel
         {
             RawText = r!.RawText,

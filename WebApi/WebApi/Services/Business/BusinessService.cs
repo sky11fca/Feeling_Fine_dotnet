@@ -7,7 +7,7 @@ namespace WebApi.Services.Business;
 
 public class BusinessService(HttpClient httpClient) : IBusinessService
 {
-    private readonly string BaseUri = "api/v1/business";
+    private readonly string BaseUri = "http://localhost:5160/api/v1/business";
     
     public async Task<Guid> AddBusiness(string name, string industry)
     {

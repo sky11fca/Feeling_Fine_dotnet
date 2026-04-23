@@ -9,6 +9,7 @@
 @inject IBusinessService BusinessService
 @inject IClientService ClientService
 @inject IReplyService ReplyService
+@inject IDialogService DialogService
 @inject IJSRuntime JSRuntime
 @inject NavigationManager NavigationManager
 
@@ -23,128 +24,125 @@
         </div>
     }
 
-    @if (_business != null)
-    {
-        <MudText Typo="Typo.h1" Align="Align.Center" Class="mb-4">Reviews for @_business.Name</MudText>
-        <MudText Typo="Typo.body1" Align="Align.Center" Class="mb-16 mud-text-secondary">@_business.Industry</MudText>
-    }
-    else
-    {
-        <MudText Typo="Typo.h1" Align="Align.Center" Class="mb-16">Reviews</MudText>
-    }
-
-    <div class="liquid-glass-section">
-        <MudText Typo="Typo.h2" Class="mb-6">Add a Review</MudText>
-        <div class="liquid-glass-card">
-            <EditForm Model="@_reviewInput" OnValidSubmit="@SubmitReview">
-                <DataAnnotationsValidator/>
-                <ValidationSummary/>
-
-                @if (_isAdmin)
-                {
-                    <MudSelect T="Guid" @bind-Value="_reviewInput.BusinessId"
-                               Label="Select Business"
-                               Underline="false"
-                               Variant="Variant.Filled"
-                               Class="liquid-glass-input mb-6"
-                               AnchorOrigin="Origin.BottomCenter">
-                        @foreach (var b in _allBusinesses)
-                        {
-                            <MudSelectItem T="Guid" Value="@b.Id">@b.Name</MudSelectItem>
-                        }
-                    </MudSelect>
-                }
-
-                <MudSelect T="Guid" @bind-Value="_reviewInput.ClientId"
-                           Label="Select Client"
-                           Underline="false"
-                           Variant="Variant.Filled"
-                           Class="liquid-glass-input mb-6"
-                           AnchorOrigin="Origin.BottomCenter">
-                    @foreach (var c in _allClients)
-                    {
-                        <MudSelectItem T="Guid" Value="@c.Id">@c.Username</MudSelectItem>
-                    }
-                </MudSelect>
-
-                <MudNumericField @bind-Value="_reviewInput.Rating"
-                                 Label="Rating (1-5)"
-                                 Underline="false"
-                                 Min="1" Max="5"
-                                 Variant="Variant.Filled"
-                                 Class="liquid-glass-input mb-6"/>
-
-                <MudTextField @bind-Value="_reviewInput.RawText"
-                              Label="Review"
-                              Underline="false"
-                              Variant="Variant.Filled"
-                              Lines="4"
-                              Class="liquid-glass-input mb-6"/>
-
-                <MudButton ButtonType="ButtonType.Submit"
-                           Variant="Variant.Filled"
-                           Class="liquid-glass-btn-primary full-width py-3">
-                    Submit
-                </MudButton>
-            </EditForm>
-        </div>
+    <div class="d-flex justify-space-between align-center mb-8">
+        @if (_business != null)
+        {
+            <div>
+                <MudText Typo="Typo.h1" Class="mb-2">Reviews for @_business.Name</MudText>
+                <MudText Typo="Typo.body1" Class="mud-text-secondary">@_business.Industry</MudText>
+            </div>
+        }
+        else
+        {
+            <MudText Typo="Typo.h1">Platform Reviews</MudText>
+        }
+        
+        <MudButton Variant="Variant.Filled" 
+                   Color="Color.Primary" 
+                   StartIcon="@Icons.Material.Filled.Add" 
+                   Size="Size.Large"
+                   Class="rounded-pill px-8"
+                   OnClick="OpenAddReviewDialog">
+            Add Review
+        </MudButton>
     </div>
 
-    @if (_reviewList.Count != 0)
+    @if (_pagedReviews.Count != 0)
     {
         <div class="liquid-glass-section">
-            <MudText Typo="Typo.h2" Class="mb-6">All Reviews</MudText>
-            <MudStack Spacing="6">
-                @foreach (var review in _reviewList)
+            <div class="d-flex justify-space-between align-center mb-6">
+                <MudText Typo="Typo.h2">Recent Feedback</MudText>
+                <MudText Typo="Typo.body2" Class="mud-text-secondary">Total: @_reviewList.Count reviews</MudText>
+            </div>
+
+            <MudStack Spacing="6" Class="mb-8">
+                @foreach (var review in _pagedReviews)
                 {
                     <a href="/review/@review.Id?clientId=@review.ClientId&rawText=@Uri.EscapeDataString(review.RawText)&clientName=@Uri.EscapeDataString(_clientNames.TryGetValue(review.ClientId, out var name) ? name : "Unknown")&sentiment=@Uri.EscapeDataString(review.SentimentLabel)" style="text-decoration: none;">
-                        <div class="liquid-glass-card">
-                            <MudText Typo="Typo.h6" Class="mb-2" Color="Color.Primary">
-                                <strong>@(_clientNames.TryGetValue(review.ClientId, out var username) ? username : review.Id.ToString())</strong>
-                            </MudText>
-                            <MudChip T="string" Size="Size.Small" Class="mb-2" Color="Color.Secondary">
-                                Rating: @review.Review / 5.0 (@review.RatingType)
-                            </MudChip>
-                            <MudText Typo="Typo.body1" Class="mb-4 text-white">@review.RawText</MudText>
+                        <div class="liquid-glass-card hover-lift">
+                            <div class="d-flex justify-space-between align-start mb-4">
+                                <div>
+                                    <MudText Typo="Typo.h6" Color="Color.Primary" Class="mb-1">
+                                        <strong>@(_clientNames.TryGetValue(review.ClientId, out var username) ? username : "Anonymous")</strong>
+                                    </MudText>
+                                    <MudChip T="string" Size="Size.Small" Color="Color.Secondary" Variant="Variant.Text" Class="ml-n2">
+                                        @review.RatingType
+                                    </MudChip>
+                                </div>
+                                <div class="text-right">
+                                    <MudRating SelectedValue="@((int)Math.Round(review.Review))" ReadOnly="true" />
+                                    <MudText Typo="Typo.caption" Class="mud-text-secondary d-block mt-1">@review.SubmittedOn</MudText>
+                                </div>
+                            </div>
 
-                            <MudGrid>
-                                <MudItem xs="12" sm="6">
-                                    <MudText Typo="Typo.body2" Class="mud-text-secondary">Posted on: @review.SubmittedOn</MudText>
-                                </MudItem>
-                                <MudItem xs="12" sm="6">
-                                    <MudText Typo="Typo.body2" Class="mud-text-secondary">Sentiment: @review.SentimentLabel (Accuracy: @review.SentimentAccuracy)</MudText>
-                                </MudItem>
-                            </MudGrid>
+                            <MudText Typo="Typo.body1" Class="mb-6 text-white" Style="line-height: 1.6;">@review.RawText</MudText>
 
-                            @if (_replies.TryGetValue(review.Id, out var reply))
+                            <div class="d-flex align-center gap-4">
+                                <MudChip T="string" Size="Size.Small" 
+                                         Color="@GetSentimentColor(review.SentimentLabel)" 
+                                         Icon="@GetSentimentIcon(review.SentimentLabel)"
+                                         Variant="Variant.Filled">
+                                    @review.SentimentLabel
+                                </MudChip>
+                                @if (_replies.TryGetValue(review.Id, out var reply))
+                                {
+                                    <MudChip T="string" Size="Size.Small" Color="Color.Info" Icon="@Icons.Material.Filled.Reply">Responded</MudChip>
+                                }
+                            </div>
+
+                            @if (_replies.TryGetValue(review.Id, out var r))
                             {
-                                <div class="mt-4 p-4 liquid-glass-floating">
-                                    <MudText Typo="Typo.body2" Class="text-white"><strong>Reply:</strong> @reply.RawText</MudText>
+                                <div class="mt-6 pa-4 liquid-glass-floating rounded-lg">
+                                    <MudText Typo="Typo.body2" Class="mud-text-secondary mb-1">Our Response:</MudText>
+                                    <MudText Typo="Typo.body2" Class="text-white">@r.RawText</MudText>
                                 </div>
                             }
                         </div>
                     </a>
                 }
             </MudStack>
+
+            <div class="d-flex justify-center mt-8">
+                <MudPagination Color="Color.Primary" Count="@_pageCount" Selected="@_currentPage" SelectedChanged="PageChanged" />
+            </div>
         </div>
     }
     else
     {
-        <MudText Typo="Typo.body1" Align="Align.Center" Class="mud-text-secondary">No reviews found</MudText>
+        <div class="d-flex flex-column align-center justify-center my-16 py-16">
+            <MudIcon Icon="@Icons.Material.Filled.RateReview" Size="Size.Large" Color="Color.Secondary" Class="mb-4" />
+            <MudText Typo="Typo.h5" Class="mud-text-secondary">No reviews found yet.</MudText>
+            <MudButton Variant="Variant.Text" Color="Color.Primary" OnClick="OpenAddReviewDialog" Class="mt-2">Be the first to leave one</MudButton>
+        </div>
     }
 </MudContainer>
 
-@code {
+<style>
+    .hover-lift {
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .hover-lift:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 8px 24px rgba(0,0,0,0.2) !important;
+    }
+</style>
 
+@code {
     private List<ReviewDto?> _reviewList = new();
+    private List<ReviewDto> _pagedReviews = new();
     private BusinessDto? _business;
     private List<BusinessDto> _allBusinesses = new();
     private List<ClientDto> _allClients = new();
-    private ReviewInput _reviewInput = new();
     private Dictionary<Guid, string> _clientNames = new();
     private Dictionary<Guid, ReplyDto> _replies = new();
+    
     private bool _isAdmin = false;
     private Guid _targetBusinessId = Guid.Empty;
+    
+    // Pagination
+    private int _currentPage = 1;
+    private int _pageSize = 5;
+    private int _pageCount => (int)Math.Ceiling((double)_reviewList.Count / _pageSize);
 
     protected async override Task OnInitializedAsync()
     {
@@ -166,47 +164,33 @@
             var roleClaim = claims.FirstOrDefault(c => c.Type == "role" || c.Type == "http://schemas.microsoft.com/ws/2008/06/identity/claims/role")?.Value;
             _isAdmin = roleClaim?.Equals("Admin", StringComparison.OrdinalIgnoreCase) ?? false;
 
-            // If Admin, get all reviews (Empty Guid). If not, filter strictly by businessId from JWT/Storage
             _targetBusinessId = Guid.Empty;
             if (!_isAdmin)
             {
                 var businessIdStr = await JSRuntime.InvokeAsync<string>("localStorage.getItem", "businessId");
-                if (!string.IsNullOrWhiteSpace(businessIdStr))
-                {
-                    Guid.TryParse(businessIdStr.Trim('"', '\''), out _targetBusinessId);
-                }
-
-                // Fallback/Verify with JWT businessId claim
+                if (!string.IsNullOrWhiteSpace(businessIdStr)) Guid.TryParse(businessIdStr.Trim('"', '\''), out _targetBusinessId);
+                
                 if (_targetBusinessId == Guid.Empty)
                 {
                     var bIdClaim = claims.FirstOrDefault(c => c.Type == "businessId")?.Value;
                     if (!string.IsNullOrEmpty(bIdClaim)) Guid.TryParse(bIdClaim, out _targetBusinessId);
                 }
 
-                // If non-admin and STILL no businessId, redirect or show empty
-                if (_targetBusinessId == Guid.Empty)
-                {
-                     _reviewList = new();
-                     return;
-                }
+                if (_targetBusinessId == Guid.Empty) return;
             }
 
             _reviewList = await ReviewsService.GetReviewQuery(_targetBusinessId, string.Empty, string.Empty);
+            _reviewList = _reviewList.OrderByDescending(r => r?.SubmittedOn).ToList();
+            
             await FetchClientNames();
             await FetchReplies();
             _allBusinesses = await BusinessService.GetBusinessQuery(string.Empty, string.Empty);
+            _allClients = await ClientService.Query();
 
             if (_targetBusinessId != Guid.Empty)
-            {
                 _business = _allBusinesses.Find(b => b.Id == _targetBusinessId);
-            }
-            else
-            {
-                _business = null;
-            }
 
-            _allClients = await ClientService.Query();
-            _reviewInput.BusinessId = _targetBusinessId;
+            UpdatePagedList();
         }
         catch (Exception ex)
         {
@@ -214,6 +198,57 @@
             _reviewList = new();
         }
     }
+
+    private void UpdatePagedList()
+    {
+        _pagedReviews = _reviewList
+            .Where(r => r != null)
+            .Cast<ReviewDto>()
+            .Skip((_currentPage - 1) * _pageSize)
+            .Take(_pageSize)
+            .ToList();
+    }
+
+    private void PageChanged(int i)
+    {
+        _currentPage = i;
+        UpdatePagedList();
+    }
+
+    private async Task OpenAddReviewDialog()
+    {
+        var parameters = new DialogParameters<AddReviewDialog>
+        {
+            { x => x.IsAdmin, _isAdmin },
+            { x => x.AllBusinesses, _allBusinesses },
+            { x => x.AllClients, _allClients },
+            { x => x.TargetBusinessId, _targetBusinessId }
+        };
+
+        var options = new DialogOptions { CloseButton = true, MaxWidth = MaxWidth.Small, FullWidth = true };
+        var dialog = await DialogService.ShowAsync<AddReviewDialog>("Submit New Feedback", parameters, options);
+        var result = await dialog.Result;
+
+        if (result != null && !result.Canceled)
+        {
+            await LoadData();
+            StateHasChanged();
+        }
+    }
+
+    private Color GetSentimentColor(string label) => label.ToUpper() switch
+    {
+        "POSITIVE" => Color.Success,
+        "NEGATIVE" => Color.Error,
+        _ => Color.Default
+    };
+
+    private string GetSentimentIcon(string label) => label.ToUpper() switch
+    {
+        "POSITIVE" => Icons.Material.Filled.SentimentVerySatisfied,
+        "NEGATIVE" => Icons.Material.Filled.SentimentVeryDissatisfied,
+        _ => Icons.Material.Filled.SentimentNeutral
+    };
 
     private IEnumerable<System.Security.Claims.Claim> ParseClaimsFromJwt(string jwt)
     {
@@ -243,10 +278,7 @@
                 try
                 {
                     var client = await ClientService.FindAsync(review.ClientId);
-                    if (client != null)
-                    {
-                        _clientNames[review.ClientId] = client.Username;
-                    }
+                    if (client != null) _clientNames[review.ClientId] = client.Username;
                 }
                 catch { }
             }
@@ -262,40 +294,10 @@
                 try
                 {
                     var replies = await ReplyService.GetRepliesAsync(review.Id);
-                    if (replies != null && replies.Count > 0)
-                    {
-                        _replies[review.Id] = replies[0];
-                    }
+                    if (replies != null && replies.Count > 0) _replies[review.Id] = replies[0];
                 }
                 catch { }
             }
         }
-    }
-
-    private async Task SubmitReview()
-    {
-        await ReviewsService.AddReview(_reviewInput.BusinessId, _reviewInput.ClientId, _reviewInput.Rating, _reviewInput.RawText,"FeelingFine.net");
-        
-        await LoadData();
-        _reviewInput = new ReviewInput { BusinessId = _targetBusinessId };
-    }
-
-    public class ReviewInput
-    {
-        public Guid BusinessId { get; set; }
-        public Guid ClientId { get; set; }
-        public decimal Rating { get; set; }
-        public string RawText { get; set; } = string.Empty;
-    }
-
-    private byte[] ParseBase64WithoutPadding(string base64)
-    {
-        base64 = base64.Replace('-', '+').Replace('_', '/');
-        switch (base64.Length % 4)
-        {
-            case 2: base64 += "=="; break;
-            case 3: base64 += "="; break;
-        }
-        return Convert.FromBase64String(base64);
     }
 }

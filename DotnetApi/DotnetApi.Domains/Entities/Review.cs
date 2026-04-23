@@ -7,7 +7,7 @@ public class Review
 
     private Review() { }
 
-    public static Review Create(Guid businessId, Guid clientId, decimal rating, RatingType ratingType, string rawText, string submittedOn)
+    public static Review Create(Guid businessId, Guid clientId, decimal rating, RatingType ratingType, string rawText, string submittedOn, string sentimentLabel = "Unknown", double sentimentAccuracy = 0)
     {
         if(businessId == Guid.Empty)
         {
@@ -33,6 +33,8 @@ public class Review
             BusinessId = businessId,
             RawText = rawText,
             SubmittedOn = submittedOn,
+            SentimentLabel = sentimentLabel,
+            SentimentAccuracy = sentimentAccuracy,
             CreatedAt = DateTime.UtcNow
         };
     }
@@ -44,5 +46,7 @@ public class Review
     public RatingType RatingType { get; private set; }
     public string RawText { get; private set; } = string.Empty;
     public string SubmittedOn { get; private set; } = string.Empty;
+    public string SentimentLabel { get; private set; } = "Unknown";
+    public double SentimentAccuracy { get; private set; } = 0;
     public DateTime CreatedAt { get; private set; } = DateTime.UtcNow;
 }

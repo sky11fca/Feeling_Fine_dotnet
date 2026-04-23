@@ -27,6 +27,7 @@ public class ApplicationDbContext(DbContextOptions options) : DbContext(options)
         {
             e.HasKey(x => x.Id);
             e.Property(x => x.BusinessId).IsRequired();
+            e.HasIndex(x => x.BusinessId); // Optimization for fetching reviews by business
             e.Property(x => x.RawText).IsRequired();
             e.Property(x => x.SubmittedOn).IsRequired();
             e.Property(x => x.CreatedAt).IsRequired();

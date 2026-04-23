@@ -1,16 +1,22 @@
 using DotnetApi.Application.Abstractions;
-using FluentValidation;
 using MediatR;
-using System.Net.Http;
-using System.Net.Http.Json;
-using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Caching.Distributed;
+using System.Text.Json;
 
 namespace DotnetApi.Application.Reviews.Queries;
 
-public class GetReviewQueryHandler(IReviewRepository repository, HttpClient httpClient, IConfiguration configuration) : IRequestHandler<GetReviewQuery, List<ReviewDto>>
+public class GetReviewQueryHandler(IReviewRepository repository, IDistributedCache cache) : IRequestHandler<GetReviewQuery, List<ReviewDto>>
 {
     public async Task<List<ReviewDto>> Handle(GetReviewQuery request, CancellationToken cancellationToken)
     {
+        string cacheKey = $"reviews_{request.BusinessId}_{request.RawText}_{request.SubmitedOn}";
+        var cachedData = await cache.GetStringAsync(cacheKey, cancellationToken);
+
+        if (!string.IsNullOrEmpty(cachedData))
+        {
+            return JsonSerializer.Deserialize<List<ReviewDto>>(cachedData) ?? new List<ReviewDto>();
+        }
+
         var query = repository.Query();
 
         if (!request.BusinessId.Equals(Guid.Empty))
@@ -30,33 +36,26 @@ public class GetReviewQueryHandler(IReviewRepository repository, HttpClient http
 
         var entities = query.ToList();
         
+        var reviews = entities.Select(x => 
+            new ReviewDto(
+                x.Id, 
+                x.ClientId, 
+                x.Rating, 
+                x.RatingType.ToString(), 
+                x.RawText, 
+                x.SubmittedOn, 
+                x.SentimentLabel, 
+                x.SentimentAccuracy)
+        ).ToList();
 
-        var tasks = entities.Select(async x =>
+        var serializedData = JsonSerializer.Serialize(reviews);
+        var cacheOptions = new DistributedCacheEntryOptions
         {
-            var aiServiceUrl = configuration["AiServiceUrl"] ?? "http://localhost:8000/ai/review/";
+            AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(10)
+        };
 
-            SentimentAnalysisResult? sentiment = null;
-            try
-            {
-                var response = await httpClient.PostAsJsonAsync(aiServiceUrl, new { raw_text = x.RawText, submitted_on = x.SubmittedOn }, cancellationToken);
-                
-                Console.WriteLine(response.Content.ToString());
-                
-                sentiment = response.IsSuccessStatusCode 
-                    ? await response.Content.ReadFromJsonAsync<SentimentAnalysisResult>(cancellationToken: cancellationToken) 
-                    : null;
-            }
-            catch (HttpRequestException)
-            {
-                // Fallback to null sentiment if the Python AI service is unreachable
-            }
+        await cache.SetStringAsync(cacheKey, serializedData, cacheOptions, cancellationToken);
 
-            return new ReviewDto(x.Id, x.ClientId, x.Rating, x.RatingType.ToString(), x.RawText, x.SubmittedOn, sentiment?.Label ?? "Unknown", sentiment?.Score ?? 0);
-        });
-
-        var reviews = await Task.WhenAll(tasks);
-
-        return reviews.ToList();
+        return reviews;
     }
-    
 }

@@ -1,0 +1,105 @@
+@using WebApi.Models
+@using WebApi.Services.Reviews
+@using WebApi.Services.Business
+@using WebApi.Services.Client
+@inject IReviewsService ReviewsService
+@inject IBusinessService BusinessService
+@inject IClientService ClientService
+
+<MudDialog>
+    <DialogContent>
+        <EditForm Model="@_reviewInput" OnValidSubmit="@SubmitReview">
+            <DataAnnotationsValidator/>
+            
+            <div class="pa-4">
+                @if (IsAdmin)
+                {
+                    <MudSelect T="Guid?" @bind-Value="_reviewInput.BusinessId"
+                               Label="Select Business"
+                               Underline="false"
+                               Variant="Variant.Filled"
+                               Class="liquid-glass-input mb-4"
+                               AnchorOrigin="Origin.BottomCenter">
+                        @foreach (var b in AllBusinesses)
+                        {
+                            <MudSelectItem T="Guid?" Value="@b.Id">@b.Name</MudSelectItem>
+                        }
+                    </MudSelect>
+                }
+
+                <MudSelect T="Guid?" @bind-Value="_reviewInput.ClientId"
+                           Label="Select Client"
+                           Underline="false"
+                           Variant="Variant.Filled"
+                           Class="liquid-glass-input mb-4"
+                           AnchorOrigin="Origin.BottomCenter">
+                    @foreach (var c in AllClients)
+                    {
+                        <MudSelectItem T="Guid?" Value="@c.Id">@c.Username</MudSelectItem>
+                    }
+                </MudSelect>
+
+                <MudNumericField @bind-Value="_reviewInput.Rating"
+                                 Label="Rating (1-5)"
+                                 Underline="false"
+                                 Min="1" Max="5"
+                                 Variant="Variant.Filled"
+                                 Class="liquid-glass-input mb-4"/>
+
+                <MudTextField @bind-Value="_reviewInput.RawText"
+                              Label="Review"
+                              Underline="false"
+                              Variant="Variant.Filled"
+                              Lines="4"
+                              Class="liquid-glass-input mb-4"/>
+            </div>
+            
+            <div class="d-flex justify-end pa-4">
+                <MudButton OnClick="Cancel" Class="mr-2">Cancel</MudButton>
+                <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary">Submit Review</MudButton>
+            </div>
+        </EditForm>
+    </DialogContent>
+</MudDialog>
+
+@code {
+    [CascadingParameter] IMudDialogInstance MudDialog { get; set; } = default!;
+
+    [Parameter] public bool IsAdmin { get; set; }
+    [Parameter] public List<BusinessDto> AllBusinesses { get; set; } = new();
+    [Parameter] public List<ClientDto> AllClients { get; set; } = new();
+    [Parameter] public Guid TargetBusinessId { get; set; }
+
+    private ReviewInput _reviewInput = new();
+
+    protected override void OnInitialized()
+    {
+        if (TargetBusinessId != Guid.Empty)
+        {
+            _reviewInput.BusinessId = TargetBusinessId;
+        }
+    }
+
+    private void Cancel() => MudDialog.Cancel();
+
+    private async Task SubmitReview()
+    {
+        await ReviewsService.AddReview(_reviewInput.BusinessId!.Value, _reviewInput.ClientId!.Value, _reviewInput.Rating, _reviewInput.RawText, "FeelingFine.net");
+        MudDialog.Close(DialogResult.Ok(true));
+    }
+
+    public class ReviewInput
+    {
+        [System.ComponentModel.DataAnnotations.Required(ErrorMessage = "Please select a business.")]
+        public Guid? BusinessId { get; set; }
+        
+        [System.ComponentModel.DataAnnotations.Required(ErrorMessage = "Please select a client.")]
+        public Guid? ClientId { get; set; }
+        
+        [System.ComponentModel.DataAnnotations.Range(1, 5, ErrorMessage = "Rating must be between 1 and 5.")]
+        public decimal Rating { get; set; }
+        
+        [System.ComponentModel.DataAnnotations.Required(ErrorMessage = "Review text cannot be empty.")]
+        public string RawText { get; set; } = string.Empty;
+    }
+}

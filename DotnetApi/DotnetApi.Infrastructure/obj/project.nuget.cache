@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "t8G6ML5PPao=",
+  "dgSpecHash": "Cn7vpxWzYEs=",
   "success": true,
   "projectFilePath": "/home/mrbogdanovich/git/FeelingFine/DotnetApi/DotnetApi.Infrastructure/DotnetApi.Infrastructure.csproj",
   "expectedPackageFiles": [
@@ -14,6 +14,8 @@
     "/home/mrbogdanovich/.nuget/packages/microsoft.entityframeworkcore.relational/10.0.0/microsoft.entityframeworkcore.relational.10.0.0.nupkg.sha512",
     "/home/mrbogdanovich/.nuget/packages/microsoft.extensions.caching.abstractions/10.0.0/microsoft.extensions.caching.abstractions.10.0.0.nupkg.sha512",
     "/home/mrbogdanovich/.nuget/packages/microsoft.extensions.caching.memory/10.0.0/microsoft.extensions.caching.memory.10.0.0.nupkg.sha512",
+    "/home/mrbogdanovich/.nuget/packages/microsoft.extensions.caching.redis/2.3.0/microsoft.extensions.caching.redis.2.3.0.nupkg.sha512",
+    "/home/mrbogdanovich/.nuget/packages/microsoft.extensions.caching.stackexchangeredis/10.0.0/microsoft.extensions.caching.stackexchangeredis.10.0.0.nupkg.sha512",
     "/home/mrbogdanovich/.nuget/packages/microsoft.extensions.configuration/10.0.5/microsoft.extensions.configuration.10.0.5.nupkg.sha512",
     "/home/mrbogdanovich/.nuget/packages/microsoft.extensions.configuration.abstractions/10.0.5/microsoft.extensions.configuration.abstractions.10.0.5.nupkg.sha512",
     "/home/mrbogdanovich/.nuget/packages/microsoft.extensions.configuration.fileextensions/10.0.5/microsoft.extensions.configuration.fileextensions.10.0.5.nupkg.sha512",
@@ -31,8 +33,13 @@
     "/home/mrbogdanovich/.nuget/packages/microsoft.identitymodel.jsonwebtokens/8.16.0/microsoft.identitymodel.jsonwebtokens.8.16.0.nupkg.sha512",
     "/home/mrbogdanovich/.nuget/packages/microsoft.identitymodel.logging/8.16.0/microsoft.identitymodel.logging.8.16.0.nupkg.sha512",
     "/home/mrbogdanovich/.nuget/packages/microsoft.identitymodel.tokens/8.16.0/microsoft.identitymodel.tokens.8.16.0.nupkg.sha512",
+    "/home/mrbogdanovich/.nuget/packages/microsoft.netcore.platforms/1.1.0/microsoft.netcore.platforms.1.1.0.nupkg.sha512",
+    "/home/mrbogdanovich/.nuget/packages/netstandard.library/1.6.1/netstandard.library.1.6.1.nupkg.sha512",
     "/home/mrbogdanovich/.nuget/packages/npgsql/10.0.0/npgsql.10.0.0.nupkg.sha512",
     "/home/mrbogdanovich/.nuget/packages/npgsql.entityframeworkcore.postgresql/10.0.0/npgsql.entityframeworkcore.postgresql.10.0.0.nupkg.sha512",
+    "/home/mrbogdanovich/.nuget/packages/pipelines.sockets.unofficial/2.2.8/pipelines.sockets.unofficial.2.2.8.nupkg.sha512",
+    "/home/mrbogdanovich/.nuget/packages/stackexchange.redis/2.7.27/stackexchange.redis.2.7.27.nupkg.sha512",
+    "/home/mrbogdanovich/.nuget/packages/stackexchange.redis.strongname/1.2.6/stackexchange.redis.strongname.1.2.6.nupkg.sha512",
     "/home/mrbogdanovich/.nuget/packages/system.identitymodel.tokens.jwt/8.16.0/system.identitymodel.tokens.jwt.8.16.0.nupkg.sha512"
   ],
   "logs": []

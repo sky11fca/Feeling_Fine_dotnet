@@ -1,12 +1,14 @@
 {
   "version": 2,
-  "dgSpecHash": "VNnKyrTBbuw=",
+  "dgSpecHash": "Wkoi3a4TB+M=",
   "success": true,
   "projectFilePath": "/home/mrbogdanovich/git/FeelingFine/DotnetApi/DotnetApi.Application/DotnetApi.Application.csproj",
   "expectedPackageFiles": [
     "/home/mrbogdanovich/.nuget/packages/fluentvalidation/12.1.1/fluentvalidation.12.1.1.nupkg.sha512",
     "/home/mrbogdanovich/.nuget/packages/mediatr/14.0.0/mediatr.14.0.0.nupkg.sha512",
     "/home/mrbogdanovich/.nuget/packages/mediatr.contracts/2.0.1/mediatr.contracts.2.0.1.nupkg.sha512",
+    "/home/mrbogdanovich/.nuget/packages/microsoft.extensions.caching.abstractions/8.0.0/microsoft.extensions.caching.abstractions.8.0.0.nupkg.sha512",
+    "/home/mrbogdanovich/.nuget/packages/microsoft.extensions.caching.redis/2.3.0/microsoft.extensions.caching.redis.2.3.0.nupkg.sha512",
     "/home/mrbogdanovich/.nuget/packages/microsoft.extensions.configuration/10.0.5/microsoft.extensions.configuration.10.0.5.nupkg.sha512",
     "/home/mrbogdanovich/.nuget/packages/microsoft.extensions.configuration.abstractions/10.0.5/microsoft.extensions.configuration.abstractions.10.0.5.nupkg.sha512",
     "/home/mrbogdanovich/.nuget/packages/microsoft.extensions.configuration.fileextensions/10.0.5/microsoft.extensions.configuration.fileextensions.10.0.5.nupkg.sha512",
@@ -16,6 +18,7 @@
     "/home/mrbogdanovich/.nuget/packages/microsoft.extensions.fileproviders.physical/10.0.5/microsoft.extensions.fileproviders.physical.10.0.5.nupkg.sha512",
     "/home/mrbogdanovich/.nuget/packages/microsoft.extensions.filesystemglobbing/10.0.5/microsoft.extensions.filesystemglobbing.10.0.5.nupkg.sha512",
     "/home/mrbogdanovich/.nuget/packages/microsoft.extensions.logging.abstractions/10.0.0/microsoft.extensions.logging.abstractions.10.0.0.nupkg.sha512",
+    "/home/mrbogdanovich/.nuget/packages/microsoft.extensions.options/8.0.2/microsoft.extensions.options.8.0.2.nupkg.sha512",
     "/home/mrbogdanovich/.nuget/packages/microsoft.extensions.primitives/10.0.5/microsoft.extensions.primitives.10.0.5.nupkg.sha512",
     "/home/mrbogdanovich/.nuget/packages/microsoft.identitymodel.abstractions/8.14.0/microsoft.identitymodel.abstractions.8.14.0.nupkg.sha512",
     "/home/mrbogdanovich/.nuget/packages/microsoft.identitymodel.jsonwebtokens/8.14.0/microsoft.identitymodel.jsonwebtokens.8.14.0.nupkg.sha512",
@@ -23,9 +26,11 @@
     "/home/mrbogdanovich/.nuget/packages/microsoft.identitymodel.tokens/8.14.0/microsoft.identitymodel.tokens.8.14.0.nupkg.sha512",
     "/home/mrbogdanovich/.nuget/packages/microsoft.netcore.platforms/1.1.1/microsoft.netcore.platforms.1.1.1.nupkg.sha512",
     "/home/mrbogdanovich/.nuget/packages/microsoft.netcore.targets/1.1.0/microsoft.netcore.targets.1.1.0.nupkg.sha512",
+    "/home/mrbogdanovich/.nuget/packages/netstandard.library/1.6.1/netstandard.library.1.6.1.nupkg.sha512",
     "/home/mrbogdanovich/.nuget/packages/runtime.native.system/4.3.0/runtime.native.system.4.3.0.nupkg.sha512",
     "/home/mrbogdanovich/.nuget/packages/runtime.native.system.net.http/4.3.0/runtime.native.system.net.http.4.3.0.nupkg.sha512",
     "/home/mrbogdanovich/.nuget/packages/runtime.native.system.security.cryptography.openssl/4.3.2/runtime.native.system.security.cryptography.openssl.4.3.2.nupkg.sha512",
+    "/home/mrbogdanovich/.nuget/packages/stackexchange.redis.strongname/1.2.6/stackexchange.redis.strongname.1.2.6.nupkg.sha512",
     "/home/mrbogdanovich/.nuget/packages/system.net.http/4.3.4/system.net.http.4.3.4.nupkg.sha512"
   ],
   "logs": [
