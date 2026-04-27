@@ -13,19 +13,29 @@ namespace DotnetApi.Tests
         {
             builder.ConfigureServices(services =>
             {
-                var descriptor = services.SingleOrDefault(
+                var dbContextDescriptor = services.SingleOrDefault(
                     d => d.ServiceType ==
                         typeof(DbContextOptions<ApplicationDbContext>));
 
-                if (descriptor != null)
+                if (dbContextDescriptor != null)
                 {
-                    services.Remove(descriptor);
+                    services.Remove(dbContextDescriptor);
                 }
 
                 services.AddDbContext<ApplicationDbContext>(options =>
                 {
                     options.UseInMemoryDatabase("InMemoryDbForTesting");
                 });
+
+                var redisDescriptor = services.SingleOrDefault(
+                    d => d.ServiceType == typeof(Microsoft.Extensions.Caching.Distributed.IDistributedCache));
+
+                if (redisDescriptor != null)
+                {
+                    services.Remove(redisDescriptor);
+                }
+
+                services.AddDistributedMemoryCache();
             });
         }
     }

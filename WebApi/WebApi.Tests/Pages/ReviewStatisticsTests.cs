@@ -4,6 +4,7 @@ using Moq;
 using Microsoft.AspNetCore.Components;
 using MudBlazor.Services;
 using WebApi.Models;
+using WebApi.Models.Responses;
 using WebApi.Pages;
 using WebApi.Services.Client;
 using WebApi.Services.Reviews;
@@ -62,6 +63,14 @@ namespace WebApi.Tests.Pages
             mockReviewsService.Setup(s => s.GetReviewQuery(It.IsAny<Guid>(), It.IsAny<string>(), It.IsAny<string>()))
                 .ReturnsAsync(reviews);
 
+            var aiStats = new AiStatisticsResponse
+            {
+                Ratings = new ChartData { Labels = new[] { "5", "1", "4" }, Data = new[] { 1, 1, 1 } },
+                Sentiments = new ChartData { Labels = new[] { "Positive", "Negative" }, Data = new[] { 2, 1 } },
+                Clients = new ChartData { Labels = new[] { "User1", "User2" }, Data = new[] { 2, 1 } }
+            };
+            mockReviewsService.Setup(s => s.GetAiStatistics(It.IsAny<List<ReviewDto?>>())).ReturnsAsync(aiStats);
+
             var mockClientService = new Mock<IClientService>();
             mockClientService.Setup(s => s.FindAsync(clientId1)).ReturnsAsync(new ClientDto(clientId1, "User1", "e1", "123"));
             mockClientService.Setup(s => s.FindAsync(clientId2)).ReturnsAsync(new ClientDto(clientId2, "User2", "e2", "123"));
@@ -73,11 +82,11 @@ namespace WebApi.Tests.Pages
             var cut = Render<ReviewStatistics>();
             
             // Assert
-            Assert.Contains("Total Reviews Analyzed: 3", cut.Markup);
-            Assert.Contains("Reviews per Rating", cut.Markup);
-            Assert.Contains("Reviews per Client", cut.Markup);
-            Assert.Contains("Reviews per Sentiment", cut.Markup);
-            Assert.Contains("Export Data", cut.Markup);
+            Assert.Contains("Successfully analysed 3 reviews", cut.Markup);
+            Assert.Contains("Reviews per Category", cut.Markup);
+            Assert.Contains("Top Clients", cut.Markup);
+            Assert.Contains("Sentiment Analysis", cut.Markup);
+            Assert.Contains("Export CSV", cut.Markup);
         }
 
         [Fact]
@@ -100,9 +109,7 @@ namespace WebApi.Tests.Pages
             var cut = Render<ReviewStatistics>();
 
             // Assert
-            Assert.Contains("Total Reviews Analyzed: 0", cut.Markup);
-            var alerts = cut.FindAll(".mud-alert-message");
-            Assert.Equal(3, alerts.Count); // One for each missing chart
+            Assert.Contains("No reviews found to analyze.", cut.Markup);
         }
 
         [Fact]
@@ -125,7 +132,7 @@ namespace WebApi.Tests.Pages
             var cut = Render<ReviewStatistics>();
 
             // Assert
-            Assert.Contains("Error loading statistics: API failure", cut.Markup);
+            Assert.Contains("Critical error: API failure", cut.Markup);
         }
 
         public Task InitializeAsync() => Task.CompletedTask;

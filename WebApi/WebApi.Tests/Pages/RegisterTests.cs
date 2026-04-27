@@ -28,7 +28,7 @@ namespace WebApi.Tests.Pages
             var mockBusinessService = new Mock<IBusinessService>();
             
             mockBusinessService.Setup(s => s.GetBusinessQuery(It.IsAny<string>(), It.IsAny<string>()))
-                .ReturnsAsync(new List<BusinessDto>());
+                .ReturnsAsync(new List<BusinessDto?>());
 
             Services.AddSingleton(mockAuthService.Object);
             Services.AddSingleton(mockBusinessService.Object);
@@ -54,7 +54,7 @@ namespace WebApi.Tests.Pages
             var mockAuthService = new Mock<IAuthenticationService>();
             var mockBusinessService = new Mock<IBusinessService>();
             mockBusinessService.Setup(s => s.GetBusinessQuery(It.IsAny<string>(), It.IsAny<string>()))
-                .ReturnsAsync(new List<BusinessDto>());
+                .ReturnsAsync(new List<BusinessDto?>());
 
             Services.AddSingleton(mockAuthService.Object);
             Services.AddSingleton(mockBusinessService.Object);
@@ -67,7 +67,7 @@ namespace WebApi.Tests.Pages
             var cut = Render<Register>();
 
             // Assert
-            Assert.EndsWith($"/reviews/{businessId}", navMan.Uri);
+            Assert.EndsWith("/reviews", navMan.Uri);
         }
 
         [Fact]
@@ -80,7 +80,7 @@ namespace WebApi.Tests.Pages
             var mockBusinessService = new Mock<IBusinessService>();
             
             mockBusinessService.Setup(s => s.GetBusinessQuery(It.IsAny<string>(), It.IsAny<string>()))
-                .ReturnsAsync(new List<BusinessDto>());
+                .ReturnsAsync(new List<BusinessDto?>());
 
             Services.AddSingleton(mockAuthService.Object);
             Services.AddSingleton(mockBusinessService.Object);
@@ -111,7 +111,7 @@ namespace WebApi.Tests.Pages
             var mockBusinessService = new Mock<IBusinessService>();
             
             mockBusinessService.Setup(s => s.GetBusinessQuery(It.IsAny<string>(), It.IsAny<string>()))
-                .ReturnsAsync(new List<BusinessDto>());
+                .ReturnsAsync(new List<BusinessDto?>());
 
             mockAuthService.Setup(s => s.Register(It.IsAny<RegisterCommand>())).ReturnsAsync(default(UserDto)!);
 

@@ -139,7 +139,7 @@ namespace WebApi.Tests.Pages
 
             // Assert
             mockReplyService.Verify(s => s.AddReviewAsync(It.IsAny<Guid>(), It.IsAny<Guid>(), "Manual override text"), Times.Once);
-            Assert.EndsWith($"/reviews/{businessId}", navMan.Uri);
+            Assert.EndsWith("/reviews", navMan.Uri);
         }
 
         public Task InitializeAsync() => Task.CompletedTask;

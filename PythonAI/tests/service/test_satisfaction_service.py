@@ -1,35 +1,25 @@
 import pytest
 from unittest.mock import patch, MagicMock
-
 from service.satisfaction_service import SatisfactionService
 
-
 @pytest.fixture
-def mock_pipeline():
-    with patch("service.satisfaction_service.pipeline") as mock:
+def mock_ollama_client():
+    with patch("service.satisfaction_service.Client") as mock:
         yield mock
 
-
-def test_initialization(mock_pipeline):
-    """Test that the service initializes the pipeline with the correct model."""
+def test_initialization(mock_ollama_client):
+    """Test that the service initializes the Ollama client."""
     service = SatisfactionService()
+    assert service.model_name == "gemma:2b"
+    mock_ollama_client.assert_called_once()
 
-    # Access the property to trigger lazy loading
-    _ = service.classifier
-
-    mock_pipeline.assert_called_with(
-        "sentiment-analysis", model="siebert/sentiment-roberta-large-english"
-    )
-
-
-def test_analyze(mock_pipeline):
-    """Test that analyze returns the correct result from the classifier."""
+def test_analyze_positive(mock_ollama_client):
+    """Test that analyze returns POSITIVE for a positive response."""
     # Setup
-    mock_classifier = MagicMock()
-    expected_result = {"label": "POSITIVE", "score": 0.998}
-    # The classifier returns a list, and the service takes the first element
-    mock_classifier.return_value = [expected_result]
-    mock_pipeline.return_value = mock_classifier
+    mock_client_instance = mock_ollama_client.return_value
+    mock_client_instance.chat.return_value = {
+        'message': {'content': 'POSITIVE'}
+    }
 
     service = SatisfactionService()
     text = "I am very happy with this service!"
@@ -38,5 +28,41 @@ def test_analyze(mock_pipeline):
     result = service.analyze(text)
 
     # Assert
-    mock_classifier.assert_called_once_with(text)
-    assert result == expected_result
+    assert result["label"] == "POSITIVE"
+    assert result["score"] == 1.0
+
+def test_analyze_negative(mock_ollama_client):
+    """Test that analyze returns NEGATIVE for a negative response."""
+    # Setup
+    mock_client_instance = mock_ollama_client.return_value
+    mock_client_instance.chat.return_value = {
+        'message': {'content': 'NEGATIVE'}
+    }
+
+    service = SatisfactionService()
+    text = "I am very disappointed."
+
+    # Execute
+    result = service.analyze(text)
+
+    # Assert
+    assert result["label"] == "NEGATIVE"
+    assert result["score"] == 1.0
+
+def test_analyze_fallback(mock_ollama_client):
+    """Test that analyze returns NEUTRAL as fallback."""
+    # Setup
+    mock_client_instance = mock_ollama_client.return_value
+    mock_client_instance.chat.return_value = {
+        'message': {'content': 'I am not sure'}
+    }
+
+    service = SatisfactionService()
+    text = "It is okay."
+
+    # Execute
+    result = service.analyze(text)
+
+    # Assert
+    assert result["label"] == "NEUTRAL"
+    assert result["score"] == 1.0

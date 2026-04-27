@@ -64,3 +64,8 @@
 /home/mrbogdanovich/git/FeelingFine/DotnetApi/DotnetApi.WebApi/bin/Debug/net10.0/Microsoft.EntityFrameworkCore.InMemory.dll
 /home/mrbogdanovich/git/FeelingFine/DotnetApi/DotnetApi.WebApi/bin/Debug/net10.0/BCrypt.Net-Core.dll
 /home/mrbogdanovich/git/FeelingFine/DotnetApi/DotnetApi.WebApi/bin/Debug/net10.0/System.IdentityModel.Tokens.Jwt.dll
+/home/mrbogdanovich/git/FeelingFine/DotnetApi/DotnetApi.WebApi/bin/Debug/net10.0/Microsoft.Extensions.Caching.Redis.dll
+/home/mrbogdanovich/git/FeelingFine/DotnetApi/DotnetApi.WebApi/bin/Debug/net10.0/Microsoft.Extensions.Caching.StackExchangeRedis.dll
+/home/mrbogdanovich/git/FeelingFine/DotnetApi/DotnetApi.WebApi/bin/Debug/net10.0/Pipelines.Sockets.Unofficial.dll
+/home/mrbogdanovich/git/FeelingFine/DotnetApi/DotnetApi.WebApi/bin/Debug/net10.0/StackExchange.Redis.dll
+/home/mrbogdanovich/git/FeelingFine/DotnetApi/DotnetApi.WebApi/bin/Debug/net10.0/StackExchange.Redis.StrongName.dll

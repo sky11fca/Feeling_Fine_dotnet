@@ -45,7 +45,7 @@ namespace WebApi.Tests.Pages
             var cut = Render<Home>();
 
             // Assert
-            Assert.EndsWith($"/reviews/{businessId}", navMan.Uri);
+            Assert.EndsWith("/reviews", navMan.Uri);
         }
 
         [Fact]

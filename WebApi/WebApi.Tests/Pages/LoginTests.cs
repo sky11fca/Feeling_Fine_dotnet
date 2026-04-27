@@ -52,7 +52,7 @@ namespace WebApi.Tests.Pages
             var cut = Render<Login>();
 
             // Assert
-            Assert.EndsWith($"/reviews/{businessId}", navMan.Uri);
+            Assert.EndsWith("/reviews", navMan.Uri);
         }
 
         [Fact]
@@ -89,7 +89,7 @@ namespace WebApi.Tests.Pages
 
             // Assert
             mockAuthService.Verify(s => s.Login("test@test.com", "password"), Times.Once);
-            Assert.EndsWith($"/reviews/{businessId}", navMan.Uri);
+            Assert.EndsWith("/reviews", navMan.Uri);
         }
 
         public Task InitializeAsync() => Task.CompletedTask;

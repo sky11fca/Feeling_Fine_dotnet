@@ -10,6 +10,7 @@ using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Moq.Protected;
+using MudBlazor.Services;
 using WebApi.Models;
 using WebApi.Pages;
 using WebApi.Services.Business;
@@ -20,6 +21,13 @@ namespace WebApi.Tests.Pages
 {
     public class DashboardIntegrationTests : TestContext
     {
+        public DashboardIntegrationTests()
+        {
+            JSInterop.Mode = JSRuntimeMode.Loose;
+            Services.AddMudServices();
+            ComponentFactories.AddStub<WebApi.Shared.Navbar>();
+        }
+
         [Fact]
         public void Dashboard_FetchesAndDisplaysData_UsingRealServicesWithMockedHttpMessageHandler()
         {

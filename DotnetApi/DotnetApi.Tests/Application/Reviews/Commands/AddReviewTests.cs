@@ -5,6 +5,11 @@ using DotnetApi.Domains.Entities;
 using FluentAssertions;
 using FluentValidation;
 using Moq;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Caching.Distributed;
+using Moq.Protected;
+using System.Net;
+using System.Net.Http.Json;
 
 namespace DotnetApi.Tests.Application.Reviews.Commands;
 
@@ -12,13 +17,30 @@ public class AddReviewTests
 {
     private readonly Mock<IReviewRepository> _repositoryMock;
     private readonly AddReviewValidator _validator;
+    private readonly Mock<HttpMessageHandler> _httpMessageHandlerMock;
+    private readonly HttpClient _httpClient;
+    private readonly Mock<IConfiguration> _configurationMock;
+    private readonly Mock<IDistributedCache> _cacheMock;
     private readonly AddReviewCommandHandler _handler;
 
     public AddReviewTests()
     {
         _repositoryMock = new Mock<IReviewRepository>();
         _validator = new AddReviewValidator();
-        _handler = new AddReviewCommandHandler(_repositoryMock.Object, _validator);
+        _httpMessageHandlerMock = new Mock<HttpMessageHandler>();
+        _httpClient = new HttpClient(_httpMessageHandlerMock.Object)
+        {
+            BaseAddress = new Uri("http://localhost:8000")
+        };
+        _configurationMock = new Mock<IConfiguration>();
+        _cacheMock = new Mock<IDistributedCache>();
+
+        _handler = new AddReviewCommandHandler(
+            _repositoryMock.Object, 
+            _validator, 
+            _httpClient, 
+            _configurationMock.Object, 
+            _cacheMock.Object);
     }
 
     [Fact]
@@ -29,12 +51,25 @@ public class AddReviewTests
         _repositoryMock.Setup(r => r.AddAsync(It.IsAny<Review>(), It.IsAny<CancellationToken>()))
             .Returns(Task.CompletedTask);
 
+        _httpMessageHandlerMock.Protected()
+            .Setup<Task<HttpResponseMessage>>(
+                "SendAsync",
+                ItExpr.IsAny<HttpRequestMessage>(),
+                ItExpr.IsAny<CancellationToken>()
+            )
+            .ReturnsAsync(new HttpResponseMessage
+            {
+                StatusCode = HttpStatusCode.OK,
+                Content = JsonContent.Create(new { Label = "POSITIVE", Score = 0.99 })
+            });
+
         // Act
         var result = await _handler.Handle(command, CancellationToken.None);
 
         // Assert
         result.Should().NotBeEmpty();
         _repositoryMock.Verify(r => r.AddAsync(It.IsAny<Review>(), It.IsAny<CancellationToken>()), Times.Once);
+        _cacheMock.Verify(c => c.RemoveAsync(It.IsAny<string>(), It.IsAny<CancellationToken>()), Times.AtLeastOnce);
     }
 
     [Fact]

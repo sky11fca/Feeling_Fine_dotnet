@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "Cn7vpxWzYEs=",
+  "dgSpecHash": "Y+TnZFsPCfM=",
   "success": true,
   "projectFilePath": "/home/mrbogdanovich/git/FeelingFine/DotnetApi/DotnetApi.Infrastructure/DotnetApi.Infrastructure.csproj",
   "expectedPackageFiles": [
@@ -38,7 +38,7 @@
     "/home/mrbogdanovich/.nuget/packages/npgsql/10.0.0/npgsql.10.0.0.nupkg.sha512",
     "/home/mrbogdanovich/.nuget/packages/npgsql.entityframeworkcore.postgresql/10.0.0/npgsql.entityframeworkcore.postgresql.10.0.0.nupkg.sha512",
     "/home/mrbogdanovich/.nuget/packages/pipelines.sockets.unofficial/2.2.8/pipelines.sockets.unofficial.2.2.8.nupkg.sha512",
-    "/home/mrbogdanovich/.nuget/packages/stackexchange.redis/2.7.27/stackexchange.redis.2.7.27.nupkg.sha512",
+    "/home/mrbogdanovich/.nuget/packages/stackexchange.redis/2.8.24/stackexchange.redis.2.8.24.nupkg.sha512",
     "/home/mrbogdanovich/.nuget/packages/stackexchange.redis.strongname/1.2.6/stackexchange.redis.strongname.1.2.6.nupkg.sha512",
     "/home/mrbogdanovich/.nuget/packages/system.identitymodel.tokens.jwt/8.16.0/system.identitymodel.tokens.jwt.8.16.0.nupkg.sha512"
   ],
