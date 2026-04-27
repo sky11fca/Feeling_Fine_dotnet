@@ -1,14 +1,14 @@
 using System.Net.Http.Json;
-using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Options;
 using WebApi.Models;
 using WebApi.Models.Requests;
 using WebApi.Models.Responses;
 
 namespace WebApi.Services.Business;
 
-public class BusinessService(HttpClient httpClient, IConfiguration configuration) : IBusinessService
+public class BusinessService(HttpClient httpClient, IOptions<ApiSettings> options) : IBusinessService
 {
-    private readonly string BaseUri = configuration["ApiUrl"]?.TrimEnd("/") + "/api/v1/business";
+    private readonly string BaseUri = options.Value.ApiUrl.TrimEnd('/') + "/api/v1/business";
     
     public async Task<Guid> AddBusiness(string name, string industry)
     {

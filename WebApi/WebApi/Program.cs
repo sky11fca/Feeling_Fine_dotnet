@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using MudBlazor.Services;
 using WebApi;
+using WebApi.Models;
 using WebApi.Services.Authentication;
 using WebApi.Services.Business;
 using WebApi.Services.Client;
@@ -12,8 +13,7 @@ var builder = WebAssemblyHostBuilder.CreateDefault(args);
 builder.RootComponents.Add<App>("#app");
 builder.RootComponents.Add<HeadOutlet>("head::after");
 
-// Load appsettings.json
-builder.Configuration.AddJsonFile("appsettings.json");
+builder.Services.Configure<ApiSettings>(builder.Configuration);
 
 builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
 

@@ -5,6 +5,7 @@ using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Net.Http;
+using Microsoft.Extensions.Options;
 using WebApi.Models;
 using WebApi.Services.Reply;
 using Xunit;
@@ -15,13 +16,25 @@ namespace WebApi.Tests.Services
 {
     public class ReplyServiceTests
     {
+        private readonly Mock<IOptions<ApiSettings>> _optionsMock;
+
+        public ReplyServiceTests()
+        {
+            _optionsMock = new Mock<IOptions<ApiSettings>>();
+            _optionsMock.Setup(x => x.Value).Returns(new ApiSettings
+            {
+                ApiUrl = "http://localhost:5160",
+                AiUrl = "http://localhost:8000"
+            });
+        }
+
         [Fact]
         public async Task AddReviewAsync_SendsPostRequest_WithCorrectUri()
         {
             // Arrange
             var handlerMock = new Mock<HttpMessageHandler>();
             var httpClient = new HttpClient(handlerMock.Object);
-            var service = new ReplyService(httpClient);
+            var service = new ReplyService(httpClient, _optionsMock.Object);
             
             var reviewId = Guid.NewGuid();
             var clientId = Guid.NewGuid();
@@ -58,7 +71,7 @@ namespace WebApi.Tests.Services
             // Arrange
             var handlerMock = new Mock<HttpMessageHandler>();
             var httpClient = new HttpClient(handlerMock.Object);
-            var service = new ReplyService(httpClient);
+            var service = new ReplyService(httpClient, _optionsMock.Object);
 
             var reviewId = Guid.NewGuid();
             var expectedUri = $"http://localhost:5160/api/v1/reply?reviewId={reviewId}";

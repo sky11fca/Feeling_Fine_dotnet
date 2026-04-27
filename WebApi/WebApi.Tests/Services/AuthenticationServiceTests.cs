@@ -5,6 +5,7 @@ using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Net.Http;
+using Microsoft.Extensions.Options;
 using WebApi.Models;
 using WebApi.Models.Requests;
 using WebApi.Services.Authentication;
@@ -15,13 +16,25 @@ namespace WebApi.Tests.Services
 {
     public class AuthenticationServiceTests
     {
+        private readonly Mock<IOptions<ApiSettings>> _optionsMock;
+
+        public AuthenticationServiceTests()
+        {
+            _optionsMock = new Mock<IOptions<ApiSettings>>();
+            _optionsMock.Setup(o => o.Value).Returns(new ApiSettings 
+            { 
+                ApiUrl = "http://localhost:5160", 
+                AiUrl = "http://localhost:8000" 
+            });
+        }
+
         [Fact]
         public async Task Login_SendsPostRequest_WithCorrectUri()
         {
             // Arrange
             var handlerMock = new Mock<HttpMessageHandler>();
             var httpClient = new HttpClient(handlerMock.Object);
-            var service = new AuthenticationService(httpClient);
+            var service = new AuthenticationService(httpClient, _optionsMock.Object);
             
             var email = "test@test.com";
             var password = "password";
@@ -61,7 +74,7 @@ namespace WebApi.Tests.Services
             // Arrange
             var handlerMock = new Mock<HttpMessageHandler>();
             var httpClient = new HttpClient(handlerMock.Object);
-            var service = new AuthenticationService(httpClient);
+            var service = new AuthenticationService(httpClient, _optionsMock.Object);
             
             var command = new RegisterCommand
             {

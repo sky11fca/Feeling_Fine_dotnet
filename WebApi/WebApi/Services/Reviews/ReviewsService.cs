@@ -1,15 +1,15 @@
 using System.Net.Http.Json;
-using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Options;
 using WebApi.Models;
 using WebApi.Models.Requests;
 using WebApi.Models.Responses;
 
 namespace WebApi.Services.Reviews;
 
-public class ReviewsService(HttpClient httpClient, IConfiguration configuration) : IReviewsService
+public class ReviewsService(HttpClient httpClient, IOptions<ApiSettings> options) : IReviewsService
 {
 
-    private readonly string BaseUri = configuration["ApiUrl"]?.TrimEnd('/') + "/api/v1/review";
+    private readonly string BaseUri = options.Value.ApiUrl.TrimEnd('/') + "/api/v1/review";
     public async Task AddReview(Guid businessId, Guid clientId, decimal review, string rawText, string submitedOn)
     {
         var request = new AddReviewCommand(businessId, clientId, review, rawText, submitedOn);
@@ -25,7 +25,7 @@ public class ReviewsService(HttpClient httpClient, IConfiguration configuration)
 
     public async Task<AiStatisticsResponse?> GetAiStatistics(List<ReviewDto?> reviews)
     {
-        var aiBaseUri = configuration["AiUrl"]?.TrimEnd('/') + "/ai/statistics/";
+        var aiBaseUri = options.Value.AiUrl.TrimEnd('/') + "/ai/statistics/";
         var validReviews = reviews.Where(r => r != null).Select(r => new ReviewAiModel
         {
             RawText = r!.RawText,

@@ -1,14 +1,14 @@
 using System.Net.Http.Json;
-using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Options;
 using WebApi.Models;
 using WebApi.Models.Requests;
 
 namespace WebApi.Services.Authentication;
 
-public class AuthenticationService(HttpClient client) : IAuthenticationService
+public class AuthenticationService(HttpClient client, IOptions<ApiSettings> options) : IAuthenticationService
 {
 
-    private readonly string BaseUrl = configuration["ApiUrl"]?.TrimEnd("/") + "/api/Authentication/";
+    private readonly string BaseUrl = options.Value.ApiUrl.TrimEnd('/') + "/api/Authentication/";
     
     public async Task<string?> Login(string email, string password)
     {

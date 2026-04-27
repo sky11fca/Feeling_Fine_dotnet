@@ -5,6 +5,7 @@ using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Net.Http;
+using Microsoft.Extensions.Options;
 using WebApi.Models;
 using WebApi.Services.Client;
 using Xunit;
@@ -15,13 +16,25 @@ namespace WebApi.Tests.Services
 {
     public class ClientServiceTests
     {
+        private readonly Mock<IOptions<ApiSettings>> _optionsMock;
+
+        public ClientServiceTests()
+        {
+            _optionsMock = new Mock<IOptions<ApiSettings>>();
+            _optionsMock.Setup(x => x.Value).Returns(new ApiSettings
+            {
+                ApiUrl = "http://localhost:5160",
+                AiUrl = "http://localhost:8000"
+            });
+        }
+
         [Fact]
         public async Task AddAsync_SendsPostRequest_WithCorrectUri()
         {
             // Arrange
             var handlerMock = new Mock<HttpMessageHandler>();
             var httpClient = new HttpClient(handlerMock.Object);
-            var service = new ClientService(httpClient);
+            var service = new ClientService(httpClient, _optionsMock.Object);
             
             var username = "testuser";
             var email = "test@test.com";
@@ -58,7 +71,7 @@ namespace WebApi.Tests.Services
             // Arrange
             var handlerMock = new Mock<HttpMessageHandler>();
             var httpClient = new HttpClient(handlerMock.Object);
-            var service = new ClientService(httpClient);
+            var service = new ClientService(httpClient, _optionsMock.Object);
 
             var clientId = Guid.NewGuid();
             var expectedUri = $"http://localhost:5160/api/v1/client/{clientId}";
@@ -101,7 +114,7 @@ namespace WebApi.Tests.Services
             // Arrange
             var handlerMock = new Mock<HttpMessageHandler>();
             var httpClient = new HttpClient(handlerMock.Object);
-            var service = new ClientService(httpClient);
+            var service = new ClientService(httpClient, _optionsMock.Object);
 
             var expectedUri = "http://localhost:5160/api/v1/client";
             

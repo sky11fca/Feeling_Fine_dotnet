@@ -2,6 +2,7 @@ using Moq;
 using Moq.Protected;
 using System.Net;
 using System.Text.Json;
+using Microsoft.Extensions.Options;
 using WebApi.Models;
 using WebApi.Services.Reviews;
 using Xunit;
@@ -10,13 +11,25 @@ namespace WebApi.Tests.Services
 {
     public class ReviewsServiceTests
     {
+        private readonly Mock<IOptions<ApiSettings>> _optionsMock;
+
+        public ReviewsServiceTests()
+        {
+            _optionsMock = new Mock<IOptions<ApiSettings>>();
+            _optionsMock.Setup(o => o.Value).Returns(new ApiSettings 
+            { 
+                ApiUrl = "http://localhost:5160", 
+                AiUrl = "http://localhost:8000" 
+            });
+        }
+
         [Fact]
         public async Task AddReview_SendsPostRequest_WithCorrectUri()
         {
             // Arrange
             var handlerMock = new Mock<HttpMessageHandler>();
             var httpClient = new HttpClient(handlerMock.Object);
-            var service = new ReviewsService(httpClient);
+            var service = new ReviewsService(httpClient, _optionsMock.Object);
             
             var businessId = Guid.NewGuid();
             var clientId = Guid.NewGuid();
@@ -55,7 +68,7 @@ namespace WebApi.Tests.Services
             // Arrange
             var handlerMock = new Mock<HttpMessageHandler>();
             var httpClient = new HttpClient(handlerMock.Object);
-            var service = new ReviewsService(httpClient);
+            var service = new ReviewsService(httpClient, _optionsMock.Object);
 
             var businessId = Guid.NewGuid();
             var clientId1 = Guid.NewGuid();

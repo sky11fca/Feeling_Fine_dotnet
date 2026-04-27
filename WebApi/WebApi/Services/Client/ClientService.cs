@@ -1,13 +1,13 @@
 using System.Net.Http.Json;
-using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Options;
 using WebApi.Models;
 using WebApi.Models.Requests;
 
 namespace WebApi.Services.Client;
 
-public class ClientService(HttpClient client) : IClientService
+public class ClientService(HttpClient client, IOptions<ApiSettings> options) : IClientService
 {
-    private readonly string BaseUri = configuration["ApiUrl"]?.TrimEnd("/") + "/api/v1/client";
+    private readonly string BaseUri = options.Value.ApiUrl.TrimEnd('/') + "/api/v1/client";
     
     public async Task AddAsync(string username, string email, string phoneNumber)
     {

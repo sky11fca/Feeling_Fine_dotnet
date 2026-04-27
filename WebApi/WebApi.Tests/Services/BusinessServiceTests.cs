@@ -2,6 +2,7 @@ using Moq;
 using Moq.Protected;
 using System.Net;
 using System.Text.Json;
+using Microsoft.Extensions.Options;
 using WebApi.Models;
 using WebApi.Models.Responses;
 using WebApi.Services.Business;
@@ -10,13 +11,25 @@ namespace WebApi.Tests.Services
 {
     public class BusinessServiceTests
     {
+        private readonly Mock<IOptions<ApiSettings>> _optionsMock;
+
+        public BusinessServiceTests()
+        {
+            _optionsMock = new Mock<IOptions<ApiSettings>>();
+            _optionsMock.Setup(o => o.Value).Returns(new ApiSettings 
+            { 
+                ApiUrl = "http://localhost:5160", 
+                AiUrl = "http://localhost:8000" 
+            });
+        }
+
         [Fact]
         public async Task AddBusiness_SendsPostRequest_WithCorrectUri()
         {
             // Arrange
             var handlerMock = new Mock<HttpMessageHandler>();
             var httpClient = new HttpClient(handlerMock.Object);
-            var service = new BusinessService(httpClient);
+            var service = new BusinessService(httpClient, _optionsMock.Object);
             
             var name = "New Biz";
             var industry = "IT";
@@ -57,7 +70,7 @@ namespace WebApi.Tests.Services
             // Arrange
             var handlerMock = new Mock<HttpMessageHandler>();
             var httpClient = new HttpClient(handlerMock.Object);
-            var service = new BusinessService(httpClient);
+            var service = new BusinessService(httpClient, _optionsMock.Object);
 
             var name = "Test";
             var industry = "Tech";

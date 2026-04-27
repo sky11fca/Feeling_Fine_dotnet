@@ -1,5 +1,6 @@
 using Bunit;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
 using Moq;
 using System;
 using System.Collections.Generic;
@@ -21,11 +22,20 @@ namespace WebApi.Tests.Pages
 {
     public class DashboardIntegrationTests : TestContext
     {
+        private readonly Mock<IOptions<ApiSettings>> _optionsMock;
+
         public DashboardIntegrationTests()
         {
             JSInterop.Mode = JSRuntimeMode.Loose;
             Services.AddMudServices();
             ComponentFactories.AddStub<WebApi.Shared.Navbar>();
+
+            _optionsMock = new Mock<IOptions<ApiSettings>>();
+            _optionsMock.Setup(x => x.Value).Returns(new ApiSettings
+            {
+                ApiUrl = "http://localhost:5160",
+                AiUrl = "http://localhost:8000"
+            });
         }
 
         [Fact]
@@ -71,8 +81,8 @@ namespace WebApi.Tests.Pages
 
             var httpClient = new HttpClient(handlerMock.Object);
             
-            Services.AddSingleton<IBusinessService>(new BusinessService(httpClient));
-            Services.AddSingleton<IClientService>(new ClientService(httpClient));
+            Services.AddSingleton<IBusinessService>(new BusinessService(httpClient, _optionsMock.Object));
+            Services.AddSingleton<IClientService>(new ClientService(httpClient, _optionsMock.Object));
 
             // Act
             var cut = Render<Dashboard>();
