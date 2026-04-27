@@ -1,4 +1,6 @@
 using DotnetApi.Application.Authentication.Command;
+using DotnetApi.Application.Businesses.Commands;
+using DotnetApi.Application.Businesses.Queries;
 using DotnetApi.Application.Clients.Commands;
 using DotnetApi.Application.Clients.Query;
 using DotnetApi.Application.Reply.Command;
@@ -49,6 +51,31 @@ public class IntegrationTests : IClassFixture<CustomWebApplicationFactory>
         // Assert
         token.Should().NotBeNullOrEmpty();
     }
+
+    [Fact]
+    public async Task Businesses_AddAndRetrieve_ReturnsBusiness()
+    {
+        // Arrange
+        var addBusinessCommand = new AddBusinessCommand("New Biz", "Testing");
+
+        // Act - Add
+        var addResponse = await _client.PostAsJsonAsync("/api/v1/business", addBusinessCommand);
+        addResponse.EnsureSuccessStatusCode();
+        var createdResult = await addResponse.Content.ReadFromJsonAsync<CreatedResult>();
+        var businessId = createdResult!.Id;
+
+        // Act - Retrieve
+        var getResponse = await _client.GetAsync($"/api/v1/business?name=New Biz&industry=Testing");
+        getResponse.EnsureSuccessStatusCode();
+        var businesses = await getResponse.Content.ReadFromJsonAsync<List<BusinessDto>>();
+
+        // Assert
+        businessId.Should().NotBeEmpty();
+        businesses.Should().NotBeNull();
+        businesses.Should().Contain(b => b.Id == businessId && b.Name == "New Biz");
+    }
+
+    private record CreatedResult(Guid Id);
 
     [Fact]
     public async Task Clients_AddAndRetrieve_ReturnsClient()

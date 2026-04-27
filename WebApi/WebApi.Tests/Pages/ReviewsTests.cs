@@ -214,7 +214,7 @@ namespace WebApi.Tests.Pages
                 Times.Once);
         }
 
-        [Fact(Skip = "Skipping due to complex bUnit/MudDialog rendering issues")]
+        [Fact]
         public async Task AddReviewDialog_SubmitsSuccessfully()
         {
             // Arrange
@@ -229,44 +229,52 @@ namespace WebApi.Tests.Pages
             Services.AddSingleton(mockBusinessService.Object);
             Services.AddSingleton(mockClientService.Object);
 
-            var cut = Render<AddReviewDialog>(parameters => parameters
-                .Add(p => p.IsAdmin, false)
-                .Add(p => p.AllBusinesses, new List<BusinessDto> { new BusinessDto(businessId, "Biz", "Ind") })
-                .Add(p => p.AllClients, new List<ClientDto> { new ClientDto(clientId, "User", "e", "p") })
-                .Add(p => p.TargetBusinessId, businessId)
-            );
-
-            // Act
-            // In MudBlazor, MudNumericField might render as an input type="number"
-            // MudTextField as input type="text" or textarea
+            Render<MudPopoverProvider>();
+            var dialogProvider = Render<MudDialogProvider>();
             
+            // We need to show the dialog via IDialogService to have it managed by MudDialogProvider
+            var dialogService = Services.GetRequiredService<IDialogService>();
+            var parameters = new DialogParameters
+            {
+                { "IsAdmin", false },
+                { "AllBusinesses", new List<BusinessDto> { new BusinessDto(businessId, "Biz", "Ind") } },
+                { "AllClients", new List<ClientDto> { new ClientDto(clientId, "User", "e", "p") } },
+                { "TargetBusinessId", businessId }
+            };
+            
+            await dialogService.ShowAsync<AddReviewDialog>("Submit New Feedback", parameters);
+
+            // Wait for the dialog to be visible in the provider
+            dialogProvider.WaitForState(() => dialogProvider.FindAll("input").Count > 0);
+            
+            var cut = dialogProvider.FindComponent<AddReviewDialog>();
+
             // Find all inputs and look for the one that is NOT readonly (since MudSelect has readonly inputs)
-            var inputs = cut.FindAll("input").Where(i => !i.HasAttribute("readonly")).ToList();
+            var inputs = dialogProvider.FindAll("input").Where(i => !i.HasAttribute("readonly")).ToList();
             if (inputs.Count > 0)
             {
-                inputs[0].Change(4); // Should be the rating field
+                inputs[0].Change(5); // Rating
             }
 
-            var textareas = cut.FindAll("textarea").ToList();
+            var textareas = dialogProvider.FindAll("textarea").ToList();
             if (textareas.Count > 0)
             {
-                textareas[0].Change("Great service");
+                textareas[0].Change("Excellent");
             }
-
-            // Also use Component.Instance to set values for the test to be absolutely sure
-            // because MudSelect is very hard to interact with in bUnit
+            
+            // Set ClientId directly as MudSelect is hard to test
             var reviewInput = cut.Instance.GetType().GetField("_reviewInput", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)
                 ?.GetValue(cut.Instance) as AddReviewDialog.ReviewInput;
             
             if (reviewInput != null)
             {
-                reviewInput.BusinessId = businessId;
                 reviewInput.ClientId = clientId;
-                reviewInput.Rating = 5;
-                reviewInput.RawText = "Excellent";
             }
 
-            cut.Find("button[type='submit']").Click();
+            // Click submit
+            var submitBtn = dialogProvider.FindAll("button").FirstOrDefault(b => b.TextContent.Contains("Submit Review"));
+            Assert.NotNull(submitBtn);
+            submitBtn.Click();
 
             // Assert
             mockReviewsService.Verify(s => s.AddReview(businessId, clientId, 5, "Excellent", "FeelingFine.net"), Times.Once);

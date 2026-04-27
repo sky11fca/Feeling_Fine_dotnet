@@ -101,7 +101,7 @@ namespace WebApi.Tests.Pages
             Assert.Contains("Phone Number", cut.Markup);
         }
 
-        [Fact(Skip = "Skipping due to complex bUnit/MudDialog rendering issues")]
+        [Fact]
         public void Dashboard_CreateNewBusiness_SubmitsSuccessfully()
         {
             // Arrange
@@ -115,7 +115,7 @@ namespace WebApi.Tests.Pages
             Services.AddSingleton(mockClientService.Object);
 
             Render<MudPopoverProvider>();
-            Render<MudDialogProvider>();
+            var dialogProvider = Render<MudDialogProvider>();
             var cut = Render<Dashboard>();
             cut.WaitForState(() => !cut.Markup.Contains("MudProgressCircular"));
 
@@ -124,15 +124,15 @@ namespace WebApi.Tests.Pages
             Assert.NotNull(createBtn);
             createBtn.Click();
 
-            // Wait for the dialog to be visible and inputs to be rendered
-            cut.WaitForState(() => cut.FindAll("input").Count > 0);
+            // Wait for the dialog to be visible in the provider
+            dialogProvider.WaitForState(() => dialogProvider.FindAll("input").Count > 0);
 
-            // Find the mud dialog inputs. The first two inputs globally will be the Business form since it's defined first.
-            var inputs = cut.FindAll("input");
+            // Find the mud dialog inputs in the provider
+            var inputs = dialogProvider.FindAll("input");
             inputs[0].Change("Awesome Corp");
             inputs[1].Change("Software");
 
-            var submitBtn = cut.FindAll("button").FirstOrDefault(b => b.TextContent.Trim() == "Create");
+            var submitBtn = dialogProvider.FindAll("button").FirstOrDefault(b => b.TextContent.Trim() == "Create");
             Assert.NotNull(submitBtn);
             submitBtn.Click();
 
@@ -141,7 +141,7 @@ namespace WebApi.Tests.Pages
             mockBizService.Verify(s => s.GetBusinessQuery("", ""), Times.Exactly(2)); // Initial load + refresh
         }
 
-        [Fact(Skip = "Skipping due to complex bUnit/MudDialog rendering issues")]
+        [Fact]
         public void Dashboard_CreateNewClient_SubmitsSuccessfully()
         {
             // Arrange
@@ -156,7 +156,7 @@ namespace WebApi.Tests.Pages
             Services.AddSingleton(mockClientService.Object);
 
             Render<MudPopoverProvider>();
-            Render<MudDialogProvider>();
+            var dialogProvider = Render<MudDialogProvider>();
             var cut = Render<Dashboard>();
             cut.WaitForState(() => !cut.Markup.Contains("MudProgressCircular"));
 
@@ -167,26 +167,24 @@ namespace WebApi.Tests.Pages
             // Act
             cut.FindAll("button").First(b => b.TextContent.Contains("Create New Client")).Click();
 
-            // Wait for the dialog to be visible and inputs to be rendered
-            cut.WaitForState(() => cut.FindAll("input").Count >= 3);
+            // Wait for the dialog to be visible in the provider
+            dialogProvider.WaitForState(() => dialogProvider.FindAll("input").Count > 0);
 
-            // The client dialog form fields are inputs 2, 3, and 4 in the DOM
-            var inputs = cut.FindAll("input");
-            inputs[2].Change("johndoe");
-            inputs[3].Change("john@example.com");
-            inputs[4].Change("555-1234");
+            var inputs = dialogProvider.FindAll("input");
+            inputs[0].Change("johndoe");
+            inputs[1].Change("john@example.com");
+            inputs[2].Change("555-1234");
 
-            // Find the Create buttons. The 2nd "Create" button belongs to the Client dialog
-            var submitBtns = cut.FindAll("button").Where(b => b.TextContent.Trim() == "Create").ToList();
-            Assert.True(submitBtns.Count >= 2);
-            submitBtns[1].Click();
+            var submitBtn = dialogProvider.FindAll("button").FirstOrDefault(b => b.TextContent.Trim() == "Create");
+            Assert.NotNull(submitBtn);
+            submitBtn.Click();
 
             // Assert
             mockClientService.Verify(s => s.AddAsync("johndoe", "john@example.com", "555-1234"), Times.Once);
             mockClientService.Verify(s => s.Query(), Times.Exactly(2)); // Initial switch + refresh
         }
         
-        [Fact(Skip = "Skipping due to complex bUnit/MudDialog rendering issues")]
+        [Fact]
         public void Dashboard_CreateNewBusiness_EmptyName_DoesNotSubmit()
         {
             // Arrange
@@ -199,18 +197,18 @@ namespace WebApi.Tests.Pages
             Services.AddSingleton(mockClientService.Object);
 
             Render<MudPopoverProvider>();
-            Render<MudDialogProvider>();
+            var dialogProvider = Render<MudDialogProvider>();
             var cut = Render<Dashboard>();
             cut.WaitForState(() => !cut.Markup.Contains("MudProgressCircular"));
 
             // Act
             cut.FindAll("button").First(b => b.TextContent.Contains("Create New Business")).Click();
 
-            // Wait for the dialog to appear before trying to find its 'Create' button
-            cut.WaitForAssertion(() => Assert.NotNull(cut.FindAll("button").FirstOrDefault(b => b.TextContent.Trim() == "Create")));
+            // Wait for the dialog to appear
+            dialogProvider.WaitForAssertion(() => Assert.NotNull(dialogProvider.FindAll("button").FirstOrDefault(b => b.TextContent.Trim() == "Create")));
 
             // Leave inputs empty, just click Create
-            cut.FindAll("button").First(b => b.TextContent.Trim() == "Create").Click();
+            dialogProvider.FindAll("button").First(b => b.TextContent.Trim() == "Create").Click();
 
             // Assert
             mockBizService.Verify(s => s.AddBusiness(It.IsAny<string>(), It.IsAny<string>()), Times.Never);
