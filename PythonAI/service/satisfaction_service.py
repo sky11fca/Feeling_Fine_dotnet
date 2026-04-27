@@ -1,5 +1,6 @@
 import os
 from ollama import Client
+from core.config import settings
 
 
 class SatisfactionService:
@@ -9,8 +10,7 @@ class SatisfactionService:
         
         # Use host.docker.internal to break out of the container and hit the host machine.
         # We wrap it in os.getenv so you can override it in production.
-        ollama_url = os.getenv("OLLAMA_HOST", "http://ollama:11434")
-        self.client = Client(host=ollama_url)
+        self.client = Client(host=settings.ollama_host)
 
     def analyze(self, text: str):
         prompt = f"""

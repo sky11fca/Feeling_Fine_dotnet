@@ -4,19 +4,28 @@ FROM python:3.11-slim
 WORKDIR /app
 
 # Install dependencies
-# (Optional system packages can be added here if transformers or other packages require them)
 RUN apt-get update && apt-get install -y \
     --no-install-recommends \
     curl build-essential \
     && rm -rf /var/lib/apt/lists/*
 
-COPY requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
+# Create a non-root user
+RUN useradd -m appuser
+USER appuser
 
-# Copy the rest of the application code
-COPY . .
+COPY --chown=appuser:appuser requirements.txt .
+RUN pip install --user --no-cache-dir -r requirements.txt
+
+# Copy specifically instead of COPY . .
+COPY --chown=appuser:appuser main.py .
+COPY --chown=appuser:appuser api/ ./api/
+COPY --chown=appuser:appuser core/ ./core/
+COPY --chown=appuser:appuser model/ ./model/
+COPY --chown=appuser:appuser service/ ./service/
+
+ENV PATH="/home/appuser/.local/bin:${PATH}"
 
 EXPOSE 8000
 
-# Command to run the application (Adjust 'main:app' if your entrypoint differs)
+# Command to run the application
 CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]

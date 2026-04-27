@@ -21,6 +21,10 @@ public class JwtTokenGenerator : IJwtTokenGenerator
     {
         var jwtSettings = _configuration.GetSection("JwtSettings");
         var secret = jwtSettings["Secret"];
+        if (string.IsNullOrEmpty(secret))
+        {
+            throw new InvalidOperationException("JWT Secret is not configured.");
+        }
         var issuer = jwtSettings["Issuer"];
         var audience = jwtSettings["Audience"];
 

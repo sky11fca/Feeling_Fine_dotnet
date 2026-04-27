@@ -29,7 +29,7 @@ def test_analyze_positive(mock_ollama_client):
 
     # Assert
     assert result["label"] == "POSITIVE"
-    assert result["score"] == 1.0
+    assert result["score"] == pytest.approx(1.0)
 
 def test_analyze_negative(mock_ollama_client):
     """Test that analyze returns NEGATIVE for a negative response."""
@@ -47,7 +47,7 @@ def test_analyze_negative(mock_ollama_client):
 
     # Assert
     assert result["label"] == "NEGATIVE"
-    assert result["score"] == 1.0
+    assert result["score"] == pytest.approx(1.0)
 
 def test_analyze_fallback(mock_ollama_client):
     """Test that analyze returns NEUTRAL as fallback."""
@@ -65,4 +65,4 @@ def test_analyze_fallback(mock_ollama_client):
 
     # Assert
     assert result["label"] == "NEUTRAL"
-    assert result["score"] == 1.0
+    assert result["score"] == pytest.approx(1.0)

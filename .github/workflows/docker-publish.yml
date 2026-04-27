@@ -32,7 +32,9 @@ jobs:
           context: ./PythonAI
           file: ./PythonAI/Dockerfile
           push: true
-          tags: ghcr.io/${{ env.REPO }}/python-ai:latest
+          tags: |
+            ghcr.io/${{ env.REPO }}/python-ai:latest
+            ghcr.io/${{ env.REPO }}/python-ai:${{ github.sha }}
 
       - name: Build and push .NET API
         uses: docker/build-push-action@v5
@@ -40,7 +42,9 @@ jobs:
           context: ./DotnetApi
           file: ./DotnetApi/DotnetApi.WebApi/Dockerfile
           push: true
-          tags: ghcr.io/${{ env.REPO }}/dotnet-api:latest
+          tags: |
+            ghcr.io/${{ env.REPO }}/dotnet-api:latest
+            ghcr.io/${{ env.REPO }}/dotnet-api:${{ github.sha }}
 
       - name: Build and push Web UI
         uses: docker/build-push-action@v5
@@ -51,4 +55,6 @@ jobs:
           build-args: |
             API_URL=${{ secrets.PUBLIC_DOTNET_API_URL }}
             AI_URL=${{ secrets.PUBLIC_PYTHON_AI_URL }}
-          tags: ghcr.io/${{ env.REPO }}/web-ui:latest
+          tags: |
+            ghcr.io/${{ env.REPO }}/web-ui:latest
+            ghcr.io/${{ env.REPO }}/web-ui:${{ github.sha }}

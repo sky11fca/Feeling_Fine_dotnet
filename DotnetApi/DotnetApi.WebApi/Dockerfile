@@ -1,4 +1,6 @@
-﻿FROM mcr.microsoft.com/dotnet/aspnet:10.0 AS base
+FROM mcr.microsoft.com/dotnet/aspnet:10.0 AS base
+# Create a non-root user
+USER $APP_UID
 WORKDIR /app
 EXPOSE 5160
 ENV ASPNETCORE_HTTP_PORTS=5160
@@ -11,7 +13,13 @@ COPY ["DotnetApi.Application/DotnetApi.Application.csproj", "DotnetApi.Applicati
 COPY ["DotnetApi.Domains/DotnetApi.Domains.csproj", "DotnetApi.Domains/"]
 COPY ["DotnetApi.Infrastructure/DotnetApi.Infrastructure.csproj", "DotnetApi.Infrastructure/"]
 RUN dotnet restore "DotnetApi.WebApi/DotnetApi.WebApi.csproj"
-COPY . .
+
+# Copy specifically instead of COPY . .
+COPY DotnetApi.WebApi/ ./DotnetApi.WebApi/
+COPY DotnetApi.Application/ ./DotnetApi.Application/
+COPY DotnetApi.Domains/ ./DotnetApi.Domains/
+COPY DotnetApi.Infrastructure/ ./DotnetApi.Infrastructure/
+
 WORKDIR "/src/DotnetApi.WebApi"
 RUN dotnet build "./DotnetApi.WebApi.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
