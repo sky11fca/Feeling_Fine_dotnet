@@ -1,4 +1,5 @@
 using System.Net.Http.Json;
+using Microsoft.Extensions.Configuration;
 using WebApi.Models;
 using WebApi.Models.Requests;
 
@@ -6,7 +7,7 @@ namespace WebApi.Services.Client;
 
 public class ClientService(HttpClient client) : IClientService
 {
-    private readonly string BaseUri = "http://localhost:5160/api/v1/client";
+    private readonly string BaseUri = configuration["ApiUrl"]?.TrimEnd("/") + "/api/v1/client";
     
     public async Task AddAsync(string username, string email, string phoneNumber)
     {

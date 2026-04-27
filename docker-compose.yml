@@ -30,12 +30,11 @@ services:
       dockerfile: Dockerfile
     container_name: feelingfine-python-ai
     ports:
-      - "8000:8000" # Adjust port to match your Python framework (FastAPI/Django)
+      - "8000:8000"
     environment:
-      # This tells the Python 'ollama' SDK where the local LLM container is located
-      - OLLAMA_HOST=http://ollama:11434
-      # Explicitly set the Hugging Face cache directory
+      - OLLAMA_HOST=${OLLAMA_URL}
       - HF_HOME=/huggingface_cache
+      - HF_TOKEN=${HF_TOKEN}
     depends_on:
       - ollama
     volumes:
@@ -58,18 +57,19 @@ services:
   dotnet-api:
     build:
       context: ./DotnetApi
-      dockerfile: DotnetApi.WebApi/Dockerfile # Adjust path if your Dockerfile is located elsewhere
+      dockerfile: DotnetApi.WebApi/Dockerfile
     container_name: feelingfine-dotnet-api
     ports:
-      - "5160:5160" # Exposed on port 5000. Uses internal port 8080 (standard for .NET 8)
+      - "5160:5160"
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_HTTP_PORTS=5160
-      # Example connection string setup (uncomment and configure if adding a local DB container)
-      # - ConnectionStrings__DefaultConnection=Host=db;Database=FeelingFine;Username=postgres;Password=postgres
-      - ConnectionStrings__DefaultConnection=User Id=postgres.iqycdvnkmygdhshdwdkv;Password=bobbyFeelingFine3002;Server=aws-1-eu-west-1.pooler.supabase.com;Port=5432;Database=postgres      
-      - AiServiceUrl=http://python-ai:8000/ai/review/
-      - Redis__ConnectionString=redis:6379
+      - ConnectionStrings__DefaultConnection=${DB_CONNECTION_STRING}
+      - JwtSettings__Secret=${JWT_SECRET}
+      - JwtSettings__Issuer=${JWT_ISSUER}
+      - JwtSettings__Audience=${JWT_AUDIENCE}
+      - AiServiceUrl=${PYTHON_AI_URL}/ai/review/
+      - Redis__ConnectionString=${REDIS_URL}
     depends_on:
       - redis
     restart: unless-stopped
@@ -80,10 +80,13 @@ services:
   web-ui:
     build:
       context: ./WebApi
-      dockerfile: WebApi/Dockerfile # Adjust path if your Dockerfile is located elsewhere
+      dockerfile: WebApi/Dockerfile
+      args:
+        - API_URL=${PUBLIC_DOTNET_API_URL}
+        - AI_URL=${PUBLIC_PYTHON_AI_URL}
     container_name: feelingfine-web-ui
     ports:
-      - "3000:80" # Exposed on port 3000. Uses standard internal port 80 for Nginx.
+      - "3000:80"
     environment:
       - ASPNETCORE_HTTP_PORTS=3000    
     depends_on:

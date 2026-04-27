@@ -54,6 +54,9 @@ jobs:
       - name: Build and Analyze .NET Solution
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          JwtSettings__Secret: ${{ secrets.JWT_SECRET }}
+          JwtSettings__Issuer: FeelingFine
+          JwtSettings__Audience: FeelingFine
         shell: powershell
         run: |
 
