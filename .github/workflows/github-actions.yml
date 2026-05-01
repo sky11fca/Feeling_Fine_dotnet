@@ -65,7 +65,7 @@ jobs:
           ${{ runner.temp }}\scanner\dotnet-sonarscanner begin /k:"sky11fca_Feeling_Fine_dotnet" `
             /o:"sky11fca" `
             /d:sonar.token="$($env:SONAR_TOKEN)" `
-            /d:sonar.exclusions="**/bin/**,**/obj/**,**/wwwroot/**,**/DotnetApi.Tests/**,**/WebApi.Tests/**,**/PythonAI/tests/**." `
+            /d:sonar.exclusions="**/bin/**,**/obj/**,**/wwwroot/**,**/DotnetApi.Tests/**,**/WebApi.Tests/**,**/PythonAI/tests/**,**/.github/workflows/**." `
             /d:sonar.host.url="https://sonarcloud.io" `
             /d:sonar.cs.opencover.reportsPaths="**/coverage.opencover.xml" `
             /d:sonar.python.version="3.x" `
@@ -106,21 +106,21 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Build and push DotnetApi
-        uses: docker/build-push-action@8a750363344879de34d32415e64e8c4470a02c75 # v5.4.0
+        uses: docker/build-push-action@v5 # v5.4.0
         with:
           context: ./DotnetApi
           push: true
           tags: ghcr.io/${{ github.repository_owner }}/feelingfine-dotnet-api:latest
 
       - name: Build and push PythonAI
-        uses: docker/build-push-action@8a750363344879de34d32415e64e8c4470a02c75 # v5.4.0
+        uses: docker/build-push-action@v5 # v5.4.0
         with:
           context: ./PythonAI
           push: true
           tags: ghcr.io/${{ github.repository_owner }}/feelingfine-python-ai:latest
 
       - name: Build and push WebApi (Blazor UI)
-        uses: docker/build-push-action@8a750363344879de34d32415e64e8c4470a02c75 # v5.4.0
+        uses: docker/build-push-action@v5 # v5.4.0
         with:
           context: ./WebApi
           push: true
