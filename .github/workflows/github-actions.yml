@@ -110,18 +110,18 @@ jobs:
         with:
           context: ./DotnetApi
           push: true
-          tags: ghcr.io/${{ github.repository_owner,, }}/feelingfine-dotnet-api:latest
+          tags: ghcr.io/${{ github.repository_owner }}/feelingfine-dotnet-api:latest
 
       - name: Build and push PythonAI
         uses: docker/build-push-action@8a750363344879de34d32415e64e8c4470a02c75 # v5.4.0
         with:
           context: ./PythonAI
           push: true
-          tags: ghcr.io/${{ github.repository_owner,, }}/feelingfine-python-ai:latest
+          tags: ghcr.io/${{ github.repository_owner }}/feelingfine-python-ai:latest
 
       - name: Build and push WebApi (Blazor UI)
         uses: docker/build-push-action@8a750363344879de34d32415e64e8c4470a02c75 # v5.4.0
         with:
           context: ./WebApi
           push: true
-          tags: ghcr.io/${{ github.repository_owner,, }}/feelingfine-web-ui:latest
+          tags: ghcr.io/${{ github.repository_owner }}/feelingfine-web-ui:latest
