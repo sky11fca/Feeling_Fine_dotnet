@@ -12,22 +12,22 @@ jobs:
     runs-on: windows-latest
     steps:
       - name: Set up JDK 17
-        uses: actions/setup-java@v4
+        uses: actions/setup-java@0ab4596768b603586c0de567f2430ce581f19023 # v4.2.1
         with:
           java-version: 17
           distribution: 'zulu'
 
       - name: Set up Python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@82c7e631bb3cdc910f68e0081d67478d79c6982d # v4.7.1
         with:
           python-version: '3.x'
 
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@b4ffde65f46336ab11d5be3a025362e3c0b4e60b # v4.1.7
         with:
           fetch-depth: 0
 
       - name: Cache SonarQube Cloud packages
-        uses: actions/cache@v4
+        uses: actions/cache@0c45773b623bea8c8e75f6c82b208c3cf94ea4f9 # v4.0.2
         with:
           path: ~\sonar\cache
           key: ${{ runner.os }}-sonar
@@ -35,7 +35,7 @@ jobs:
 
       - name: Cache SonarQube Cloud scanner
         id: cache-sonar-scanner
-        uses: actions/cache@v4
+        uses: actions/cache@0c45773b623bea8c8e75f6c82b208c3cf94ea4f9 # v4.0.2
         with:
           path: ${{ runner.temp }}\scanner
           key: ${{ runner.os }}-sonar-scanner
@@ -96,32 +96,32 @@ jobs:
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@b4ffde65f46336ab11d5be3a025362e3c0b4e60b # v4.1.7
 
       - name: Log in to GitHub Container Registry
-        uses: docker/login-action@v3
+        uses: docker/login-action@9780b0c442fbb1117ed29e0efdff1e18412f7567 # v3.3.0
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Build and push DotnetApi
-        uses: docker/build-push-action@v5
+        uses: docker/build-push-action@8a750363344879de34d32415e64e8c4470a02c75 # v5.4.0
         with:
           context: ./DotnetApi
           push: true
-          tags: ghcr.io/${{ github.repository_owner }}/feelingfine-dotnet-api:latest
+          tags: ghcr.io/${{ github.repository_owner,, }}/feelingfine-dotnet-api:latest
 
       - name: Build and push PythonAI
-        uses: docker/build-push-action@v5
+        uses: docker/build-push-action@8a750363344879de34d32415e64e8c4470a02c75 # v5.4.0
         with:
           context: ./PythonAI
           push: true
-          tags: ghcr.io/${{ github.repository_owner }}/feelingfine-python-ai:latest
+          tags: ghcr.io/${{ github.repository_owner,, }}/feelingfine-python-ai:latest
 
       - name: Build and push WebApi (Blazor UI)
-        uses: docker/build-push-action@v5
+        uses: docker/build-push-action@8a750363344879de34d32415e64e8c4470a02c75 # v5.4.0
         with:
           context: ./WebApi
           push: true
-          tags: ghcr.io/${{ github.repository_owner }}/feelingfine-web-ui:latest
+          tags: ghcr.io/${{ github.repository_owner,, }}/feelingfine-web-ui:latest

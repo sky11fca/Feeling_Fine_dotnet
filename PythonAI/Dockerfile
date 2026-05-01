@@ -9,17 +9,25 @@ RUN apt-get update && apt-get install -y \
     curl build-essential \
     && rm -rf /var/lib/apt/lists/*
 
-# Create a non-root user
+# Create a non-root user and group
+RUN groupadd -r appgroup && useradd --no-log-init -r -g appgroup -d /home/appuser -m appuser
 
-COPY --chown=root:root --chmod=755 requirements.txt .
+# Change ownership of the working directory for the new user
+RUN chown -R appuser:appgroup /app
+
+# Switch to the non-root user
+USER appuser
+
+# Copy and install Python dependencies
+COPY requirements.txt .
 RUN pip install --user --no-cache-dir -r requirements.txt
 
-# Copy specifically instead of COPY . .
-COPY --chown=root:root --chmod=755 main.py .
-COPY --chown=root:root --chmod=755 api/ ./api/
-COPY --chown=root:root --chmod=755 core/ ./core/
-COPY --chown=root:root --chmod=755 model/ ./model/
-COPY --chown=root:root --chmod=755 service/ ./service/
+# Copy the rest of the application code
+COPY main.py .
+COPY api/ ./api/
+COPY core/ ./core/
+COPY model/ ./model/
+COPY service/ ./service/
 
 ENV PATH="/home/appuser/.local/bin:${PATH}"
 

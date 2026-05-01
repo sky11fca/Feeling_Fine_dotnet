@@ -1,6 +1,6 @@
 FROM mcr.microsoft.com/dotnet/aspnet:10.0 AS base
-# Create a non-root user
-USER $APP_UID
+# Switch to the non-root 'app' user provided by the base image
+USER app
 WORKDIR /app
 EXPOSE 5160
 ENV ASPNETCORE_HTTP_PORTS=5160
