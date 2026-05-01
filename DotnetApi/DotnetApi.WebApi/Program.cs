@@ -112,22 +112,6 @@ if (app.Environment.IsDevelopment() || app.Environment.IsEnvironment("Testing"))
 }
 
 
-app.UseCors("DefaultPolicy");
-
-app.MapControllers();
-
-await app.RunAsync();
-
-public partial class Program { }
-  {
-        c.SwaggerEndpoint("/swagger/v1/swagger.json", "Feeling Fine API v1");
-        c.RoutePrefix = string.Empty; // Serves Swagger UI at the root (http://localhost:<port>/)
-        c.DisplayOperationId();
-    });
-    app.MapOpenApi();
-}
-
-
 app.UseCors("AllowAll");
 
 app.MapControllers();

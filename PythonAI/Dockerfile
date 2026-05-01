@@ -10,18 +10,16 @@ RUN apt-get update && apt-get install -y \
     && rm -rf /var/lib/apt/lists/*
 
 # Create a non-root user
-RUN useradd -m appuser
-USER appuser
 
-COPY --chown=appuser:appuser requirements.txt .
+COPY --chown=root:root --chmod=755 requirements.txt .
 RUN pip install --user --no-cache-dir -r requirements.txt
 
 # Copy specifically instead of COPY . .
-COPY --chown=appuser:appuser main.py .
-COPY --chown=appuser:appuser api/ ./api/
-COPY --chown=appuser:appuser core/ ./core/
-COPY --chown=appuser:appuser model/ ./model/
-COPY --chown=appuser:appuser service/ ./service/
+COPY --chown=root:root --chmod=755 main.py .
+COPY --chown=root:root --chmod=755 api/ ./api/
+COPY --chown=root:root --chmod=755 core/ ./core/
+COPY --chown=root:root --chmod=755 model/ ./model/
+COPY --chown=root:root --chmod=755 service/ ./service/
 
 ENV PATH="/home/appuser/.local/bin:${PATH}"
 

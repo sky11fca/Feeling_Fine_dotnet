@@ -3,32 +3,28 @@ using System.Security.Claims;
 using System.Text;
 using DotnetApi.Application.Abstractions;
 using DotnetApi.Domains.Entities;
-using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 
 namespace DotnetApi.Infrastructure.Authentication;
 
 public class JwtTokenGenerator : IJwtTokenGenerator
 {
-    private readonly IConfiguration _configuration;
+    private readonly JwtSettings _jwtSettings;
 
-    public JwtTokenGenerator(IConfiguration configuration)
+    public JwtTokenGenerator(IOptions<JwtSettings> jwtOptions)
     {
-        _configuration = configuration;
+        _jwtSettings = jwtOptions.Value;
     }
 
     public string GenerateToken(User user)
     {
-        var jwtSettings = _configuration.GetSection("JwtSettings");
-        var secret = jwtSettings["Secret"];
-        if (string.IsNullOrEmpty(secret))
+        if (string.IsNullOrEmpty(_jwtSettings.Secret))
         {
             throw new InvalidOperationException("JWT Secret is not configured.");
         }
-        var issuer = jwtSettings["Issuer"];
-        var audience = jwtSettings["Audience"];
 
-        var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secret));
+        var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtSettings.Secret));
         var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
         var claims = new[]
@@ -42,8 +38,8 @@ public class JwtTokenGenerator : IJwtTokenGenerator
         };
 
         var token = new JwtSecurityToken(
-            issuer,
-            audience,
+            _jwtSettings.Issuer,
+            _jwtSettings.Audience,
             claims,
             expires: DateTime.UtcNow.AddHours(1),
             signingCredentials: credentials);
