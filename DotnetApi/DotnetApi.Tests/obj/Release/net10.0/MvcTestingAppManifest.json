@@ -1,0 +1,6 @@
+{
+  "DotnetApi.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null": "\/home\/mrbogdanovich\/git\/FeelingFine\/DotnetApi\/DotnetApi.Application",
+  "DotnetApi.Domains, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null": "\/home\/mrbogdanovich\/git\/FeelingFine\/DotnetApi\/DotnetApi.Domains",
+  "DotnetApi.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null": "\/home\/mrbogdanovich\/git\/FeelingFine\/DotnetApi\/DotnetApi.Infrastructure",
+  "DotnetApi.WebApi, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null": "\/home\/mrbogdanovich\/git\/FeelingFine\/DotnetApi\/DotnetApi.WebApi"
+}

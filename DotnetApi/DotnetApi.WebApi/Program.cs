@@ -53,6 +53,8 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 
 builder.Services.AddControllers();
 
+builder.Services.Configure<JwtSettings>(builder.Configuration.GetSection("JwtSettings"));
+
 builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(GetBusinessQuery).Assembly));
 
 builder.Services.AddStackExchangeRedisCache(options =>
@@ -82,11 +84,22 @@ builder.Services.AddValidatorsFromAssemblyContaining<RegisterCommand>();
 
 builder.Services.AddCors(option =>
 {
-    option.AddPolicy("AllowAll", c =>
+    option.AddPolicy("DefaultPolicy", c =>
     {
-        c.AllowAnyOrigin()
-            .AllowAnyMethod()
-            .AllowAnyHeader();
+        if (builder.Environment.IsDevelopment() || builder.Environment.IsEnvironment("Testing"))
+        {
+            c.AllowAnyOrigin()
+             .AllowAnyMethod()
+             .AllowAnyHeader();
+        }
+        else
+        {
+            var allowedOrigins = builder.Configuration.GetSection("AllowedOrigins").Get<string[]>() ?? Array.Empty<string>();
+            c.WithOrigins(allowedOrigins)
+             .AllowAnyMethod()
+             .AllowAnyHeader()
+             .AllowCredentials();
+        }
     });
 });
 
@@ -113,26 +126,6 @@ if (app.Environment.IsDevelopment() || app.Environment.IsEnvironment("Testing"))
 
 
 app.UseCors("DefaultPolicy");
-
-app.MapControllers();
-
-await app.RunAsync();
-
-public partial class Program { }
-ment("Testing"))
-{
-    app.UseSwagger();
-    app.UseSwaggerUI(c =>
-    {
-        c.SwaggerEndpoint("/swagger/v1/swagger.json", "Feeling Fine API v1");
-        c.RoutePrefix = string.Empty; // Serves Swagger UI at the root (http://localhost:<port>/)
-        c.DisplayOperationId();
-    });
-    app.MapOpenApi();
-}
-
-
-app.UseCors("AllowAll");
 
 app.MapControllers();
 

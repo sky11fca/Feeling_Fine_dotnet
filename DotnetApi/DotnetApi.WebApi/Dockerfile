@@ -29,6 +29,6 @@ RUN dotnet publish "./DotnetApi.WebApi.csproj" -c $BUILD_CONFIGURATION -o /app/p
 
 FROM base AS final
 WORKDIR /app
-COPY --chown=app:app --from=publish /app/publish .
+COPY --chown=app:app --chmod=555 --from=publish /app/publish .
 USER app
 ENTRYPOINT ["dotnet", "DotnetApi.WebApi.dll"]
