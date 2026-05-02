@@ -86,20 +86,15 @@ builder.Services.AddCors(option =>
 {
     option.AddPolicy("DefaultPolicy", c =>
     {
-        if (builder.Environment.IsDevelopment() || builder.Environment.IsEnvironment("Testing"))
-        {
-            c.AllowAnyOrigin()
-             .AllowAnyMethod()
-             .AllowAnyHeader();
-        }
-        else
-        {
-            var allowedOrigins = builder.Configuration.GetSection("AllowedOrigins").Get<string[]>() ?? Array.Empty<string>();
-            c.WithOrigins(allowedOrigins)
-             .AllowAnyMethod()
-             .AllowAnyHeader()
-             .AllowCredentials();
-        }
+        var allowedOrigins = builder.Configuration.GetSection("AllowedOrigins").Get<string[]>() ?? Array.Empty<string>();
+
+        c.SetIsOriginAllowed(origin => 
+            builder.Environment.IsDevelopment() || 
+            builder.Environment.IsEnvironment("Testing") || 
+            allowedOrigins.Contains(origin))
+         .AllowAnyMethod()
+         .AllowAnyHeader()
+         .AllowCredentials();
     });
 });
 
