@@ -18,7 +18,7 @@ COPY --chown=root:root --chmod=555 requirements.txt .
 
 # Switch to the non-root user for pip install so it installs to /home/appuser/.local
 USER appuser
-RUN pip install --user --no-cache-dir --only-binary :all: -r requirements.txt
+RUN pip install --user --no-cache-dir --only-binary :all: --require-hashes -r requirements.txt
 
 # Switch back to root to copy the rest of the application code securely
 USER root

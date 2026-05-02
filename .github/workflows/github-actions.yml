@@ -73,7 +73,7 @@ jobs:
 
           # Build Python AI
           if [ -f "PythonAI/requirements.txt" ]; then
-            pip install --no-cache-dir --only-binary :all: -r "PythonAI/requirements.txt" 
+            pip install --no-cache-dir --only-binary :all: --require-hashes -r "PythonAI/requirements.txt" 
             pytest --cov=. --cov-report=xml:PythonAI/coverage.xml "PythonAI/tests"
           fi
 
