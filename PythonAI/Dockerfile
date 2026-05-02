@@ -20,7 +20,7 @@ USER appuser
 
 # Copy and install Python dependencies
 COPY requirements.txt .
-RUN pip install --user --no-cache-dir -r requirements.txt
+RUN pip install --user --no-cache-dir --only-binary :all: -r requirements.txt
 
 # Copy the rest of the application code
 COPY main.py .
