@@ -12,22 +12,24 @@ RUN apt-get update && apt-get install -y \
 # Create a non-root user and group
 RUN groupadd -r appgroup && useradd --no-log-init -r -g appgroup -d /home/appuser -m appuser
 
-# Change ownership of the working directory for the new user
-RUN chown -R appuser:appgroup /app
-
-# Switch to the non-root user
-USER appuser
-
 # Copy and install Python dependencies
-COPY requirements.txt .
+# Copying as root and setting read-only permissions for security
+COPY --chown=root:root --chmod=555 requirements.txt .
+
+# Switch to the non-root user for pip install so it installs to /home/appuser/.local
+USER appuser
 RUN pip install --user --no-cache-dir --only-binary :all: -r requirements.txt
 
-# Copy the rest of the application code
-COPY main.py .
-COPY api/ ./api/
-COPY core/ ./core/
-COPY model/ ./model/
-COPY service/ ./service/
+# Switch back to root to copy the rest of the application code securely
+USER root
+COPY --chown=root:root --chmod=555 main.py .
+COPY --chown=root:root --chmod=555 api/ ./api/
+COPY --chown=root:root --chmod=555 core/ ./core/
+COPY --chown=root:root --chmod=555 model/ ./model/
+COPY --chown=root:root --chmod=555 service/ ./service/
+
+# Switch back to the non-root user for execution
+USER appuser
 
 ENV PATH="/home/appuser/.local/bin:${PATH}"
 
