@@ -22,7 +22,17 @@ ARG BUILD_CONFIGURATION=Release
 RUN dotnet publish "./WebApi.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
 
 FROM nginxinc/nginx-unprivileged:alpine AS final
+# Switch to root temporarily to copy files with root ownership securely
+USER root
+
 WORKDIR /usr/share/nginx/html
-COPY --from=publish /app/publish/wwwroot .
-COPY WebApi/nginx.conf /etc/nginx/nginx.conf
+# Copy web assets and configure them as read-only, owned by root
+COPY --chown=root:root --chmod=555 --from=publish /app/publish/wwwroot .
+
+# Copy custom nginx configuration securely
+COPY --chown=root:root --chmod=555 WebApi/nginx.conf /etc/nginx/nginx.conf
+
+# Switch back to the unprivileged nginx user for secure execution
+USER nginx
+
 EXPOSE 8080
