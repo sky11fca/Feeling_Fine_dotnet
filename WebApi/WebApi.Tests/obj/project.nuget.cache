@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "fNpkuI3DflI=",
+  "dgSpecHash": "cVW17Rvf48k=",
   "success": true,
   "projectFilePath": "/home/mrbogdanovich/git/FeelingFine/WebApi/WebApi.Tests/WebApi.Tests.csproj",
   "expectedPackageFiles": [
@@ -20,7 +20,6 @@
     "/home/mrbogdanovich/.nuget/packages/microsoft.aspnetcore.components.webassembly.authentication/10.0.0/microsoft.aspnetcore.components.webassembly.authentication.10.0.0.nupkg.sha512",
     "/home/mrbogdanovich/.nuget/packages/microsoft.aspnetcore.metadata/10.0.1/microsoft.aspnetcore.metadata.10.0.1.nupkg.sha512",
     "/home/mrbogdanovich/.nuget/packages/microsoft.codecoverage/17.14.1/microsoft.codecoverage.17.14.1.nupkg.sha512",
-    "/home/mrbogdanovich/.nuget/packages/microsoft.dotnet.hotreload.webassembly.browser/10.0.100/microsoft.dotnet.hotreload.webassembly.browser.10.0.100.nupkg.sha512",
     "/home/mrbogdanovich/.nuget/packages/microsoft.extensions.caching.abstractions/10.0.0/microsoft.extensions.caching.abstractions.10.0.0.nupkg.sha512",
     "/home/mrbogdanovich/.nuget/packages/microsoft.extensions.caching.memory/10.0.0/microsoft.extensions.caching.memory.10.0.0.nupkg.sha512",
     "/home/mrbogdanovich/.nuget/packages/microsoft.extensions.configuration/10.0.1/microsoft.extensions.configuration.10.0.1.nupkg.sha512",

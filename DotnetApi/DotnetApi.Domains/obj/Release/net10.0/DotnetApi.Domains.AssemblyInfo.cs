@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("DotnetApi.Domains")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Release")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+2d7c272b54f916fbdcb68e1aadbcd3c15232e74c")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+95a87b0c605c230e2dbeca065db7e8e73fd2d416")]
 [assembly: System.Reflection.AssemblyProductAttribute("DotnetApi.Domains")]
 [assembly: System.Reflection.AssemblyTitleAttribute("DotnetApi.Domains")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
