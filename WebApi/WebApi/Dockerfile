@@ -24,5 +24,5 @@ RUN dotnet publish "./WebApi.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:
 FROM nginxinc/nginx-unprivileged:alpine AS final
 WORKDIR /usr/share/nginx/html
 COPY --from=publish /app/publish/wwwroot .
-COPY WebApi/nginx.conf /etc/nginx/conf.d/default.conf
+COPY WebApi/nginx.conf /etc/nginx/nginx.conf
 EXPOSE 8080
