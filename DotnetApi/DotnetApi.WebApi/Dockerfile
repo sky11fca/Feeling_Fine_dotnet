@@ -28,7 +28,11 @@ ARG BUILD_CONFIGURATION=Release
 RUN dotnet publish "./DotnetApi.WebApi.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
 
 FROM base AS final
+# Switch to root temporarily to secure files
+USER root
 WORKDIR /app
-COPY --chown=app:app --chmod=555 --from=publish /app/publish .
+COPY --chown=root:root --chmod=555 --from=publish /app/publish .
+
+# Switch back to the non-root app user for execution
 USER app
 ENTRYPOINT ["dotnet", "DotnetApi.WebApi.dll"]
