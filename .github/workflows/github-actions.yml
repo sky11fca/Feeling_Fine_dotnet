@@ -108,7 +108,7 @@ jobs:
       - name: Build and push DotnetApi
         uses: docker/build-push-action@ca052bb54ab0790a636c9b5f226502c73d547a25 # v5.4.0
         with:
-          context: ./DotnetApi
+          context: ./DotnetApi/DotnemtApi.WebApi
           push: true
           tags: ghcr.io/${{ github.repository_owner }}/feelingfine-dotnet-api:latest
 
@@ -122,6 +122,6 @@ jobs:
       - name: Build and push WebApi (Blazor UI)
         uses: docker/build-push-action@ca052bb54ab0790a636c9b5f226502c73d547a25 # v5.4.0
         with:
-          context: ./WebApi
+          context: ./WebApi/WebApi
           push: true
           tags: ghcr.io/${{ github.repository_owner }}/feelingfine-web-ui:latest
