@@ -1,2 +1,6 @@
 ./PythonAI/.env
 .env
+.env.azure
+
+**/bin/**
+**/obj/**

@@ -1,0 +1,18 @@
+properties:
+  configuration:
+    ingress:
+      external: true
+      targetPort: 8000
+      allowInsecure: true
+  template:
+    containers:
+    - image: ghcr.io/your_github_username/feelingfine-python-ai:latest
+      name: feelingfine-python-ai
+      resources:
+        cpu: 1.0
+        memory: 2.0Gi
+      env:
+      - name: OLLAMA_HOST
+        value: http://feelingfine-ollama:11434
+      - name: HF_TOKEN
+        value: "your_huggingface_token"

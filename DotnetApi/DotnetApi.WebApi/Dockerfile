@@ -31,7 +31,7 @@ FROM base AS final
 # Switch to root temporarily to secure files
 USER root
 WORKDIR /app
-COPY --chown=root:root --chmod=555 --from=publish /app/publish .
+COPY --chown=root:root --chmod=755 --from=publish /app/publish .
 
 # Switch back to the non-root app user for execution
 USER app

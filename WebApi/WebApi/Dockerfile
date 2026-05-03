@@ -11,7 +11,7 @@ RUN dotnet restore "WebApi/WebApi.csproj"
 COPY WebApi/ ./WebApi/
 WORKDIR "/src/WebApi"
 
-# Inject URLs into appsettings.json
+# Inject URLs into appsettings.json at build time
 RUN sed -i "s|API_URL_PLACEHOLDER|$API_URL|g" wwwroot/appsettings.json
 RUN sed -i "s|AI_URL_PLACEHOLDER|$AI_URL|g" wwwroot/appsettings.json
 
@@ -22,15 +22,15 @@ ARG BUILD_CONFIGURATION=Release
 RUN dotnet publish "./WebApi.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
 
 FROM nginxinc/nginx-unprivileged:alpine AS final
-# Switch to root temporarily to copy files with root ownership securely
+# Switch to root temporarily to secure files
 USER root
 
 WORKDIR /usr/share/nginx/html
 # Copy web assets and configure them as read-only, owned by root
-COPY --chown=root:root --chmod=555 --from=publish /app/publish/wwwroot .
+COPY --chown=root:root --chmod=755 --from=publish /app/publish/wwwroot .
 
 # Copy custom nginx configuration securely
-COPY --chown=root:root --chmod=555 WebApi/nginx.conf /etc/nginx/nginx.conf
+COPY --chown=root:root --chmod=755 WebApi/nginx.conf /etc/nginx/nginx.conf
 
 # Switch back to the unprivileged nginx user for secure execution
 USER nginx
