@@ -160,7 +160,7 @@ jobs:
           
           # 3. WebUI
           # Fetch ALB DNS to bake it into the WebUI build
-          ALB_DNS=$(aws cloudformation describe-stacks --stack-name feelingfine-stack --query "Stacks[0].Outputs[?OutputKey=='ALBDns'].OutputValue" --output tsv)
+          ALB_DNS=$(aws cloudformation describe-stacks --stack-name feelingfine-stack --region eu-north-1 --query "Stacks[0].Outputs[?OutputKey=='ALBDns'].OutputValue" --output tsv)
           docker build --platform linux/amd64 -t $ECR_REGISTRY/feelingfine-web-ui:latest \
             --build-arg API_URL="http://$ALB_DNS" \
             --build-arg AI_URL="http://$ALB_DNS" \
