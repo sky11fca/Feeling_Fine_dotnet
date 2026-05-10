@@ -1,0 +1,479 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: AWS Infrastructure for FeelingFine (Full Stack ECS Fargate)
+
+Parameters:
+  EnvironmentName:
+    Type: String
+    Default: feelingfine
+  VpcCIDR:
+    Type: String
+    Default: 10.0.0.0/16
+  DatabaseConnectionString:
+    Type: String
+    NoEcho: true
+  JwtSecret:
+    Type: String
+    NoEcho: true
+  HuggingFaceToken:
+    Type: String
+    NoEcho: true
+
+Resources:
+  # --- Container Registries ---
+  DotnetEcrRepository:
+    Type: AWS::ECR::Repository
+    Properties:
+      RepositoryName: feelingfine-dotnet-api
+  
+  PythonEcrRepository:
+    Type: AWS::ECR::Repository
+    Properties:
+      RepositoryName: feelingfine-python-ai
+
+  WebEcrRepository:
+    Type: AWS::ECR::Repository
+    Properties:
+      RepositoryName: feelingfine-web-ui
+
+  # --- Networking ---
+  VPC:
+    Type: AWS::EC2::VPC
+    Properties:
+      CidrBlock: !Ref VpcCIDR
+      EnableDnsSupport: true
+      EnableDnsHostnames: true
+      Tags: [{Key: Name, Value: !Ref EnvironmentName}]
+
+  InternetGateway:
+    Type: AWS::EC2::InternetGateway
+  VPCGatewayAttachment:
+    Type: AWS::EC2::VPCGatewayAttachment
+    Properties:
+      VpcId: !Ref VPC
+      InternetGatewayId: !Ref InternetGateway
+
+  PublicSubnet1:
+    Type: AWS::EC2::Subnet
+    Properties:
+      VpcId: !Ref VPC
+      AvailabilityZone: !Select [0, !GetAZs ""]
+      CidrBlock: 10.0.1.0/24
+      MapPublicIpOnLaunch: true
+
+  PublicSubnet2:
+    Type: AWS::EC2::Subnet
+    Properties:
+      VpcId: !Ref VPC
+      AvailabilityZone: !Select [1, !GetAZs ""]
+      CidrBlock: 10.0.2.0/24
+      MapPublicIpOnLaunch: true
+
+  PublicRouteTable:
+    Type: AWS::EC2::RouteTable
+    Properties:
+      VpcId: !Ref VPC
+  DefaultPublicRoute:
+    Type: AWS::EC2::Route
+    DependsOn: VPCGatewayAttachment
+    Properties:
+      RouteTableId: !Ref PublicRouteTable
+      DestinationCidrBlock: 0.0.0.0/0
+      GatewayId: !Ref InternetGateway
+
+  PublicSubnet1RouteTableAssociation:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      RouteTableId: !Ref PublicRouteTable
+      SubnetId: !Ref PublicSubnet1
+  PublicSubnet2RouteTableAssociation:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      RouteTableId: !Ref PublicRouteTable
+      SubnetId: !Ref PublicSubnet2
+
+  # --- IAM Roles ---
+  ECSTaskExecutionRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: [ecs-tasks.amazonaws.com]
+            Action: ['sts:AssumeRole']
+      ManagedPolicyArns:
+        - arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy
+
+  ECSTaskRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: [ecs-tasks.amazonaws.com]
+            Action: ['sts:AssumeRole']
+
+  # --- Security Groups ---
+  ALBSecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: Access to ALB
+      VpcId: !Ref VPC
+      SecurityGroupIngress:
+        - IpProtocol: tcp
+          FromPort: 80
+          ToPort: 80
+          CidrIp: 0.0.0.0/0
+
+  ECSSecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: Access to ECS Tasks
+      VpcId: !Ref VPC
+      SecurityGroupIngress:
+        - IpProtocol: -1
+          SourceSecurityGroupId: !Ref ALBSecurityGroup
+        - IpProtocol: -1
+          Self: true
+
+  EFSSecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: Access to EFS
+      VpcId: !Ref VPC
+      SecurityGroupIngress:
+        - IpProtocol: tcp
+          FromPort: 2049
+          ToPort: 2049
+          SourceSecurityGroupId: !Ref ECSSecurityGroup
+
+  # --- Storage (EFS) ---
+  FileSystem:
+    Type: AWS::EFS::FileSystem
+    Properties:
+      FileSystemTags: [{Key: Name, Value: !Sub "${EnvironmentName}-ollama-data"}]
+
+  MountTarget1:
+    Type: AWS::EFS::MountTarget
+    Properties:
+      FileSystemId: !Ref FileSystem
+      SubnetId: !Ref PublicSubnet1
+      SecurityGroups: [!Ref EFSSecurityGroup]
+  MountTarget2:
+    Type: AWS::EFS::MountTarget
+    Properties:
+      FileSystemId: !Ref FileSystem
+      SubnetId: !Ref PublicSubnet2
+      SecurityGroups: [!Ref EFSSecurityGroup]
+
+  # --- Load Balancer ---
+  LoadBalancer:
+    Type: AWS::ElasticLoadBalancingV2::LoadBalancer
+    Properties:
+      Subnets: [!Ref PublicSubnet1, !Ref PublicSubnet2]
+      SecurityGroups: [!Ref ALBSecurityGroup]
+
+  HttpListener:
+    Type: AWS::ElasticLoadBalancingV2::Listener
+    Properties:
+      DefaultActions:
+        - Type: fixed-response
+          FixedResponseConfig:
+            StatusCode: '404'
+            ContentType: text/plain
+            MessageBody: Not Found
+      LoadBalancerArn: !Ref LoadBalancer
+      Port: 80
+      Protocol: HTTP
+
+  # --- Cloud Map ---
+  DiscoveryNamespace:
+    Type: AWS::ServiceDiscovery::PrivateDnsNamespace
+    Properties:
+      Name: feelingfine.local
+      Vpc: !Ref VPC
+
+  # --- ECS Cluster ---
+  ECSCluster:
+    Type: AWS::ECS::Cluster
+    Properties:
+      ClusterName: !Ref EnvironmentName
+
+  # --- Services ---
+
+  # 1. Redis
+  RedisService:
+    Type: AWS::ECS::Service
+    Properties:
+      Cluster: !Ref ECSCluster
+      ServiceName: redis
+      LaunchType: FARGATE
+      DesiredCount: 1
+      TaskDefinition: !Ref RedisTaskDefinition
+      NetworkConfiguration:
+        AwsvpcConfiguration:
+          AssignPublicIp: ENABLED
+          Subnets: [!Ref PublicSubnet1, !Ref PublicSubnet2]
+          SecurityGroups: [!Ref ECSSecurityGroup]
+      ServiceRegistries:
+        - RegistryArn: !GetAtt RedisDiscoveryService.Arn
+
+  RedisTaskDefinition:
+    Type: AWS::ECS::TaskDefinition
+    Properties:
+      Family: redis
+      Cpu: 256
+      Memory: 512
+      NetworkMode: awsvpc
+      RequiresCompatibilities: [FARGATE]
+      ExecutionRoleArn: !Ref ECSTaskExecutionRole
+      ContainerDefinitions:
+        - Name: redis
+          Image: redis:alpine
+          PortMappings: [{ContainerPort: 6379}]
+
+  RedisDiscoveryService:
+    Type: AWS::ServiceDiscovery::Service
+    Properties:
+      Name: redis
+      DnsConfig:
+        NamespaceId: !Ref DiscoveryNamespace
+        DnsRecords: [{Type: A, TTL: 60}]
+
+  # 2. Ollama
+  OllamaService:
+    Type: AWS::ECS::Service
+    Properties:
+      Cluster: !Ref ECSCluster
+      ServiceName: ollama
+      LaunchType: FARGATE
+      DesiredCount: 1
+      TaskDefinition: !Ref OllamaTaskDefinition
+      NetworkConfiguration:
+        AwsvpcConfiguration:
+          AssignPublicIp: ENABLED
+          Subnets: [!Ref PublicSubnet1, !Ref PublicSubnet2]
+          SecurityGroups: [!Ref ECSSecurityGroup]
+      ServiceRegistries:
+        - RegistryArn: !GetAtt OllamaDiscoveryService.Arn
+
+  OllamaTaskDefinition:
+    Type: AWS::ECS::TaskDefinition
+    Properties:
+      Family: ollama
+      Cpu: 2048
+      Memory: 4096
+      NetworkMode: awsvpc
+      RequiresCompatibilities: [FARGATE]
+      ExecutionRoleArn: !Ref ECSTaskExecutionRole
+      Volumes:
+        - Name: ollama-data
+          EFSVolumeConfiguration:
+            FileSystemId: !Ref FileSystem
+            TransitEncryption: ENABLED
+      ContainerDefinitions:
+        - Name: ollama
+          Image: ollama/ollama:latest
+          PortMappings: [{ContainerPort: 11434}]
+          MountPoints:
+            - ContainerPath: /root/.ollama
+              SourceVolume: ollama-data
+
+  OllamaDiscoveryService:
+    Type: AWS::ServiceDiscovery::Service
+    Properties:
+      Name: ollama
+      DnsConfig:
+        NamespaceId: !Ref DiscoveryNamespace
+        DnsRecords: [{Type: A, TTL: 60}]
+
+  # 3. Python AI
+  PythonAIService:
+    Type: AWS::ECS::Service
+    DependsOn: [AiRule, HttpListener]
+    Properties:
+      Cluster: !Ref ECSCluster
+      ServiceName: python-ai
+      LaunchType: FARGATE
+      DesiredCount: 1
+      TaskDefinition: !Ref PythonAITaskDefinition
+      NetworkConfiguration:
+        AwsvpcConfiguration:
+          AssignPublicIp: ENABLED
+          Subnets: [!Ref PublicSubnet1, !Ref PublicSubnet2]
+          SecurityGroups: [!Ref ECSSecurityGroup]
+      LoadBalancers:
+        - ContainerName: python-ai
+          ContainerPort: 8000
+          TargetGroupArn: !Ref PythonAITargetGroup
+      ServiceRegistries:
+        - RegistryArn: !GetAtt PythonAIDiscoveryService.Arn
+
+  PythonAITaskDefinition:
+    Type: AWS::ECS::TaskDefinition
+    Properties:
+      Family: python-ai
+      Cpu: 1024
+      Memory: 2048
+      NetworkMode: awsvpc
+      RequiresCompatibilities: [FARGATE]
+      ExecutionRoleArn: !Ref ECSTaskExecutionRole
+      ContainerDefinitions:
+        - Name: python-ai
+          Image: !Sub "${AWS::AccountId}.dkr.ecr.${AWS::Region}.amazonaws.com/feelingfine-python-ai:latest"
+          PortMappings: [{ContainerPort: 8000}]
+          Environment:
+            - Name: OLLAMA_HOST
+              Value: "http://ollama.feelingfine.local:11434"
+            - Name: HF_TOKEN
+              Value: !Ref HuggingFaceToken
+
+  PythonAIDiscoveryService:
+    Type: AWS::ServiceDiscovery::Service
+    Properties:
+      Name: python-ai
+      DnsConfig:
+        NamespaceId: !Ref DiscoveryNamespace
+        DnsRecords: [{Type: A, TTL: 60}]
+
+  PythonAITargetGroup:
+    Type: AWS::ElasticLoadBalancingV2::TargetGroup
+    Properties:
+      VpcId: !Ref VPC
+      Port: 8000
+      Protocol: HTTP
+      TargetType: ip
+      HealthCheckPath: /health
+
+  # 4. Dotnet API
+  DotnetApiService:
+    Type: AWS::ECS::Service
+    DependsOn: [ApiRule, HttpListener]
+    Properties:
+      Cluster: !Ref ECSCluster
+      ServiceName: dotnet-api
+      LaunchType: FARGATE
+      DesiredCount: 1
+      TaskDefinition: !Ref DotnetApiTaskDefinition
+      NetworkConfiguration:
+        AwsvpcConfiguration:
+          AssignPublicIp: ENABLED
+          Subnets: [!Ref PublicSubnet1, !Ref PublicSubnet2]
+          SecurityGroups: [!Ref ECSSecurityGroup]
+      LoadBalancers:
+        - ContainerName: dotnet-api
+          ContainerPort: 5160
+          TargetGroupArn: !Ref DotnetApiTargetGroup
+
+  DotnetApiTaskDefinition:
+    Type: AWS::ECS::TaskDefinition
+    Properties:
+      Family: dotnet-api
+      Cpu: 1024
+      Memory: 2048
+      NetworkMode: awsvpc
+      RequiresCompatibilities: [FARGATE]
+      ExecutionRoleArn: !Ref ECSTaskExecutionRole
+      ContainerDefinitions:
+        - Name: dotnet-api
+          Image: !Sub "${AWS::AccountId}.dkr.ecr.${AWS::Region}.amazonaws.com/feelingfine-dotnet-api:latest"
+          PortMappings: [{ContainerPort: 5160}]
+          Environment:
+            - Name: ASPNETCORE_ENVIRONMENT
+              Value: Production
+            - Name: ConnectionStrings__DefaultConnection
+              Value: !Ref DatabaseConnectionString
+            - Name: JwtSettings__Secret
+              Value: !Ref JwtSecret
+            - Name: JwtSettings__Issuer
+              Value: FeelingFine
+            - Name: JwtSettings__Audience
+              Value: FeelingFine
+            - Name: Redis__ConnectionString
+              Value: "redis.feelingfine.local:6379"
+            - Name: AiServiceUrl
+              Value: "http://python-ai.feelingfine.local:8000/ai/review/"
+
+  DotnetApiTargetGroup:
+    Type: AWS::ElasticLoadBalancingV2::TargetGroup
+    Properties:
+      VpcId: !Ref VPC
+      Port: 5160
+      Protocol: HTTP
+      TargetType: ip
+      HealthCheckPath: /swagger/index.html
+
+  # 5. Web UI
+  WebUiService:
+    Type: AWS::ECS::Service
+    DependsOn: [WebUiRule, HttpListener]
+    Properties:
+      Cluster: !Ref ECSCluster
+      ServiceName: web-ui
+      LaunchType: FARGATE
+      DesiredCount: 1
+      TaskDefinition: !Ref WebUiTaskDefinition
+      NetworkConfiguration:
+        AwsvpcConfiguration:
+          AssignPublicIp: ENABLED
+          Subnets: [!Ref PublicSubnet1, !Ref PublicSubnet2]
+          SecurityGroups: [!Ref ECSSecurityGroup]
+      LoadBalancers:
+        - ContainerName: web-ui
+          ContainerPort: 8080
+          TargetGroupArn: !Ref WebUiTargetGroup
+
+  WebUiTaskDefinition:
+    Type: AWS::ECS::TaskDefinition
+    Properties:
+      Family: web-ui
+      Cpu: 512
+      Memory: 1024
+      NetworkMode: awsvpc
+      RequiresCompatibilities: [FARGATE]
+      ExecutionRoleArn: !Ref ECSTaskExecutionRole
+      ContainerDefinitions:
+        - Name: web-ui
+          Image: !Sub "${AWS::AccountId}.dkr.ecr.${AWS::Region}.amazonaws.com/feelingfine-web-ui:latest"
+          PortMappings: [{ContainerPort: 8080}]
+
+  WebUiTargetGroup:
+    Type: AWS::ElasticLoadBalancingV2::TargetGroup
+    Properties:
+      VpcId: !Ref VPC
+      Port: 8080
+      Protocol: HTTP
+      TargetType: ip
+      HealthCheckPath: /
+
+  # --- Routing Rules ---
+  WebUiRule:
+    Type: AWS::ElasticLoadBalancingV2::ListenerRule
+    Properties:
+      Actions: [{Type: forward, TargetGroupArn: !Ref WebUiTargetGroup}]
+      Conditions: [{Field: path-pattern, Values: ['/']}]
+      ListenerArn: !Ref HttpListener
+      Priority: 1
+
+  ApiRule:
+    Type: AWS::ElasticLoadBalancingV2::ListenerRule
+    Properties:
+      Actions: [{Type: forward, TargetGroupArn: !Ref DotnetApiTargetGroup}]
+      Conditions: [{Field: path-pattern, Values: ['/api/*', '/swagger*']}]
+      ListenerArn: !Ref HttpListener
+      Priority: 2
+
+  AiRule:
+    Type: AWS::ElasticLoadBalancingV2::ListenerRule
+    Properties:
+      Actions: [{Type: forward, TargetGroupArn: !Ref PythonAITargetGroup}]
+      Conditions: [{Field: path-pattern, Values: ['/ai/*']}]
+      ListenerArn: !Ref HttpListener
+      Priority: 3
+
+Outputs:
+  ALBDns: {Value: !GetAtt LoadBalancer.DNSName}
+  ECSCluster: {Value: !Ref ECSCluster}

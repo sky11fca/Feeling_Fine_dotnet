@@ -125,3 +125,51 @@ jobs:
           file: ./WebApi/WebApi/Dockerfile
           push: true
           tags: ghcr.io/${{ github.repository_owner }}/feelingfine-web-ui:latest
+
+  aws-deploy:
+    name: Deploy to AWS (ECS Fargate)
+    runs-on: ubuntu-latest
+    needs: build-and-push-docker
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4.1.7
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@e3dd6a429d7300a6a4c196c26e071d44e03b0065 # v4.0.2
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: eu-north-1
+
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@062b18b96a7aff071d4dc91bc00c4c1a7945b076 # v2.0.1
+
+      - name: Build, tag, and push images to Amazon ECR
+        env:
+          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+        run: |
+          # 1. DotnetApi
+          docker build --platform linux/amd64 -t $ECR_REGISTRY/feelingfine-dotnet-api:latest -f DotnetApi/DotnetApi.WebApi/Dockerfile ./DotnetApi
+          docker push $ECR_REGISTRY/feelingfine-dotnet-api:latest
+          
+          # 2. PythonAI
+          docker build --platform linux/amd64 -t $ECR_REGISTRY/feelingfine-python-ai:latest -f PythonAI/Dockerfile ./PythonAI
+          docker push $ECR_REGISTRY/feelingfine-python-ai:latest
+          
+          # 3. WebUI
+          # Fetch ALB DNS to bake it into the WebUI build
+          ALB_DNS=$(aws cloudformation describe-stacks --stack-name feelingfine-stack --query "Stacks[0].Outputs[?OutputKey=='ALBDns'].OutputValue" --output tsv)
+          docker build --platform linux/amd64 -t $ECR_REGISTRY/feelingfine-web-ui:latest \
+            --build-arg API_URL="http://$ALB_DNS" \
+            --build-arg AI_URL="http://$ALB_DNS" \
+            -f WebApi/WebApi/Dockerfile ./WebApi
+          docker push $ECR_REGISTRY/feelingfine-web-ui:latest
+
+      - name: Update ECS Services
+        run: |
+          aws ecs update-service --cluster feelingfine --service dotnet-api --force-new-deployment --region eu-north-1
+          aws ecs update-service --cluster feelingfine --service python-ai --force-new-deployment --region eu-north-1
+          aws ecs update-service --cluster feelingfine --service web-ui --force-new-deployment --region eu-north-1
+

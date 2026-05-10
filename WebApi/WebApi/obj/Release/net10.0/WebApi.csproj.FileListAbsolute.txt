@@ -209,9 +209,6 @@
 /home/mrbogdanovich/git/FeelingFine/WebApi/WebApi/bin/Release/net10.0/wwwroot/_framework/icudt_CJK.tjcz0u77k5.dat
 /home/mrbogdanovich/git/FeelingFine/WebApi/WebApi/bin/Release/net10.0/wwwroot/_framework/icudt_EFIGS.tptq2av103.dat
 /home/mrbogdanovich/git/FeelingFine/WebApi/WebApi/bin/Release/net10.0/wwwroot/_framework/icudt_no_CJK.lfu7j35m59.dat
-/home/mrbogdanovich/git/FeelingFine/WebApi/WebApi/bin/Release/net10.0/wwwroot/_framework/WebApi.48w4vnylug.wasm
-/home/mrbogdanovich/git/FeelingFine/WebApi/WebApi/bin/Release/net10.0/wwwroot/_framework/WebApi.dw4ngnouex.pdb
-/home/mrbogdanovich/git/FeelingFine/WebApi/WebApi/bin/Release/net10.0/wwwroot/_framework/dotnet.wilw4crpdh.js
 /home/mrbogdanovich/git/FeelingFine/WebApi/WebApi/bin/Release/net10.0/wwwroot/_framework/blazor.webassembly.66stpp682q.js.gz
 /home/mrbogdanovich/git/FeelingFine/WebApi/WebApi/bin/Release/net10.0/wwwroot/_framework/Microsoft.AspNetCore.Authorization.mrojqw2yhh.wasm.gz
 /home/mrbogdanovich/git/FeelingFine/WebApi/WebApi/bin/Release/net10.0/wwwroot/_framework/Microsoft.AspNetCore.Components.5yorhp2rya.wasm.gz
@@ -422,9 +419,6 @@
 /home/mrbogdanovich/git/FeelingFine/WebApi/WebApi/bin/Release/net10.0/wwwroot/_framework/icudt_CJK.tjcz0u77k5.dat.gz
 /home/mrbogdanovich/git/FeelingFine/WebApi/WebApi/bin/Release/net10.0/wwwroot/_framework/icudt_EFIGS.tptq2av103.dat.gz
 /home/mrbogdanovich/git/FeelingFine/WebApi/WebApi/bin/Release/net10.0/wwwroot/_framework/icudt_no_CJK.lfu7j35m59.dat.gz
-/home/mrbogdanovich/git/FeelingFine/WebApi/WebApi/bin/Release/net10.0/wwwroot/_framework/WebApi.48w4vnylug.wasm.gz
-/home/mrbogdanovich/git/FeelingFine/WebApi/WebApi/bin/Release/net10.0/wwwroot/_framework/WebApi.dw4ngnouex.pdb.gz
-/home/mrbogdanovich/git/FeelingFine/WebApi/WebApi/bin/Release/net10.0/wwwroot/_framework/dotnet.wilw4crpdh.js.gz
 /home/mrbogdanovich/git/FeelingFine/WebApi/WebApi/bin/Release/net10.0/WebApi.staticwebassets.runtime.json
 /home/mrbogdanovich/git/FeelingFine/WebApi/WebApi/bin/Release/net10.0/WebApi.staticwebassets.endpoints.json
 /home/mrbogdanovich/git/FeelingFine/WebApi/WebApi/bin/Release/net10.0/WebApi.dll
@@ -1124,10 +1118,6 @@
 /home/mrbogdanovich/git/FeelingFine/WebApi/WebApi/obj/Release/net10.0/compressed/j6uxtdoaoa-{0}-tjcz0u77k5-tjcz0u77k5.gz
 /home/mrbogdanovich/git/FeelingFine/WebApi/WebApi/obj/Release/net10.0/compressed/1tic488sfq-{0}-tptq2av103-tptq2av103.gz
 /home/mrbogdanovich/git/FeelingFine/WebApi/WebApi/obj/Release/net10.0/compressed/yz5wqfoz2o-{0}-lfu7j35m59-lfu7j35m59.gz
-/home/mrbogdanovich/git/FeelingFine/WebApi/WebApi/obj/Release/net10.0/compressed/5si921m76q-{0}-48w4vnylug-48w4vnylug.gz
-/home/mrbogdanovich/git/FeelingFine/WebApi/WebApi/obj/Release/net10.0/compressed/p4zuezbzqg-{0}-dw4ngnouex-dw4ngnouex.gz
-/home/mrbogdanovich/git/FeelingFine/WebApi/WebApi/obj/Release/net10.0/compressed/kbxsqear80-{0}-wilw4crpdh-wilw4crpdh.gz
-/home/mrbogdanovich/git/FeelingFine/WebApi/WebApi/obj/Release/net10.0/compressed/8tcqlq5m7g-{0}-a9l8bx21mp-a9l8bx21mp.gz
 /home/mrbogdanovich/git/FeelingFine/WebApi/WebApi/obj/Release/net10.0/staticwebassets.build.json
 /home/mrbogdanovich/git/FeelingFine/WebApi/WebApi/obj/Release/net10.0/staticwebassets.build.json.cache
 /home/mrbogdanovich/git/FeelingFine/WebApi/WebApi/obj/Release/net10.0/staticwebassets.development.json
@@ -1138,3 +1128,13 @@
 /home/mrbogdanovich/git/FeelingFine/WebApi/WebApi/obj/Release/net10.0/refint/WebApi.dll
 /home/mrbogdanovich/git/FeelingFine/WebApi/WebApi/obj/Release/net10.0/WebApi.pdb
 /home/mrbogdanovich/git/FeelingFine/WebApi/WebApi/obj/Release/net10.0/ref/WebApi.dll
+/home/mrbogdanovich/git/FeelingFine/WebApi/WebApi/bin/Release/net10.0/wwwroot/_framework/WebApi.z77buz6tpw.wasm
+/home/mrbogdanovich/git/FeelingFine/WebApi/WebApi/bin/Release/net10.0/wwwroot/_framework/WebApi.g1xskiljwr.pdb
+/home/mrbogdanovich/git/FeelingFine/WebApi/WebApi/bin/Release/net10.0/wwwroot/_framework/dotnet.w3f9ufz1km.js
+/home/mrbogdanovich/git/FeelingFine/WebApi/WebApi/bin/Release/net10.0/wwwroot/_framework/WebApi.z77buz6tpw.wasm.gz
+/home/mrbogdanovich/git/FeelingFine/WebApi/WebApi/bin/Release/net10.0/wwwroot/_framework/WebApi.g1xskiljwr.pdb.gz
+/home/mrbogdanovich/git/FeelingFine/WebApi/WebApi/bin/Release/net10.0/wwwroot/_framework/dotnet.w3f9ufz1km.js.gz
+/home/mrbogdanovich/git/FeelingFine/WebApi/WebApi/obj/Release/net10.0/compressed/5si921m76q-{0}-z77buz6tpw-z77buz6tpw.gz
+/home/mrbogdanovich/git/FeelingFine/WebApi/WebApi/obj/Release/net10.0/compressed/p4zuezbzqg-{0}-g1xskiljwr-g1xskiljwr.gz
+/home/mrbogdanovich/git/FeelingFine/WebApi/WebApi/obj/Release/net10.0/compressed/kbxsqear80-{0}-w3f9ufz1km-w3f9ufz1km.gz
+/home/mrbogdanovich/git/FeelingFine/WebApi/WebApi/obj/Release/net10.0/compressed/8tcqlq5m7g-{0}-nq6qnsn76x-nq6qnsn76x.gz

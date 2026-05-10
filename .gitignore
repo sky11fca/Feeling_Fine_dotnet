@@ -1,6 +1,7 @@
 ./PythonAI/.env
 .env
 .env.azure
+.env.aws
 
 **/bin/**
 **/obj/**

@@ -30,7 +30,8 @@ WORKDIR /usr/share/nginx/html
 COPY --chown=root:root --chmod=755 --from=publish /app/publish/wwwroot .
 
 # Copy custom nginx configuration securely
-COPY --chown=root:root --chmod=755 WebApi/nginx.conf /etc/nginx/nginx.conf
+COPY --chown=root:root --chmod=555 WebApi/nginx.conf /etc/nginx/nginx.conf
+RUN rm -f /etc/nginx/conf.d/default.conf
 
 # Switch back to the unprivileged nginx user for secure execution
 USER nginx

@@ -25,3 +25,7 @@ app.add_middleware(
 app.include_router(api.review_router.router)
 app.include_router(api.reply_router.router)
 app.include_router(api.statistics_router.router)
+
+@app.get("/health")
+def health_check():
+    return {"status": "healthy"}
