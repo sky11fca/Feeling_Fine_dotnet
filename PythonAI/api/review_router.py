@@ -6,7 +6,7 @@ from service.satisfaction_service import satisfaction_service
 router = APIRouter()
 
 
-@router.post("/ai/review/")
+@router.post("/review/")
 async def analyse_review(payload: ReviewModel):
     prediction = satisfaction_service.analyze(payload.raw_text)
     return prediction

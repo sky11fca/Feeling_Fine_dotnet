@@ -8,7 +8,7 @@ from service.review_service import review_service
 router = APIRouter()
 
 
-@router.post("/ai/reply/")
+@router.post("/reply/")
 async def generate_a_reply(payload: ClientModel):
     try:
         # Run blocking inference in a threadpool to prevent blocking the event loop

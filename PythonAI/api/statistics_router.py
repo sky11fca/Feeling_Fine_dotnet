@@ -7,7 +7,7 @@ from service.statistics_service import statistics_service
 router = APIRouter()
 logger = logging.getLogger(__name__)
 
-@router.post("/ai/statistics/")
+@router.post("/statistics/")
 async def get_statistics(reviews: List[ReviewModel]):
     try:
         if not reviews:
