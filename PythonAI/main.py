@@ -22,10 +22,10 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-app.include_router(api.review_router.router)
-app.include_router(api.reply_router.router)
-app.include_router(api.statistics_router.router)
+app.include_router(api.review_router.router, prefix="/ai")
+app.include_router(api.reply_router.router, prefix="/ai")
+app.include_router(api.statistics_router.router, prefix="/ai")
 
-@app.get("/health")
+@app.get("/ai/health")
 def health_check():
     return {"status": "healthy"}

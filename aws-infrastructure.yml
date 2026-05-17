@@ -19,22 +19,6 @@ Parameters:
     NoEcho: true
 
 Resources:
-  # --- Container Registries ---
-  DotnetEcrRepository:
-    Type: AWS::ECR::Repository
-    Properties:
-      RepositoryName: feelingfine-dotnet-api
-  
-  PythonEcrRepository:
-    Type: AWS::ECR::Repository
-    Properties:
-      RepositoryName: feelingfine-python-ai
-
-  WebEcrRepository:
-    Type: AWS::ECR::Repository
-    Properties:
-      RepositoryName: feelingfine-web-ui
-
   # --- Networking ---
   VPC:
     Type: AWS::EC2::VPC
@@ -346,7 +330,7 @@ Resources:
       Port: 8000
       Protocol: HTTP
       TargetType: ip
-      HealthCheckPath: /health
+      HealthCheckPath: /ai/health
 
   # 4. Dotnet API
   DotnetApiService:
